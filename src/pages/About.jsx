@@ -60,7 +60,7 @@ const About = () => {
             <Card>
               <Card.Img
                 variant="top"
-                src={process.env.PUBLIC_URL + "/Hector.jpeg"}
+                src={process.env.PUBLIC_URL + "/Hector.png"}
                 alt="Hector Zhong"
               />
               <Card.Body>

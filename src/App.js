@@ -4,9 +4,16 @@ import NavBar from "./components/NavBar";
 import About from "./pages/About";
 import Navigation from "./components/Navigation";
 
-// import srv from './fetch_';
+import srv from './fetch_';
 
-// console.log(srv.read_text_to_image("a bottle of water"));
+
+srv.read_text_to_image("a bottle of water", (question, data)=>{
+  localStorage.setItem("hash",{question: question, result: data });
+});
+()=>{
+  localStorage.getItem("hash");//{question: question, result: data }
+}
+
 
 import ReadingAssistance from "./pages/ReadingAssistance";
 

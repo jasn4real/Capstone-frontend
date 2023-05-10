@@ -3,6 +3,11 @@ import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 import About from "./pages/About";
 import Navigation from "./components/Navigation";
+
+// import srv from './fetch_';
+
+// console.log(srv.read_text_to_image("a bottle of water"));
+
 import ReadingAssistance from "./pages/ReadingAssistance";
 
 

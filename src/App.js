@@ -7,12 +7,40 @@ import Navigation from "./components/Navigation";
 import srv from './fetch_';
 
 
-srv.read_text_to_image("a bottle of water", (question, data)=>{
-  localStorage.setItem("hash",{question: question, result: data });
-});
-()=>{
-  localStorage.getItem("hash");//{question: question, result: data }
-}
+// const upload_ = (metadata)=>{
+//   let books = localStorage.getItem("books");
+//   books = books.push(metadata);
+//   localStorage.setItem("books", books);
+// }
+
+// ()=>{
+//   localStorage.setItem("books",[
+//     {bookID: "book-{filehash}"},
+//     {bookID: "book-{filehash}"}
+//   ]);
+// }
+
+// ()=>{
+//   const books = localStorage.getItem("books");
+//   const book = localStorage.getItem(`book-${books[0].bookID}`);
+
+// }
+
+// srv.read_text_to_image("a bottle of water", (question, data)=>{
+
+//   localStorage.setItem("book-{filehash}",{
+//     image_histroy:[
+//       {question: question, result: data }
+//     ],
+//     text_histroy:[
+
+//     ],
+//   });
+
+// });
+// ()=>{
+//   localStorage.getItem("book-{filehash}");//{question: question, result: data }
+// }
 
 
 import ReadingAssistance from "./pages/ReadingAssistance";

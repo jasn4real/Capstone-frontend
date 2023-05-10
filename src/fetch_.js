@@ -25,7 +25,7 @@ function read_text_to_image(q, callback) {
   fetch(`${API}/ra/image`, body)
     .then((response) => response.json())
     .then((data) => {
-      callback(data);
+      callback(q, data);
     })
     .catch(error_handle);
   /** example of result
@@ -48,7 +48,7 @@ function read_text_to_explaination(q, callback) {
   fetch(`${API}/ra/text`, body)
     .then((response) => response.json())
     .then((data) => {
-      callback(data);
+      callback(q, data);
     })
     .catch(error_handle);
 

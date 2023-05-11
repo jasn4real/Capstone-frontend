@@ -14,6 +14,46 @@ function error_handle(error) {
 //upload_file
 //
 
+function question_to_reading_comprehension(q, fileHash){
+  const body  = {
+    method: "POST",
+    body: new URLSearchParams({q, fileHash}),
+    headers: {
+      ...default_fetch_options,
+    },
+  }
+  fetch(`${API}/rc`, body)
+    .then((response) => response.json())
+    .then((data) => {
+      callback(q, data);
+    })
+    .catch(error_handle);
+}
+
+function upload_file(files, callback){
+  const formData = new FormData();
+  for (let i = 0; i < files.files.length; i++) {
+    formData.append("files", files.files[i]);
+  }
+  const body  = {
+    method: "POST",
+    body: formData,
+  }
+  fetch(`${API}/upload_files`, body)
+    .then((response) => response.json())
+    .then((data) => {
+      callback(files, data);
+    })
+    .catch(error_handle);
+  /* result example
+    {
+      "result":"sucess",
+      "fileHash":"0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef",
+      "message":"Successfully uploaded"
+    }
+  */
+}
+
 function read_text_to_image(q, callback) {
   const body  = {
     method: "POST",
@@ -61,4 +101,4 @@ function read_text_to_explaination(q, callback) {
 }
 
 
-export default { read_text_to_image, read_text_to_explaination };
+export default { read_text_to_image, read_text_to_explaination, upload_file, question_to_reading_comprehension };

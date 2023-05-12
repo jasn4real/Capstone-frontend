@@ -28,7 +28,7 @@ main{
   transition: height 0.5s ease-in-out; /* 添加过渡效果 */
   overflow: hidden;
 }
-.landing-div.hidden {
+.landing-div.hidden, .reading-div.hidden {
   height: 0%;
 }
 .landing-div div{
@@ -40,9 +40,6 @@ main{
   transition: height 0.5s ease-in-out; /* 添加过渡效果 */
   overflow: hidden;
   display: flex;
-}
-.reading-div.hidden {
-  height: 0%;
 }
 .horizontal-splitter {
   background-color: gray;
@@ -82,22 +79,13 @@ main{
 .vertical-splitter:hover{
   background-color: gold;
 }
-.reading-comprehenstion-div{
+.reading-comprehenstion-div, .reading-assistance-div{
   /* minus vertical splitter width */
   width: calc(100% - var(--vertical-bar-width));
   overflow: hidden;
   transition: width 0.5s ease-in-out; /* 添加过渡效果 */
 }
-.reading-comprehenstion-div.hidden{
-  width: 0%;
-}
-.reading-assistance-div{
-  /* minus vertical splitter width */
-  width: calc(100% - var(--vertical-bar-width));
-  transition: width 0.5s ease-in-out; /* 添加过渡效果 */
-  overflow: hidden;
-}
-.reading-assistance-div.hidden{
+.reading-comprehenstion-div.hidden, .reading-assistance-div.hidden{
   width: 0%;
 }
 .landing-div div, .reading-comprehenstion-div div, .reading-assistance-div div{

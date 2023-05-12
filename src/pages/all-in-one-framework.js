@@ -30,13 +30,17 @@ export default function AllInOneFramework(){
   ////components of splitter///////////////////////////////////////////////////
   return <div className="main-frame-div" >
     <div className="landing-div">
-      <div><h1>this is landing page, put content in this div</h1></div>
+      <div>this is <h1>landing page</h1>, put content in this div</div>
     </div>
     <div className="horizontal-splitter" onClick={horizontal_splitter_click}><p>|</p></div>
     <div className="reading-div hidden">
-      <div className="reading-comprehenstion-div">this is reading comprehenstion, put content in this div</div>
+      <div className="reading-comprehenstion-div">
+        <div>this is <h2>reading comprehenstion page</h2>, put content in this div</div>
+      </div>
       <div className="vertical-splitter" onClick={vertical_splitter}><p>{'-'}</p></div>
-      <div className="reading-assistance-div hidden">this is reading assistance, put content in this div</div>
+      <div className="reading-assistance-div hidden">
+        <div>this is <h2>reading assistance page</h2>, put content in this div</div>
+      </div>
     </div>
   </div>
 }

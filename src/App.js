@@ -20,6 +20,15 @@ const declareBooks = (metadata, data) => {
   localStorage.getItem("books");
 }
 
+//upload book 
+ const upload = (metadata, data) => {
+  existingBooks.push({
+    bookID: metadata.file_hash,
+    book_data: metadata,
+    results: data.result,
+  });
+  localStorage.setItem("books", JSON.stringify(existingBooks));
+}
 
   srv.read_text_to_image("a bottole of water", (question, data) => {
 

@@ -1,0 +1,93 @@
+:root {
+  --horizontal-bar-height: 3%;
+  --vertical-bar-width: 15px;
+  --nav-bar-height: 73px;
+}
+html, body, #root, .App{
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+body {
+  overscroll-behavior: none;
+}
+main{
+  /* minus nav bar height */
+  height: calc(100% - var(--nav-bar-height));
+  padding: 0;
+  margin: 0;
+}
+/* above for base element */
+.main-frame-div {
+ height: 100%;
+ width: 100%;
+}
+.landing-div {
+  height: 97%;
+  opacity : 1;
+  transition: height 0.5s ease-in-out; /* 添加过渡效果 */
+  overflow: hidden;
+}
+.landing-div.hidden, .reading-div.hidden {
+  height: 0%;
+}
+.landing-div div{
+  padding: 10px;
+}
+.reading-div {
+  height: 97%;
+  opacity : 1;
+  transition: height 0.5s ease-in-out; /* 添加过渡效果 */
+  overflow: hidden;
+  display: flex;
+}
+.horizontal-splitter {
+  background-color: gray;
+  height: var(--horizontal-bar-height);
+  width: 100%;
+  position: relative;
+  bottom: 0px;
+  transition: background-color 0.2s ease-in-out; /* 添加过渡效果 */
+  cursor: pointer;
+  box-shadow: 0px -5px 5px lightgray;
+  text-align: center;
+  color: gray;
+}
+.horizontal-splitter p{
+  line-height: 100%;
+}
+.horizontal-splitter:hover{
+  background-color: gold;
+  box-shadow: 0px -7px 7px lightgray;
+}
+.vertical-splitter {
+  background-color: gray;
+  height: 100%;
+  width: var(--vertical-bar-width);
+  line-height: 100%;
+  transition: background-color 0.2s ease-in-out; /* 添加过渡效果 */
+  cursor: pointer;
+  box-shadow: 6px 0px 6px lightgray, -6px 0px 6px lightgray;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: gray;
+}
+.vertical-splitter p{
+  width: 100%;
+}
+.vertical-splitter:hover{
+  background-color: gold;
+}
+.reading-comprehenstion-div, .reading-assistance-div{
+  /* minus vertical splitter width */
+  width: calc(100% - var(--vertical-bar-width));
+  overflow: hidden;
+  transition: width 0.5s ease-in-out; /* 添加过渡效果 */
+}
+.reading-comprehenstion-div.hidden, .reading-assistance-div.hidden{
+  width: 0%;
+}
+.landing-div div, .reading-comprehenstion-div div, .reading-assistance-div div{
+  padding: 1em;
+}

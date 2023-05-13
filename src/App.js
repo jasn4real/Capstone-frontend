@@ -3,7 +3,11 @@ import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 import About from "./pages/About";
 import Navigation from "./components/Navigation";
+
+import AllInOneFramework from "./pages/all-in-one-framework";
+
 import ReadingAssistance from "./pages/ReadingAssistance";
+
 
 // import srv from './fetch_';
 
@@ -92,6 +96,8 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Navigation />} />
             <Route path="/assistance" element={<ReadingAssistance />} />
+            <Route path="/testing-only" element={<AllInOneFramework />} />
+
           </Routes>
         </main>
       </Router>

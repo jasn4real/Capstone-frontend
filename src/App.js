@@ -54,7 +54,7 @@ const  text_to_image = (bookID,question, data) => {
     const books = JSON.parse(localStorage.getItem("books")) || [];
     const updatedBooks = books.map((b) => {
       if (b.bookID === bookID) {
-        return {...b, history:[{questions: question, image_history: data.image_history, text_history: data.text_history}]}
+        return {...b, textImageHistory:[{questions: question, image_history: data.image_history, text_history: data.text_history}]}
       } else {
         return b;
       }

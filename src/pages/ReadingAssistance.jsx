@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 const ReadingAssistance = () => {
   const [selection, setSelection] = useState();
@@ -7,6 +7,7 @@ const ReadingAssistance = () => {
   const [action, setAction] = useState(null);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const con = useRef(null);
+  
 
   useEffect(() => {
     const showPopup = () => {
@@ -47,6 +48,8 @@ const ReadingAssistance = () => {
     else setResult(res.data.data);
   };
 
+
+
   useEffect(() => {
     if (!action) return;
     getData();
@@ -65,6 +68,8 @@ const ReadingAssistance = () => {
     if (action === "image") return <img src={result} />;
     return <p>Error</p>;
   };
+
+  
 
   return (
     <div className="p-5 mx-auto overflow-hidden" style={{ maxWidth: "800px", marginBottom: "300px" }}>
@@ -156,10 +161,12 @@ const ReadingAssistance = () => {
           sir.” “Show us where you live,” said the man. “Pint out the place!” I
           pointed to where our village lay, on the flat in-shore among the
           alder-trees and pollards, a mile or more from the church.
-        </p>
+        </p> 
       </div>
     </div>
   );
 };
+
+
 
 export default ReadingAssistance;

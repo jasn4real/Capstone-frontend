@@ -53,7 +53,7 @@ const  text_to_image = (bookID,question, data) => {
     }
     const books = JSON.parse(localStorage.getItem("books")) || [];
     const updatedBooks = books.map((b) => {
-      if (b.bookID === data.file_hash) {
+      if (b.bookID === bookID) {
         return {...b, textImageHistory:[{questions: question, image_history: data.image_history, text_history: data.text_history}]}
       } else {
         return b;
@@ -62,21 +62,23 @@ const  text_to_image = (bookID,question, data) => {
     localStorage.setItem("books", JSON.stringify(updatedBooks));
   }
 
-  srv.read_text_to_explanation((question, data) => {
 
-    //retrieve existing hash table or empty {}
-    const storedData = JSON.parse(localStorage.getItem("hash")) || {};
-
-    //assign a new key/pair to the object
-   
-        Object.assign(storedData, {asked: question}, {textR:data})
-
-    //store the updated object back to local storage
-    localStorage.setItem("hash",JSON.stringify(storedData));
-   console.log(storedData)
-    
-  })
-
+  const text_comprehension = (bookID, question, data) => {
+    const book = getBookById(bookID);
+    if (!book) {
+      console.log(`Book with ID '${bookID}' not found in localStorage`);
+      return;
+    }
+    const books = JSON.parse(localStorage.getItem("books")) || [];
+    const updatedBooks = books.map((b) => {
+      if(b.bookID === data.file_hash) {
+        return {...b, textResponse:[{asked: question, textResponse: response}]}
+      }else {
+        return b
+      }
+    });
+    localStorage.setItem("books", JSON.stringify(updatedBooks))
+  }
 
 export default function App() {
   return (

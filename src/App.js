@@ -44,7 +44,23 @@ const getBookById = (id, metadata) => {
   console.log(book.bookID, book);
   return book;
 };
- 
+   //set text to image
+const  text_to_image = (bookID,question, data) => {
+    const book = getBookById(bookID);
+    if (!book) {
+      console.log(`Book with ID '${bookID}' not found in localStorage`);
+      return;
+    }
+    const books = JSON.parse(localStorage.getItem("books")) || [];
+    const updatedBooks = books.map((b) => {
+      if (b.bookID === bookID) {
+        return {...b, history:[{questions: question, image_history: data.image_history, text_history: data.text_history}]}
+      } else {
+        return b;
+      }
+    });
+    localStorage.setItem("books", JSON.stringify(updatedBooks));
+  }
 
   srv.read_text_to_explanation((question, data) => {
 

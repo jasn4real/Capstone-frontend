@@ -14,6 +14,7 @@ function error_handle(error) {
 //upload_file
 //
 
+/**The question_to_reading_comprehension function sends a POST request to the API server at the /rc endpoint with a question and a file hash as parameters in the body of the request. It then parses the response as JSON and calls a callback function with the question and data returned by the server. */
 function question_to_reading_comprehension(q, fileHash){
   const body  = {
     method: "POST",

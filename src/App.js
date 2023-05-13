@@ -30,17 +30,21 @@ const declareBooks = (metadata, data) => {
   localStorage.setItem("books", JSON.stringify(existingBooks));
 }
 
-  srv.read_text_to_image("a bottole of water", (question, data) => {
+//by id
+const getBookById = (id, metadata) => {
+  const existingBook = JSON.parse(localStorage.getItem("books")) || []; 
 
-  //set key of "hash" to local storage
-  //stringigy the second argument to store the data object as string into local storage.
-    localStorage.setItem("hash", JSON.stringify({question:question, result: data }));
-
-     //JSON.parse is used to retrieve the data object from local storage to access.
-     const storage_object = JSON.parse(localStorage.getItem("hash"))
-     console.log(storage_object)
-  })
-
+  if (!existingBook) {
+    return null;
+  }
+  const book = existingBook.find((b) => b.bookID === metadata.file_hash);
+  if (!book) {
+    return null;
+  }
+  console.log(book.bookID, book);
+  return book;
+};
+ 
 
   srv.read_text_to_explanation((question, data) => {
 

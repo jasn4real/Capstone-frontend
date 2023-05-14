@@ -15,7 +15,7 @@ function error_handle(error) {
 //
 
 /**The question_to_reading_comprehension function sends a POST request to the API server at the /rc endpoint with a question and a file hash as parameters in the body of the request. It then parses the response as JSON and calls a callback function with the question and data returned by the server. */
-function question_to_reading_comprehension(q, fileHash){
+function question_to_reading_comprehension(fileHash, q, callback){
   const body  = {
     method: "POST",
     body: new URLSearchParams({q, fileHash}),
@@ -26,9 +26,28 @@ function question_to_reading_comprehension(q, fileHash){
   fetch(`${API}/rc`, body)
     .then((response) => response.json())
     .then((data) => {
-      callback(q, data);
+      callback(data);
     })
     .catch(error_handle);
+    /* result example
+      {
+        "id":"chatcmpl-7FtdtwCgRUMg6nEx64M0RPrNOpZJc","object":"chat.completion",
+        "created":1684023165,
+        "model":"gpt-3.5-turbo-0301",
+        "usage":{
+          "prompt_tokens":2023,
+          "completion_tokens":28,
+          "total_tokens":2051
+        },
+        "choices":[{
+          "message":{
+            "role":"assistant",
+            "content":"The story is about an old fisherman who has gone 84 days without catching a fish and his journey to catch a giant marlin."
+          },
+          "finish_reason":"stop",
+          "index":0
+        }]}
+     */
 }
 
 function upload_file(files, callback){
@@ -39,11 +58,14 @@ function upload_file(files, callback){
   const body  = {
     method: "POST",
     body: formData,
+    headers : { 
+      "Access-Control-Allow-Origin": "*" 
+    }
   }
   fetch(`${API}/upload_files`, body)
     .then((response) => response.json())
     .then((data) => {
-      callback(files, data);
+      callback(data);
     })
     .catch(error_handle);
   /* result example
@@ -66,7 +88,7 @@ function read_text_to_image(q, callback) {
   fetch(`${API}/ra/image`, body)
     .then((response) => response.json())
     .then((data) => {
-      callback(q, data);
+      callback(data);
     })
     .catch(error_handle);
   /** example of result
@@ -89,7 +111,7 @@ function read_text_to_explaination(q, callback) {
   fetch(`${API}/ra/text`, body)
     .then((response) => response.json())
     .then((data) => {
-      callback(q, data);
+      callback(data);
     })
     .catch(error_handle);
 

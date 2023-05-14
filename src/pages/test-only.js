@@ -19,7 +19,7 @@ export default function TestOnly(){
   }
   function printComprehenstionHistory(evt){
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    console.log(lc.getFile(fileHash, ['textToComprehenstion']));
+    console.log(lc.getFileDetail(fileHash, ['textToComprehenstion']));
   }
   ////////////////////////////////////////////
   function onTextToExplanation (evt){
@@ -31,7 +31,7 @@ export default function TestOnly(){
   }
   function printTextToExplanation(evt){
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    console.log(lc.getFile(fileHash, ['textToExplanation']));
+    console.log(lc.getFileDetail(fileHash, ['textToExplanation']));
   }
   ////////////////////////////////////////////
   function OnTextToImage(evt){
@@ -43,14 +43,14 @@ export default function TestOnly(){
   }
   function printTextToImage(evt){
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    console.log(lc.getFile(fileHash, ['textToImage']));
+    console.log(lc.getFileDetail(fileHash, ['textToImage']));
   }
   ////////////////////////////////////////////
   function getFileDetailClick(evt){
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
     console.log(lc.getFileDetail(fileHash, 
       [
-        'metadata',
+        'metaData',
         'textToImage',
         'textToExplanation',
         'textToComprehenstion',

@@ -56,6 +56,11 @@ export default function TestOnly(){
         'textToComprehenstion',
       ]));
   }
+  function getAllfiles(evt){
+    let allFiles = lc.getAllFiles();
+    allFiles = allFiles.map(el => lc.getFileDetail(el, ['metaData','textToImage']));
+    console.log(allFiles);
+  }
   ////////////////////////////////////////////
   return <div>
     <h1>test fetch</h1>
@@ -100,6 +105,7 @@ export default function TestOnly(){
     </div>
     <div>
       <button onClick={getFileDetailClick}>get all detail from file Hash</button>
+      <button onClick={getAllfiles}>get all files</button>
     </div>
   </div>
 }

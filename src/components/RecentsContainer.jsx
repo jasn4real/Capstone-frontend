@@ -18,6 +18,7 @@ const RecentsContainer = () => {
 
   return (
     <div className="recents-container">
+        <p>This is the Recents</p>
       {recents.map((recent) => (
         <div className="card" key={recent.id}>
           <img src={recent.image} alt={recent.title} />

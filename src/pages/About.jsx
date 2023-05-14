@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../App.css";
 
 const About = () => {
   return (
@@ -98,7 +100,8 @@ const About = () => {
               </Card.Body>
             </Card>
           </Col>
-
+        </Row>
+        <Row className="justify-content-center">
           <Col md={4} className="mb-4">
             <Card>
               <Card.Img
@@ -108,7 +111,7 @@ const About = () => {
               />
               <Card.Body>
                 <Card.Title>Jean Napoleon</Card.Title>
-                <Card.Text>
+                <Card.Text className="font-weight-bold">
                   Full Stack Software Engineer, Pursuit Fellow
                 </Card.Text>
                 <svg

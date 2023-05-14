@@ -3,12 +3,14 @@ import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 import About from "./pages/About";
 import Navigation from "./components/Navigation";
+import RecentsContainer from "./components/RecentsContainer";
 
 export default function App() {
   return (
     <div className="App">
       <Router>
         <NavBar />
+        <RecentsContainer />
 
         <main>
           <Routes>

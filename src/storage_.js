@@ -5,7 +5,7 @@ function error_handle(error) {
 }
 function check_string(){
   for(let item of arguments) if(typeof item !== 'string'){
-    console.log(item, ' not string');
+    error_handle(item, ' not string');
     return false;
   }
   return true;
@@ -33,9 +33,7 @@ function uploadFile(files, callback){
   })
   function fileObjToString(fileObj){
     const ret = {};
-    for(let x in fileObj){
-      ret[x] = fileObj[x];
-    }
+    for(let x in fileObj){ ret[x] = fileObj[x] }
     return JSON.stringify(ret);
   }
 }
@@ -196,7 +194,8 @@ const textToComprehension = (fileHash, question, callback)=>{
   
 }
 export default {
-  uploadFile, getAllFiles, getFileDetail, deleteFile,
+  getAllFiles, getFileDetail, deleteFile,
+  uploadFile, 
   textToComprehension,
   textToExplanation,
   textToImage

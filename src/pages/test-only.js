@@ -2,7 +2,6 @@ import React from "react";
 import lc from '../storage_';
 
 export default function TestOnly(){
-
   function onFileUpload(evt){
     evt.preventDefault();
     lc.uploadFile(evt.target.files, (data)=>{
@@ -10,13 +9,12 @@ export default function TestOnly(){
       console.log(lc.getAllFiles());
     })
   }
-  ////////////////////////////////////////////
+  //below are examples of all api call/////////////////
   function onReadingComprehensionSubmit(evt){
     evt.preventDefault();
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
     lc.textToComprehension(fileHash, evt.target.readingcomprehenstion.value, (data)=>{
       console.log(data);
-
     })
   }
   function printComprehenstionHistory(evt){
@@ -101,7 +99,7 @@ export default function TestOnly(){
       <button onClick={printTextToImage}>print text to image history to console</button>
     </div>
     <div>
-      <button onClick={getFileDetailClick}>get all from file Hash</button>
+      <button onClick={getFileDetailClick}>get all detail from file Hash</button>
     </div>
   </div>
 }

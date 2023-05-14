@@ -14,7 +14,6 @@ export default function TestOnly(){
   function onReadingComprehensionSubmit(evt){
     evt.preventDefault();
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    console.log(evt.target.readingcomprehenstion.value);
     lc.textToComprehension(fileHash, evt.target.readingcomprehenstion.value, (data)=>{
       console.log(data);
 
@@ -22,7 +21,7 @@ export default function TestOnly(){
   }
   function printComprehenstionHistory(evt){
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    console.log(lc.readComprehensionHistory(fileHash));
+    console.log(lc.getFile(fileHash, ['textToComprehenstion']));
   }
   ////////////////////////////////////////////
   function onTextToExplanation (evt){
@@ -34,7 +33,7 @@ export default function TestOnly(){
   }
   function printTextToExplanation(evt){
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    console.log(lc.readTextHistory(fileHash));
+    console.log(lc.getFile(fileHash, ['textToExplanation']));
   }
   ////////////////////////////////////////////
   function OnTextToImage(evt){
@@ -46,7 +45,18 @@ export default function TestOnly(){
   }
   function printTextToImage(evt){
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    console.log(lc.readImageHistory(fileHash));
+    console.log(lc.getFile(fileHash, ['textToImage']));
+  }
+  ////////////////////////////////////////////
+  function getFileDetailClick(evt){
+    const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
+    console.log(lc.getFileDetail(fileHash, 
+      [
+        'metadata',
+        'textToImage',
+        'textToExplanation',
+        'textToComprehenstion',
+      ]));
   }
   ////////////////////////////////////////////
   return <div>
@@ -91,7 +101,7 @@ export default function TestOnly(){
       <button onClick={printTextToImage}>print text to image history to console</button>
     </div>
     <div>
-      <button>clear</button>
+      <button onClick={getFileDetailClick}>get all from file Hash</button>
     </div>
   </div>
 }

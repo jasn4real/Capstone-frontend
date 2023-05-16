@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+
 import lc from "../storage_";
+import Form from "react-bootstrap/Form";
 
 export default function ReadingComprehension() {
+  const [responseData, setResponseData] = useState(null);
+
   const handleReadingComprehensionSubmit = (evt) => {
     evt.preventDefault();
     const fileHash =
@@ -14,13 +16,14 @@ export default function ReadingComprehension() {
       evt.target.readingcomprehenstion.value,
       (data) => {
         console.log(data);
+        setResponseData(data);
       }
     );
   };
 
   return (
     <div className="container rc-content">
-      <div className="container rc-text-container">response!</div>
+      <div className="container rc-text"></div>
 
       <Form className="rc-form-box" onSubmit={handleReadingComprehensionSubmit}>
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -30,19 +33,20 @@ export default function ReadingComprehension() {
             placeholder="Type..."
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+        <button className="rc-submit-button" type="submit">
+          SEND
+        </button>
       </Form>
+      {responseData && <div>{responseData}</div>}
       <div className="reading-level-radio">
         <span className="reading-level-text">Select reading level</span>
         <div class="group">
           <input type="radio" name="rb" id="rb1" />
-          <label for="rb1">Check this</label>
+          <label for="rb1">Foundational</label>
           <input type="radio" name="rb" id="rb2" />
-          <label for="rb2">... or this...</label>
+          <label for="rb2">Proficient</label>
           <input type="radio" name="rb" id="rb3" />
-          <label for="rb3">or maybe this</label>
+          <label for="rb3">Advanced</label>
         </div>
       </div>
     </div>

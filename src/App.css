@@ -488,9 +488,48 @@ nav {
     max-width: 95vw;
   }
 }
+
 @media (max-width: 600px) {
   .home-bannerImage-container,
   .about-background-image-container {
     display: none;
   }
+}
+
+.rc-text-container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* -ms-transform: translate(-50%, -20%); */
+  transform: translate(-50%, -8%);
+  width: 90rem;
+  animation: fadeIn 5s;
+}
+
+.rc {
+  font-size: initial;
+  font-weight: normal;
+  letter-spacing: .2rem;
+
+}
+
+.fade-in-text {
+  font-family: Arial;
+  font-size: 150px;
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.text-box {
+  margin-top: 7rem;
+}
+
+.clicked {
+  border: solid pink; /* Set the desired background color */
+  /* Other styling properties */
 }

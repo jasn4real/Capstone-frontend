@@ -76,7 +76,11 @@ function upload_file(files, callback){
     }
   */
 }
-
+/*
+download file / access file by filehash
+API_URL + /download_file/ + file hash
+http://150.230.113.32:8899/download_file/0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef
+*/
 function read_text_to_image(q, callback) {
   const body  = {
     method: "POST",

@@ -3,9 +3,6 @@ import './all-in-one-framework.css';
 import FrameworkTestButtons from'../components/framework-test-buttons';
 
 export default function AllInOneFramework(){
-
-  /////////////////////////////////////////////////////////
-  
   /////////////////////////////////////////////////////////
   function get_elements(){
     const horizontal_splitter = document.querySelector(".horizontal-splitter");

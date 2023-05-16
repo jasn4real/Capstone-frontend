@@ -19,9 +19,10 @@ export default function ReadingComprehension() {
   };
 
   return (
-    <div className="container rc-text-container">
-      <div class="fade-in-text"></div>
-      <Form className="text-box" onSubmit={handleReadingComprehensionSubmit}>
+    <div className="container rc-content">
+      <div className="container rc-text-container">response!</div>
+
+      <Form className="rc-form-box" onSubmit={handleReadingComprehensionSubmit}>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Control
             type="text"
@@ -33,6 +34,17 @@ export default function ReadingComprehension() {
           Submit
         </Button>
       </Form>
+      <div className="reading-level-radio">
+        <span className="reading-level-text">Select reading level</span>
+        <div class="group">
+          <input type="radio" name="rb" id="rb1" />
+          <label for="rb1">Check this</label>
+          <input type="radio" name="rb" id="rb2" />
+          <label for="rb2">... or this...</label>
+          <input type="radio" name="rb" id="rb3" />
+          <label for="rb3">or maybe this</label>
+        </div>
+      </div>
     </div>
   );
 }

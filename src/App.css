@@ -522,7 +522,7 @@ margin: 0;
 }
 
 .rc-form-box {
-  transform: translate(0%, 300%);
+  transform: translate(10rem, 29rem);
   display: flex;
   align-items: flex-start;
   width: 73rem;
@@ -541,7 +541,7 @@ margin: 0;
 }
 
 .reading-level-radio {
-  transform: translate(24%, 140px);
+  transform: translate(30rem, 26rem);
   opacity: 0.2;
   transition: opacity 0.3s ease; /* Add transition for smooth effect */
 }

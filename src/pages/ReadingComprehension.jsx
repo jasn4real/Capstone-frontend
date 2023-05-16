@@ -6,17 +6,20 @@ import Form from "react-bootstrap/Form";
 
 export default function ReadingComprehension() {
   const [responseData, setResponseData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleReadingComprehensionSubmit = (evt) => {
     evt.preventDefault();
     const fileHash =
       "0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef";
+    setIsLoading(true);
     lc.textToComprehension(
       fileHash,
       evt.target.readingcomprehenstion.value,
       (data) => {
         console.log(data);
         setResponseData(data);
+        setIsLoading(false);
       }
     );
   };
@@ -37,7 +40,17 @@ export default function ReadingComprehension() {
           SEND
         </button>
       </Form>
-      {responseData && <div>{responseData}</div>}
+      {/*  */}
+      {isLoading ? (
+        <div className="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      ) : (
+        responseData && <div>{responseData}</div>
+      )}
       <div className="reading-level-radio">
         <span className="reading-level-text">Select reading level</span>
         <div class="group">

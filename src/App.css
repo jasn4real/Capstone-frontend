@@ -521,7 +521,7 @@ nav {
 }
 
 .rc-form-box {
-  transform: translate(10%, 630%);
+  transform: translate(0%, 300%);
   display: flex;
   align-items: flex-start;
   width: 73rem;
@@ -539,8 +539,7 @@ nav {
 }
 
 .reading-level-radio {
-  position: absolute;
-  transform: translate(27rem, 30rem);
+  transform: translate(24%, 140px);
   opacity: 0.2;
   transition: opacity 0.3s ease;
 }

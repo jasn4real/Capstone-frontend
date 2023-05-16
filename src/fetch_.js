@@ -15,10 +15,10 @@ function error_handle(error) {
 //
 
 /**The question_to_reading_comprehension function sends a POST request to the API server at the /rc endpoint with a question and a file hash as parameters in the body of the request. It then parses the response as JSON and calls a callback function with the question and data returned by the server. */
-function question_to_reading_comprehension(fileHash, q, callback){
+function question_to_reading_comprehension(fileHash, q, level, callback){
   const body  = {
     method: "POST",
-    body: new URLSearchParams({q, fileHash}),
+    body: new URLSearchParams({q, fileHash, level}),
     headers: {
       ...default_fetch_options,
     },
@@ -70,7 +70,7 @@ function upload_file(files, callback){
     .catch(error_handle);
   /* result example
     {
-      "result":"sucess",
+      "result":"success",
       "fileHash":"0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef",
       "message":"Successfully uploaded"
     }

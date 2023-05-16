@@ -25,7 +25,7 @@ function uploadFile(files, callback){
         }
         localStorage.setItem(`${file_list_prefix}-${data.fileHash}`, fileObjToString(files.files[0]));
         callback(data);
-      }else throw "upload failed";
+      }else throw new Error("upload failed");
     } catch (error) {
       error_handle(error);
       callback(false);
@@ -74,6 +74,8 @@ function getFileDetail(fileHash, history_category = ['metaData']){
         case "textToComprehenstion":
           ret['textToComprehenstion'] = getHistory('comprehension', fileHash);
         break;
+        default:
+          error_handle('not recognize in get file detail:' + x);
       }
     } catch (error) {
       error_handle(error);
@@ -144,62 +146,64 @@ function deleteHistory(category, fileHash){
   localStorage.removeItem(keyName);
 }
 ///wrapped backend api//////////////
-const textToImage = (fileHash, question, callback)=>{
-  if (check_string(fileHash, question) === false ) return false;
-  const history = getFileDetail(fileHash, ['image']);
+function pull_history(fileHash, category, question){
+  const history = getFileDetail(fileHash, [category]);
   try{
-    if(history['image'][question]){
-      callback(history['image'][question].data);
-      return;
-    } 
+    if(history[category][question]){
+      return history[category][question].data;
+    }
+    return false;
   }catch(error){
-    error_handle(`${fileHash} text to explanation history not found`);
+    return false;
   }
-  srv.read_text_to_image(question, (data)=>{
+}
+const textToImage = (fileHash, question, callback) => {
+  if (check_string(fileHash, question) === false ) return false;
+  const history = pull_history(fileHash, 'image', question);
+  if(history !== false){
+    callback(history);
+    return;
+  } 
+  //////////////////////////////
+  srv.read_text_to_image(question, (data) => {
     setHistory("image", fileHash, question, data.image_url);
     callback(data.image_url);
   })
 }
-const textToExplanation = (fileHash, question, callback)=>{
+const textToExplanation = (fileHash, question, callback) => {
   if (check_string(fileHash, question) === false ) return false;
-  const history = getFileDetail(fileHash, ['text']);
-  try{
-    if(history['text'][question]){
-      callback(history['text'][question].data);
-      return;
-    } 
-  }catch(error){
-    error_handle(`${fileHash} text to explanation history not found`);
-  }
+  const history = pull_history(fileHash, 'text', question);
+  if(history !== false){
+    callback(history);
+    return;
+  } 
+  //////////////////////////////
   srv.read_text_to_explaination(question, (data)=>{
     setHistory("text", fileHash, question, data.data);
     callback(data.data);
   })
 }
-const textToComprehension = (fileHash, question, callback)=>{
+const textToComprehension = (fileHash, question, level = '2', callback) => {
   if (check_string(fileHash, question) === false ) return false;
-  const history = getFileDetail(fileHash, ['comprehension']);
-  try{
-    if(history['comprehension'][question]){
-      callback(history['comprehension'][question].data);
-      return;
-    } 
-  }catch(error){
-    error_handle(`${fileHash} comprehension history not found`);
-  }
-  srv.question_to_reading_comprehension(fileHash, question, (data)=>{
-    setHistory("comprehension", fileHash, question, data.choices[0].message.content);
+  const history = pull_history(fileHash, 'comprehension', `${question}-${level}`);
+  if(history !== false){
+    callback(history);
+    return;
+  } 
+  //////////////////////////////
+  srv.question_to_reading_comprehension(fileHash, question, level = '2', (data) => {
+    setHistory("comprehension", fileHash, `${question}-${level}`, data.choices[0].message.content);
     callback(data.choices[0].message.content);
   })
-  
 }
-export default {
+const wrapper = {
   getAllFiles, getFileDetail, deleteFile,
   uploadFile, 
   textToComprehension,
   textToExplanation,
   textToImage
 }
+export default wrapper;
 
 //////////////////////////////////////
 // const existingBooks = JSON.parse(localStorage.getItem("books")) || [];

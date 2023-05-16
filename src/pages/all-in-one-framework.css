@@ -1,7 +1,7 @@
 :root {
   --horizontal-bar-height: 3%;
   --vertical-bar-width: 15px;
-  --nav-bar-height: 73px;
+  --nav-bar-height: 117px;
 }
 html, body, #root, .App{
   height: 100%;
@@ -19,11 +19,11 @@ main{
 }
 /* above for base element */
 .main-frame-div {
- height: 100%;
- width: 100%;
+  height: 100%;
+  width: 100%;
 }
 .landing-div {
-  height: 97%;
+  height: calc(100% - var(--horizontal-bar-height));
   opacity : 1;
   transition: height 0.5s ease-in-out; /* 添加过渡效果 */
   overflow: hidden;
@@ -35,7 +35,7 @@ main{
   padding: 10px;
 }
 .reading-div {
-  height: 97%;
+  height: calc(100% - var(--horizontal-bar-height));
   opacity : 1;
   transition: height 0.5s ease-in-out; /* 添加过渡效果 */
   overflow: hidden;

@@ -26,8 +26,19 @@ export default function ReadingComprehension() {
 
   return (
     <div className="container rc-content">
-      <div className="container rc-text"></div>
-
+      <div className="container rc-text">
+        {" "}
+        {isLoading ? (
+          <div className="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        ) : (
+          responseData && <div className="rc-text">{responseData}</div>
+        )}
+      </div>
       <Form className="rc-form-box" onSubmit={handleReadingComprehensionSubmit}>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Control
@@ -41,16 +52,7 @@ export default function ReadingComprehension() {
         </button>
       </Form>
       {/*  */}
-      {isLoading ? (
-        <div className="lds-ellipsis">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      ) : (
-        responseData && <div>{responseData}</div>
-      )}
+
       <div className="reading-level-radio">
         <span className="reading-level-text">Select reading level</span>
         <div class="group">

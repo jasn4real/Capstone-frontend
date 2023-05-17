@@ -13,7 +13,8 @@ export default function TestOnly(){
   function onReadingComprehensionSubmit(evt){
     evt.preventDefault();
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    lc.textToComprehension(fileHash, evt.target.readingcomprehenstion.value, (data)=>{
+    //level are presented as "1","2","3","4","5" by default level = "2"
+    lc.textToComprehension(fileHash, evt.target.readingcomprehenstion.value, '2', (data)=>{
       console.log(data);
     })
   }

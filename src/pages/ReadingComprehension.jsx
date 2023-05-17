@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 import lc from "../storage_";
+import "./ReadingComprehension.css";
 import Form from "react-bootstrap/Form";
 
 export default function ReadingComprehension() {
@@ -16,6 +17,7 @@ export default function ReadingComprehension() {
     lc.textToComprehension(
       fileHash,
       evt.target.readingcomprehenstion.value,
+      "2",
       (data) => {
         console.log(data);
         setResponseData(data);

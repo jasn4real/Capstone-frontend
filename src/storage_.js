@@ -11,6 +11,11 @@ function check_string(){
   return true;
 }
 //////////////////////////////////////////////////
+function downloadFile(fileHash, callback){
+  srv.download_file(fileHash, (result) => {
+    callback(result);
+  })
+}
 function uploadFile(files, callback){
   srv.upload_file(files, (data)=>{
     try {
@@ -37,7 +42,32 @@ function uploadFile(files, callback){
     return JSON.stringify(ret);
   }
 }
-
+function getFileMeta(fileHash, callback){
+  srv.read_file_metadata(fileHash, (meta) => {
+    //plug the meta data by to localstorage
+    try {
+      if(meta){
+        let files_table = localStorage.getItem(fileTable);
+        files_table = JSON.parse[files_table];
+        if(!files_table.includes(fileHash)){
+          //if file_table not have this record
+          files_table.push(fileHash);
+        }
+        const file_key_name = `${file_list_prefix}-${fileHash}`;
+        if(!localStorage.getItem(file_key_name)){
+          //if file record not exist
+          localStorage.setItem(file_key_name, JSON.stringify(meta));
+        }
+        callback(meta);
+      }
+      else{
+        throw "get file meta api return false";
+      }
+    } catch (error) {
+      callback(false);
+    }
+  })
+}
 function getAllFiles(limit = undefined){
   let files_table = localStorage.getItem(fileTable);
   try {
@@ -198,7 +228,7 @@ const textToComprehension = (fileHash, question, level = '2', callback) => {
 }
 const wrapper = {
   getAllFiles, getFileDetail, deleteFile,
-  uploadFile, 
+  uploadFile, downloadFile, getFileMeta,
   textToComprehension,
   textToExplanation,
   textToImage

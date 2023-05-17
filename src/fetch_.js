@@ -49,7 +49,33 @@ function question_to_reading_comprehension(fileHash, q, level, callback){
         }]}
      */
 }
-
+/*
+download file / access file by filehash
+API_URL + /download_file/ + file hash
+http://150.230.113.32:8899/download_file/0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef
+*/
+function download_file(fileHash, callback){
+  fetch(`${API}/download_file/${fileHash}`)
+    .then(response => response.blob())
+    .then(blob => {
+      callback(blob);
+    })
+    .catch(error => {
+      error_handle('Error downloading file:' + error.toString());
+      callback(false);
+    });
+}
+function read_file_metadata(fileHash, callback){
+  fetch(`${API}/download_file/meta/${fileHash}`)
+    .then(response => response.json())
+    .then(json => {
+      callback(json);
+    })
+    .catch(error => {
+      error_handle( error );
+      callback(false);
+    })
+}
 function upload_file(files, callback){
   const formData = new FormData();
   for (let i = 0; i < files.files.length; i++) {
@@ -76,11 +102,7 @@ function upload_file(files, callback){
     }
   */
 }
-/*
-download file / access file by filehash
-API_URL + /download_file/ + file hash
-http://150.230.113.32:8899/download_file/0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef
-*/
+
 function read_text_to_image(q, callback) {
   const body  = {
     method: "POST",
@@ -128,4 +150,10 @@ function read_text_to_explaination(q, callback) {
 }
 
 
-export default { read_text_to_image, read_text_to_explaination, upload_file, question_to_reading_comprehension };
+export default { 
+  read_text_to_image, 
+  read_text_to_explaination, 
+  upload_file, 
+  download_file, 
+  read_file_metadata,
+  question_to_reading_comprehension };

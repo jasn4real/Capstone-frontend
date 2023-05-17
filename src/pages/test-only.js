@@ -51,7 +51,7 @@ export default function TestOnly(){
   function downloadFileClick(evt){
     evt.preventDefault();
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    lc.download_file(fileHash, (result)=>{
+    lc.downloadFile(fileHash, (result)=>{
       if(result){
         console.log(result);
       }

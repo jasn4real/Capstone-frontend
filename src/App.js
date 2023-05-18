@@ -4,7 +4,8 @@ import NavBar from "./components/NavBar";
 import About from "./pages/About";
 import Navigation from "./components/Navigation";
 
-import RecentsContainer from "./components/RecentsContainer";
+
+// import RecentsContainer from "./components/RecentsContainer";
 
 import AllInOneFramework from "./pages/all-in-one-framework";
 import ReadingAssistance from "./pages/ReadingAssistance";
@@ -20,7 +21,6 @@ export default function App() {
     <div className="App">
       <Router>
         <NavBar />
-        <RecentsContainer />
 
         <main>
           <Routes>

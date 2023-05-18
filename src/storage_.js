@@ -23,7 +23,9 @@ function uploadFile(files, callback){
         let files_table = localStorage.getItem(fileTable);
         try {
           files_table = JSON.parse(files_table);
-          files_table.push(data.fileHash);
+          if(!files_table.includes(data.fileHash)){
+            files_table.push(data.fileHash);
+          }
           localStorage.setItem(fileTable, JSON.stringify(files_table));
         } catch (error) {
           console.log(error);

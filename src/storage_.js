@@ -22,10 +22,11 @@ function uploadFile(files, callback){
       if(data.fileHash.length === 64) {
         let files_table = localStorage.getItem(fileTable);
         try {
-          files_table = JSON.parse[files_table];
+          files_table = JSON.parse(files_table);
           files_table.push(data.fileHash);
           localStorage.setItem(fileTable, JSON.stringify(files_table));
         } catch (error) {
+          console.log(error);
           localStorage.setItem(fileTable, JSON.stringify([data.fileHash]));
         }
         localStorage.setItem(`${file_list_prefix}-${data.fileHash}`, fileObjToString(files.files[0]));

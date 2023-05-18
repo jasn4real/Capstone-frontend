@@ -1,7 +1,7 @@
 :root {
   --horizontal-bar-height: 3%;
   --vertical-bar-width: 15px;
-  --nav-bar-height: 73px;
+  --nav-bar-height: 117px;
 }
 html, body, #root, .App{
   height: 100%;

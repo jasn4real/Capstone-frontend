@@ -3,7 +3,9 @@ import { useState } from "react";
 
 import lc from "../storage_";
 import "./ReadingComprehension.css";
+
 import Form from "react-bootstrap/Form";
+ import { BsBookHalf } from "react-icons/bs"; 
 
 export default function ReadingComprehension() {
   const [responseData, setResponseData] = useState(null);
@@ -28,20 +30,35 @@ export default function ReadingComprehension() {
 
   return (
     <div>
-      <ul class="hList">
-        <li>
-          <a href="#click" class="menu">
-            <h2 class="menu-title">History</h2>
-            <ul class="menu-dropdown">
-              <li>cat</li>
-              <li>dog</li>
-              <li>horse</li>
-              <li>cow</li>
-              <li>pig</li>
-            </ul>
-          </a>
-        </li>
-      </ul>
+      <div class="menu-container">
+        <ul class="vertical-nav">
+          <span><BsBookHalf className="book-half"/></span>
+          <span>History</span>
+          <li>
+            {/* <a href="#">mjmjm</a> */}
+
+
+            <div class="hover-menu">
+              <ul>
+            
+                <li>
+                  <a href="#">Menu Item</a>
+                </li>
+                <li>
+                  <a href="#">Menu Item</a>
+                </li>
+                <li class="menu-header">OTHER</li>
+                <li>
+                  <a href="#">Menu Item</a>
+                </li>
+                <li>
+                  <a href="#">Menu Item</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
 
       <div className="container content">
         <div className="reading-level-radio">
@@ -49,9 +66,9 @@ export default function ReadingComprehension() {
 
           <div class="group">
             <input type="radio" name="rb" id="rb1" />
-            <label for="rb1">Foundational</label>
+            <label for="rb1">Easy</label>
             <input type="radio" name="rb" id="rb2" />
-            <label for="rb2">Proficient</label>
+            <label for="rb2">Medium</label>
             <input type="radio" name="rb" id="rb3" />
             <label for="rb3">Advanced</label>
           </div>

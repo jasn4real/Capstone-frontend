@@ -1,157 +1,259 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Roboto+Condensed");
+*,
+::after,
+::before {
+	box-sizing: border-box;
+}
+/* html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+} */
+/* body {
+	webkit-text-size-adjust: 100%;
+	font-variant-ligatures: none;
+	-webkit-font-variant-ligatures: none;
+	text-rendering: optimizeLegibility;
+	-moz-osx-font-smoothing: grayscale;
+	font-smoothing: antialiased;
+	-webkit-font-feature-settings: "kern" on, "liga" on, "calt" on, "onum", "pnum";
+	-webkit-font-smoothing: subpixel-antialiased;
+	text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+	background: #fff;
+	font-family: "Roboto", sans-serif;
+	font-size: 14px;
+	margin: 0;
+	font-weight: 400;
+	padding: 0;
+} */
+
+.book-half {
+  margin-top: 2rem;
+  font-size: xx-large;
+}
 
 
-
-
+.nav-title {
+  margin-top: 6rem;
+}
 a {
-  text-decoration: none;
-  color: inherit;
+	color: #1e85c9;
 }
-
-/* * {
-  box-sizing: border-box;
-} */
-
-/* $menu_WIDTH: 150px; */
-
-.menu {
-  display: block;
-  position: relative;
-  cursor: pointer;
-}
-
-.menu-title {
-  display: block;
-  height: 40px;
-  padding: 9px 0 0;
-  text-decoration: underline;
-  /* background: rgb(243, 217, 45); */
-  text-align: center;
-  color: #302828;
-  letter-spacing: 0.2rem;
-  font-weight: bold;
-  transition: 0.3s background-color;
-  padding-left: inherit;
-  width: 10rem;
-}
-
-.menu-title:before {
-  content: "";
-  display: block;
-  height: 0;
-  /* border-top: 5px solid rgb(243, 217, 45); */
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 101;
-  transition:
-    0.2s 0.2s border-top ease-out,
-    0.3s border-top-color;
-}
-
-.menu-title:hover { background: rgb(237, 234, 214); }
-.menu-title:hover:before { border-top-color: rgb(252, 250, 235); }
-
-.menu:hover > .menu-title:before {
-  border-top-width: 0;
-  transition:
-    0.2s border-top-width ease-in,
-    0.3s border-top-color;
-}
-
-.menu-title:after {
-  content: "";
-  display: block;
-  height: 0;
-  /* border-left: ($menu_WIDTH / 2) solid transparent;
-  border-right: ($menu_WIDTH / 2) solid transparent; */
-  border-bottom: 0 solid #ebebeb;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 101;
-  transition: 0.2s border-bottom ease-in;
-}
-
-/* .menu:hover > .menu-title:after {
-  border-bottom-width: 5px;
-  transition: 0.2s 0.2s border-bottom-width ease-out;
-} */
-
-.menu-dropdown {
-  min-width: 100%;
-  padding: 15px 0;
-  position: absolute;
-  background: #ebebeb;
-  z-index: 100;
-  transition:
-    0.5s padding,
-    0.5s background;
-}
-
-.menu-dropdown:after {
-  content: "";
-  display: block;
-  height: 0;
-  border-top: 5px solid #ebebeb;
-  /* border-left: ($menu_WIDTH / 2) solid transparent;
-  border-right: ($menu_WIDTH / 2) solid transparent; */
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 101;
-  transition: 0.5s border-top;
-}
-
-
-
-.menu-dropdown > * {
-  overflow: hidden;
-  height: 30px;
-  padding: 5px 10px;
-  background: rgba(5, 5, 5, 0);
-  white-space: nowrap;
-  transition: 
-    0.5s height cubic-bezier(.73,.32,.34,1.5),
-    0.5s padding cubic-bezier(.73,.32,.34,1.5),
-    0.5s margin cubic-bezier(.73,.32,.34,1.5),
-    0.5s 0.2s color,
-    0.2s background-color;
-}
-
-.menu-dropdown > *:hover {
-  background: rgba(0,0,0,0.1);
-}
-
-.menu:not(:hover) > .menu-dropdown > * {
-  visibility: hidden;
-  height: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+.vertical-nav {
+  position: fixed;
+  background: white;
+  box-shadow: 0 0 40px #00000021;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   margin: 0;
-  color: rgba(25,25,25,0);
-  transition: 
-    0.5s 0.1s height,
-    0.5s 0.1s padding,
-    0.5s 0.1s margin,
-    0.3s color,
-    0.6s visibility;
-  z-index: 99;
+  padding: 0;
+  margin-top: 17rem;
+  height: 50rem;
+  width: 70px;
 }
 
-.hList {
-  /* //overflow: hidden; */
-  float: right;
-    transform: translate(-150px, 110px);
+.vertical-nav li {
+	list-style: none;
+	display: block;
+	width: 100%;
+	border-bottom: solid 1px #f2f5ff;
+	text-align: center;
+	position: relative;
+	flex-grow: 1;
+	align-items: stretch;
+	display: flex;
+}
+.vertical-nav li:last-child {
+	border: none;
+}
+.vertical-nav li a {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-flow: column;
+	justify-content: center;
+	transition: all 0.2s ease;
+}
+.vertical-nav li:hover > a {
+	background: #fafafa;
+	transition: all 0.2s ease;
+}
+.vertical-nav li:hover > a .feather {
+	transform: scale(1.1);
+	transition: all 0.2s ease;
+}
+.vertical-nav li:hover > .hover-menu,
+.vertical-nav li:focus-within > .hover-menu {
+	visibility: visible;
+	opacity: 1;
+	-webkit-animation: slide-down 0.2s ease-out;
+	-moz-animation: slide-down 0.2s ease-out;
+	transition: all 0.5s ease;
+	display: block;
+}
+.vertical-nav li .hover-menu {
+	background: white;
+	visibility: hidden;
+	transition: all 0.5s ease;
+	opacity: 0;
+	display: none;
+	position: absolute;
+	left: 70px;
+	min-width: 200px;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	box-shadow: 0 0 40px #00000021;
+}
+.vertical-nav li .hover-menu:after {
+	right: 100%;
+	top: 20%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: #ffffff;
+	border-width: 10px;
+	margin-top: -10px;
+}
+.vertical-nav li .hover-menu ul {
+	margin: 0;
+	padding: 0;
+}
+.vertical-nav li .hover-menu ul li {
+	list-style: none;
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+.vertical-nav li .hover-menu ul li a {
+	width: 100%;
+	display: block !important;
+	text-decoration: none;
+	padding: 15px 20px;
+	text-align: left;
+	height: auto !important;
+	font-weight: 400;
+}
+.vertical-nav li .hover-menu ul li a:hover {
+	background: #fafafa;
+	transition: 0.3s ease;
 }
 
-/* .hList > * {
-  float: left;
+.menu-header {
+	font-family: "Roboto Condensed", sans-serif;
+	color: #929292;
+	font-size: 13px;
+	text-align: left !important;
+	padding: 12px 20px 5px 20px;
+	font-weight: 600;
+	border-bottom: none !important;
 }
 
-.hList > * + * {
-  margin-left: 0;
-} */
+.log-out a {
+	background: #1e85c9;
+	color: white;
+}
+.log-out a:hover {
+	color: #1e85c9;
+	background: white;
+}
 
+@-webkit-keyframes slide-down {
+	0% {
+		opacity: 0;
+		-webkit-transform: translateY(-5%);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: translateY(0);
+	}
+	0{
+		opacity:0;
+		-webkit-transform: translateY(0);
+	}
+}
+@-moz-keyframes slide-down {
+	0% {
+		opacity: 0;
+		-moz-transform: translateY(-5%);
+	}
+	100% {
+		opacity: 1;
+		-moz-transform: translateY(0);
+	}
+}
+
+.content {
+	padding: 40px;
+	color: #464646;
+	width:1170px;
+	margin:0 auto;
+}
+h1,
+h2 {
+	color:#343535;
+	font-weight: 400;
+}
+p,
+.content li {
+	color: #949494;
+	line-height: 29px;
+	font-size: 16px;
+	font-weight: 300;
+}
+.header-image {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.mt-0{
+	margin-top:0;
+}
+
+.mb-0{
+	margin-bottom:0;
+}
+
+/* Zui table (modified) - https://jsfiddle.net/zinoui/dB93J/ */
+.zui-table {
+	border: solid 1px #ddeeee;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	box-shadow: 0 0 40px #00000021;
+	margin: 50px 0;
+}
+.zui-table thead th {
+	background-color: #fff;
+	border: solid 1px #dee;
+	color: #343535;
+	border: solid 1px #f5f9f9;
+	padding: 20px;
+
+	text-align: left;
+}
+.zui-table tbody td {
+	border: solid 1px #edf1f1;
+	color: #949494;
+	font-size:16px;
+	padding: 20px;
+}
+footer{
+	padding:20px 0;
+	text-align:center;
+}
+footer p{
+	color:gray;
+	font-size:12px;
+}
 /**/
 .content {
   margin: 0;
@@ -168,7 +270,7 @@ a {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-55%, -16%);
+  transform: translate(-40%, -16%);
   width: 100rem;
   height: -webkit-fill-available;
   background-color: rgb(6,6,68)
@@ -290,7 +392,7 @@ a {
   }
   
   .lds-ellipsis {
-    transform: translate(40rem, 10rem);
+    transform: translate(43rem, 13rem);
     position: relative;
     width: 80px;
     height: 80px;
@@ -302,7 +404,7 @@ a {
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: #060644;
+    background: #b4b4b5;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   .lds-ellipsis div:nth-child(1) {

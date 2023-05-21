@@ -41,21 +41,30 @@ a {
 	color: #1e85c9;
 }
 .vertical-nav {
-  position: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
   background: white;
   box-shadow: 0 0 40px #00000021;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  margin: 0;
+  /* margin: 0; */
   padding: 0;
-  margin-top: 17rem;
-  height: 50rem;
-  width: 70px;
+  margin-top: 25rem;
+  width: 15rem;
+  height: 41.1rem;
+  transform: translate(300px, 94px);
 }
 
-.vertical-nav li {
+.container {
+  position: relative;
+}
+
+
+/* .vertical-nav li {
 	list-style: none;
 	display: block;
 	width: 100%;
@@ -79,8 +88,8 @@ a {
 }
 .vertical-nav li:hover > a {
 	background: #fafafa;
-	transition: all 0.2s ease;
-}
+	transition: all 0.2s ease; */
+/* }
 .vertical-nav li:hover > a .feather {
 	transform: scale(1.1);
 	transition: all 0.2s ease;
@@ -144,7 +153,7 @@ a {
 .vertical-nav li .hover-menu ul li a:hover {
 	background: #fafafa;
 	transition: 0.3s ease;
-}
+} */
 
 .menu-header {
 	font-family: "Roboto Condensed", sans-serif;
@@ -192,6 +201,7 @@ a {
 
 .content {
 	padding: 40px;
+  padding-left: 90px;
 	color: #464646;
 	width:1170px;
 	margin:0 auto;
@@ -270,25 +280,44 @@ footer p{
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-40%, -16%);
+  transform: translate(-50%, -16%);
   width: 100rem;
   height: -webkit-fill-available;
-  background-color: rgb(6,6,68)
+  background-color: rgb(6,6,68);
+}
 
-  }
+  /*                       
+            {
+              historyData.length !== 0 ? (historyData.map((history) => {
+                return (
+                  <li key={history.textComprehension.q}>{history.textComprehension.q}</li>
+
+                )
+              }))
+}*/
+
+.history-column-text {
+  display: grid;
+  /* justify-items: start; */
+  margin-bottom: 32rem;
+}
   
   .rc-text {
+
     font-size: 1.4rem;
     letter-spacing: 0.1rem;
     font-weight: 500;
     margin-top: 2rem;
-    margin-left: 1rem;
+    margin-left: 8rem;
     color: whitesmoke;
+    text-align: center;
+    width: fit-content;
+
   }
   
   .rc-form-box {
-    transform: translate(10rem, -13rem);
-    display: flex; 
+    transform: translate(6rem, -12rem);
+    display: flex;
     align-items: flex-start;
     width: 73rem;
   }
@@ -313,9 +342,9 @@ footer p{
   }
   .reading-level-radio {
     position: absolute;
-    transform: translate(-5rem, -19rem);
+    transform: translate(8rem, -19rem);
     /* opacity: 0.2; */
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease;
   }
   
   .reading-level-radio:hover {

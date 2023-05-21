@@ -1,15 +1,29 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import lc from "../storage_";
 import "./ReadingComprehension.css";
 
 import Form from "react-bootstrap/Form";
- import { BsBookHalf } from "react-icons/bs"; 
+import { BsBookHalf } from "react-icons/bs";
 
 export default function ReadingComprehension() {
   const [responseData, setResponseData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [historyData, setHistoryData] = useState(null);
+
+  useEffect(() => {
+    const fetchHistoryData = async () => {
+      const fileHash =
+        "0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef";
+      const fileDetails = await lc.getFileDetail(fileHash, [
+        "textToComprehenstion",
+      ]);
+      setHistoryData(fileDetails);
+    };
+
+    fetchHistoryData();
+  }, []);
 
   const handleReadingComprehensionSubmit = (evt) => {
     evt.preventDefault();
@@ -32,31 +46,10 @@ export default function ReadingComprehension() {
     <div>
       <div class="menu-container">
         <ul class="vertical-nav">
-          <span><BsBookHalf className="book-half"/></span>
-          <span>History</span>
-          <li>
-            {/* <a href="#">mjmjm</a> */}
-
-
-            <div class="hover-menu">
-              <ul>
-            
-                <li>
-                  <a href="#">Menu Item</a>
-                </li>
-                <li>
-                  <a href="#">Menu Item</a>
-                </li>
-                <li class="menu-header">OTHER</li>
-                <li>
-                  <a href="#">Menu Item</a>
-                </li>
-                <li>
-                  <a href="#">Menu Item</a>
-                </li>
-              </ul>
-            </div>
-          </li>
+          <span className="history-column-text">
+            <BsBookHalf className="book-half" />
+            History
+          </span>
         </ul>
       </div>
 

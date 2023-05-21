@@ -49,9 +49,10 @@ function getFileMeta(fileHash, callback){
   srv.read_file_metadata(fileHash, (meta) => {
     //plug the meta data by to localstorage
     try {
+      
       if(meta){
         let files_table = localStorage.getItem(fileTable);
-        files_table = JSON.parse[files_table];
+        files_table = JSON.parse(files_table);
         if(!files_table.includes(fileHash)){
           //if file_table not have this record
           files_table.push(fileHash);
@@ -67,6 +68,7 @@ function getFileMeta(fileHash, callback){
         throw "get file meta api return false";
       }
     } catch (error) {
+      console.log(error);
       callback(false);
     }
   })
@@ -155,12 +157,13 @@ function check_key_name(category, fileHash){
 function setHistory(category, fileHash, q, data){
   const keyName = check_key_name(category, fileHash);
   if(!keyName) return false;
+  const item = {...data, timestamp: new Date()};
   try {
     let history = JSON.parse(localStorage.getItem(keyName));
-    history[q] = {q, data, timestamp: new Date()}
+    history[q] = item;
     localStorage.setItem(keyName, JSON.stringify(history));
   } catch (error) {
-    localStorage.setItem(keyName, JSON.stringify({[q]: {q, data, timestamp: new Date()}}));
+    localStorage.setItem(keyName, JSON.stringify({[q]: item}));
   }
 }
 function getHistory(category, fileHash){
@@ -199,7 +202,7 @@ const textToImage = (fileHash, question, callback) => {
   } 
   //////////////////////////////
   srv.read_text_to_image(question, (data) => {
-    setHistory("image", fileHash, question, data.image_url);
+    setHistory("image", fileHash, question, {q: question, data :data.image_url});
     callback(data.image_url);
   })
 }
@@ -212,7 +215,7 @@ const textToExplanation = (fileHash, question, callback) => {
   } 
   //////////////////////////////
   srv.read_text_to_explaination(question, (data)=>{
-    setHistory("text", fileHash, question, data.data);
+    setHistory("text", fileHash, question, {q: question, data: data.data});
     callback(data.data);
   })
 }
@@ -225,7 +228,12 @@ const textToComprehension = (fileHash, question, level = '2', callback) => {
   } 
   //////////////////////////////
   srv.question_to_reading_comprehension(fileHash, question, level = '2', (data) => {
-    setHistory("comprehension", fileHash, `${question}-${level}`, data.choices[0].message.content);
+    setHistory(
+      "comprehension", 
+      fileHash, 
+      `${question}-${level}`, 
+      {data: data.choices[0].message.content, level:data.level || level, q: question}
+    );
     callback(data.choices[0].message.content);
   })
 }

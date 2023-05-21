@@ -1,22 +1,192 @@
+
+
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* * {
+  box-sizing: border-box;
+} */
+
+/* $menu_WIDTH: 150px; */
+
+.menu {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.menu-title {
+  display: block;
+  height: 40px;
+  padding: 9px 0 0;
+  text-decoration: underline;
+  /* background: rgb(243, 217, 45); */
+  text-align: center;
+  color: #302828;
+  letter-spacing: 0.2rem;
+  font-weight: bold;
+  transition: 0.3s background-color;
+  padding-left: inherit;
+  width: 10rem;
+}
+
+.menu-title:before {
+  content: "";
+  display: block;
+  height: 0;
+  /* border-top: 5px solid rgb(243, 217, 45); */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 101;
+  transition:
+    0.2s 0.2s border-top ease-out,
+    0.3s border-top-color;
+}
+
+.menu-title:hover { background: rgb(237, 234, 214); }
+.menu-title:hover:before { border-top-color: rgb(252, 250, 235); }
+
+.menu:hover > .menu-title:before {
+  border-top-width: 0;
+  transition:
+    0.2s border-top-width ease-in,
+    0.3s border-top-color;
+}
+
+.menu-title:after {
+  content: "";
+  display: block;
+  height: 0;
+  /* border-left: ($menu_WIDTH / 2) solid transparent;
+  border-right: ($menu_WIDTH / 2) solid transparent; */
+  border-bottom: 0 solid #ebebeb;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 101;
+  transition: 0.2s border-bottom ease-in;
+}
+
+/* .menu:hover > .menu-title:after {
+  border-bottom-width: 5px;
+  transition: 0.2s 0.2s border-bottom-width ease-out;
+} */
+
+.menu-dropdown {
+  min-width: 100%;
+  padding: 15px 0;
+  position: absolute;
+  background: #ebebeb;
+  z-index: 100;
+  transition:
+    0.5s padding,
+    0.5s background;
+}
+
+.menu-dropdown:after {
+  content: "";
+  display: block;
+  height: 0;
+  border-top: 5px solid #ebebeb;
+  /* border-left: ($menu_WIDTH / 2) solid transparent;
+  border-right: ($menu_WIDTH / 2) solid transparent; */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 101;
+  transition: 0.5s border-top;
+}
+
+
+
+.menu-dropdown > * {
+  overflow: hidden;
+  height: 30px;
+  padding: 5px 10px;
+  background: rgba(5, 5, 5, 0);
+  white-space: nowrap;
+  transition: 
+    0.5s height cubic-bezier(.73,.32,.34,1.5),
+    0.5s padding cubic-bezier(.73,.32,.34,1.5),
+    0.5s margin cubic-bezier(.73,.32,.34,1.5),
+    0.5s 0.2s color,
+    0.2s background-color;
+}
+
+.menu-dropdown > *:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+.menu:not(:hover) > .menu-dropdown > * {
+  visibility: hidden;
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  color: rgba(25,25,25,0);
+  transition: 
+    0.5s 0.1s height,
+    0.5s 0.1s padding,
+    0.5s 0.1s margin,
+    0.3s color,
+    0.6s visibility;
+  z-index: 99;
+}
+
+.hList {
+  /* //overflow: hidden; */
+  float: right;
+    transform: translate(-150px, 110px);
+}
+
+/* .hList > * {
+  float: left;
+}
+
+.hList > * + * {
+  margin-left: 0;
+} */
+
+/**/
+.content {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90rem;
+  animation: fadeIn 5s;
+}
+
 .rc-content {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90rem;
-    animation: fadeIn 5s;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-55%, -16%);
+  width: 100rem;
+  height: -webkit-fill-available;
+  background-color: rgb(6,6,68)
+
   }
   
   .rc-text {
-    font-size: medium;
+    font-size: 1.4rem;
     letter-spacing: 0.1rem;
     font-weight: 500;
+    margin-top: 2rem;
+    margin-left: 1rem;
+    color: whitesmoke;
   }
   
   .rc-form-box {
-    transform: translate(10%, 630%);
-    display: flex;
+    transform: translate(10rem, -13rem);
+    display: flex; 
     align-items: flex-start;
     width: 73rem;
   }
@@ -30,19 +200,32 @@
     padding: 0.5em 1em;
     background-color: rgb(6, 6, 68);
     color: whitesmoke;
+    text-decoration: underline;
+    line-height: normal;
+    text-underline-position: under;
   }
   
+  .rc-submit-button:hover {
+    color: whitesmoke;
+ 
+  }
   .reading-level-radio {
     position: absolute;
-    transform: translate(27rem, 30rem);
-    opacity: 0.2;
+    transform: translate(-5rem, -19rem);
+    /* opacity: 0.2; */
     transition: opacity 0.3s ease;
   }
   
   .reading-level-radio:hover {
     opacity: 1;
+    color: rgb(32, 32, 121);
   }
   
+  .reading-level-text {
+
+    font-weight: 500;
+  }
+
   .group {
     display: flex;
     align-items: center;

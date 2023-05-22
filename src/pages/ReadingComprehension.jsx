@@ -9,8 +9,8 @@ import { BsBookHalf } from "react-icons/bs";
 
 export default function ReadingComprehension() {
   const [responseData, setResponseData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [historyData, setHistoryData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [historyData, setHistoryData] = useState([]);
 
   useEffect(() => {
     const fetchHistoryData = async () => {
@@ -19,12 +19,16 @@ export default function ReadingComprehension() {
       const fileDetails = await lc.getFileDetail(fileHash, [
         "textToComprehenstion",
       ]);
-      setHistoryData(fileDetails);
+      setHistoryData(fileDetails.textToComprehenstion);
     };
 
     fetchHistoryData();
   }, []);
 
+  useEffect(() => {
+    console.log("historyData:", historyData);
+  }, [historyData]);
+ 
   const handleReadingComprehensionSubmit = (evt) => {
     evt.preventDefault();
     const fileHash =
@@ -42,16 +46,11 @@ export default function ReadingComprehension() {
     );
   };
 
+  console.log(historyData.length)
+
   return (
     <div>
-      <div class="menu-container">
-        <ul class="vertical-nav">
-          <span className="history-column-text">
-            <BsBookHalf className="book-half" />
-            History
-          </span>
-        </ul>
-      </div>
+ 
 
       <div className="container content">
         <div className="reading-level-radio">
@@ -98,7 +97,30 @@ export default function ReadingComprehension() {
             responseData && <div className="rc-text">{responseData}</div>
           )}
         </div>
+        <div class="menu-container">
+        <ul class="vertical-nav">
+    <li>
+      <span className="history-column-text">
+        <BsBookHalf className="book-half" />
+        History
+      </span>
+      <ul>
+        {historyData && Array.isArray(historyData) && historyData.length !== 0 ? (
+          historyData.map((history) => (
+            <li key={history.q}>
+              <p>{history.q}</p>
+              {/* Render other content from history object */}
+            </li>
+          ))
+        ) : (
+          <li>No history data available.</li>
+        )}
+      </ul>
+    </li>
+  </ul>
       </div>
+      </div>
+     
     </div>
   );
 }

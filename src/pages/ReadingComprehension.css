@@ -1,8 +1,45 @@
+/* 
+body {
+	background: linear-gradient(-45deg, #060644, #060644, #23a6d5, #ffffff);
+	background-size: 400% 400%;
+	animation: gradient 30s ease infinite;
+	height: 100vh;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+} */
+
+
+
+
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Roboto+Condensed");
 *,
 ::after,
 ::before {
 	box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90%; /* Adjust the width as per your design */
+  }
+
+  .reading-level-radio {
+    transform: translate(0, -19rem); /* Adjust the translation as per your design */
+  }
+
+  .rc-form-box{
+    width: 10rem;
+  }
 }
 /* html,
 body {
@@ -41,119 +78,39 @@ a {
 	color: #1e85c9;
 }
 .vertical-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: fixed; /* Change position to fixed */
+  top: 69px; /* Adjust the top position as per your design */
+  left: 90px; /* Adjust the left position as per your design */
   z-index: 1;
   background: white;
   box-shadow: 0 0 40px #00000021;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   justify-content: space-around;
   align-items: center;
-  /* margin: 0; */
   padding: 0;
-  margin-top: 25rem;
-  width: 15rem;
-  height: 41.1rem;
-  transform: translate(300px, 94px);
+  width: 30rem;
+
+  transform: translate(-30rem, -7rem);
+  height: 38.3rem;
 }
+
+.vertical-nav ul {
+  /* ...existing styles... */
+  overflow-y: auto; /* Add overflow-y property to enable scrolling */
+}
+
+.vertical-nav li {
+  /* ...existing styles... */
+  display: flex;
+  align-items: center;
+}
+
 
 .container {
   position: relative;
 }
 
-
-/* .vertical-nav li {
-	list-style: none;
-	display: block;
-	width: 100%;
-	border-bottom: solid 1px #f2f5ff;
-	text-align: center;
-	position: relative;
-	flex-grow: 1;
-	align-items: stretch;
-	display: flex;
-}
-.vertical-nav li:last-child {
-	border: none;
-}
-.vertical-nav li a {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	flex-flow: column;
-	justify-content: center;
-	transition: all 0.2s ease;
-}
-.vertical-nav li:hover > a {
-	background: #fafafa;
-	transition: all 0.2s ease; */
-/* }
-.vertical-nav li:hover > a .feather {
-	transform: scale(1.1);
-	transition: all 0.2s ease;
-}
-.vertical-nav li:hover > .hover-menu,
-.vertical-nav li:focus-within > .hover-menu {
-	visibility: visible;
-	opacity: 1;
-	-webkit-animation: slide-down 0.2s ease-out;
-	-moz-animation: slide-down 0.2s ease-out;
-	transition: all 0.5s ease;
-	display: block;
-}
-.vertical-nav li .hover-menu {
-	background: white;
-	visibility: hidden;
-	transition: all 0.5s ease;
-	opacity: 0;
-	display: none;
-	position: absolute;
-	left: 70px;
-	min-width: 200px;
-	margin: 0;
-	padding: 0;
-	top: 0;
-	box-shadow: 0 0 40px #00000021;
-}
-.vertical-nav li .hover-menu:after {
-	right: 100%;
-	top: 20%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(255, 255, 255, 0);
-	border-right-color: #ffffff;
-	border-width: 10px;
-	margin-top: -10px;
-}
-.vertical-nav li .hover-menu ul {
-	margin: 0;
-	padding: 0;
-}
-.vertical-nav li .hover-menu ul li {
-	list-style: none;
-	display: block;
-	width: 100%;
-	text-align: center;
-}
-.vertical-nav li .hover-menu ul li a {
-	width: 100%;
-	display: block !important;
-	text-decoration: none;
-	padding: 15px 20px;
-	text-align: left;
-	height: auto !important;
-	font-weight: 400;
-}
-.vertical-nav li .hover-menu ul li a:hover {
-	background: #fafafa;
-	transition: 0.3s ease;
-} */
 
 .menu-header {
 	font-family: "Roboto Condensed", sans-serif;

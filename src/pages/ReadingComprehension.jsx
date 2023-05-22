@@ -6,6 +6,10 @@ import "./ReadingComprehension.css";
 
 import Form from "react-bootstrap/Form";
 import { BsBookHalf } from "react-icons/bs";
+import { FcReading } from "react-icons/fc";
+import {FcFolder} from "react-icons/fc"
+import {FcBookmark} from "react-icons/fc"
+
 
 export default function ReadingComprehension() {
   const [responseData, setResponseData] = useState(null);
@@ -28,7 +32,7 @@ export default function ReadingComprehension() {
   useEffect(() => {
     console.log("historyData:", historyData);
   }, [historyData]);
- 
+
   const handleReadingComprehensionSubmit = (evt) => {
     evt.preventDefault();
     const fileHash =
@@ -46,12 +50,10 @@ export default function ReadingComprehension() {
     );
   };
 
-  console.log(historyData.length)
+  console.log(historyData.length);
 
   return (
     <div>
- 
-
       <div className="container content">
         <div className="reading-level-radio">
           <span className="reading-level-text">Select reading level</span>
@@ -97,30 +99,34 @@ export default function ReadingComprehension() {
             responseData && <div className="rc-text">{responseData}</div>
           )}
         </div>
-        <div class="menu-container">
-        <ul class="vertical-nav">
-    <li>
-      <span className="history-column-text">
-        <BsBookHalf className="book-half" />
-        History
-      </span>
-      <ul>
-        {historyData && Array.isArray(historyData) && historyData.length !== 0 ? (
-          historyData.map((history) => (
-            <li key={history.q}>
-              <p>{history.q}</p>
-              {/* Render other content from history object */}
+        <div className="menu-container">
+          <ul className="vertical-nav">
+            
+          <span className="history-column-text">
+                <FcReading className="book-half" />
+               <FcBookmark className="book-half"/>
+               <FcFolder className="book-half" />
+          
+                History
+              </span>
+            <li>
+              <ul>
+                {historyData &&
+                Array.isArray(historyData) &&
+                historyData.length !== 0 ? (
+                  historyData.map((history) => (
+                    <li key={history.q}>
+                      <p>{history.q}</p>
+                    </li>
+                  ))
+                ) : (
+                  <li>No history data available.</li>
+                )}
+              </ul>
             </li>
-          ))
-        ) : (
-          <li>No history data available.</li>
-        )}
-      </ul>
-    </li>
-  </ul>
+          </ul>
+        </div>
       </div>
-      </div>
-     
     </div>
   );
 }

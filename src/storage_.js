@@ -10,7 +10,63 @@ function check_string(){
   }
   return true;
 }
-//////////////////////////////////////////////////
+////all history///////////////////////
+function check_key_name(category, fileHash){
+  let keyName = ""
+  switch(category){
+    case "image":
+      keyName = `${file_list_prefix}-${fileHash}-image-history`;
+    break;
+    case "text":
+      keyName = `${file_list_prefix}-${fileHash}-text-history`;
+    break;
+    case "comprehension":
+      keyName = `${file_list_prefix}-${fileHash}-comprehension-history`;
+    break;
+    default:
+      return false;
+  }
+  return keyName;
+}
+function setHistory(category, fileHash, subKeyName, data){
+  const keyName = check_key_name(category, fileHash);
+  if(!keyName) return false;
+  const item = {...data, timestamp: new Date()};
+  try {
+    let history = JSON.parse(localStorage.getItem(keyName));
+    history[subKeyName] = item;
+    localStorage.setItem(keyName, JSON.stringify(history));
+  } catch (error) {
+    localStorage.setItem(keyName, JSON.stringify({[subKeyName]: item}));
+  }
+}
+function getHistory(category, fileHash){
+  if(typeof fileHash !== 'string') return false;
+  const keyName = check_key_name(category, fileHash);
+  try {
+    const history = JSON.parse(localStorage.getItem(keyName))
+    return !history ? {} : history;
+  } catch (error) {
+    error_handle(error);
+    return {};
+  }
+}
+function deleteHistory(category, fileHash){
+  const keyName = check_key_name(category, fileHash);
+  localStorage.removeItem(keyName);
+}
+function pull_history(fileHash, category, question){
+  const history = getFileDetail(fileHash, [category]);
+  try{
+    if(history[category][question]){
+      return history[category][question].data;
+    }
+    return false;
+  }catch(error){
+    return false;
+  }
+}
+///file related///////////////////////////////////////////////
 function downloadFile(fileHash, callback){
   srv.download_file(fileHash, (result) => {
     callback(result);
@@ -28,7 +84,7 @@ function uploadFile(files, callback){
           }
           localStorage.setItem(fileTable, JSON.stringify(files_table));
         } catch (error) {
-          console.log(error);
+          error_handle(error);
           localStorage.setItem(fileTable, JSON.stringify([data.fileHash]));
         }
         localStorage.setItem(`${file_list_prefix}-${data.fileHash}`, fileObjToString(files.files[0]));
@@ -41,7 +97,7 @@ function uploadFile(files, callback){
   })
   function fileObjToString(fileObj){
     const ret = {};
-    for(let x in fileObj){ ret[x] = fileObj[x] }
+    for(let x in fileObj) ret[x] = fileObj[x];
     return JSON.stringify(ret);
   }
 }
@@ -51,7 +107,7 @@ function getFileMeta(fileHash, callback){
     try {
       if(meta){
         let files_table = localStorage.getItem(fileTable);
-        files_table = JSON.parse[files_table];
+        files_table = JSON.parse(files_table);
         if(!files_table.includes(fileHash)){
           //if file_table not have this record
           files_table.push(fileHash);
@@ -67,6 +123,7 @@ function getFileMeta(fileHash, callback){
         throw "get file meta api return false";
       }
     } catch (error) {
+      error_handle(error);
       callback(false);
     }
   })
@@ -125,71 +182,8 @@ function deleteFile(fileHash){
   deleteHistory('comprehension', fileHash);
 }
 
-// function checkFile(fileHash){
-//   try {
-//     const files = getAllFiles();
-//     return files.includes(fileHash);
-//   } catch (error) {
-//     error_handle(error);
-//     return false;
-//   }
-// }
-////all history///////////////////////
-function check_key_name(category, fileHash){
-  let keyName = ""
-  switch(category){
-    case "image":
-      keyName = `${file_list_prefix}-${fileHash}-image-history`;
-    break;
-    case "text":
-      keyName = `${file_list_prefix}-${fileHash}-text-history`;
-    break;
-    case "comprehension":
-      keyName = `${file_list_prefix}-${fileHash}-comprehension-history`;
-    break;
-    default:
-      return false;
-  }
-  return keyName;
-}
-function setHistory(category, fileHash, q, data){
-  const keyName = check_key_name(category, fileHash);
-  if(!keyName) return false;
-  try {
-    let history = JSON.parse(localStorage.getItem(keyName));
-    history[q] = {q, data, timestamp: new Date()}
-    localStorage.setItem(keyName, JSON.stringify(history));
-  } catch (error) {
-    localStorage.setItem(keyName, JSON.stringify({[q]: {q, data, timestamp: new Date()}}));
-  }
-}
-function getHistory(category, fileHash){
-  if(typeof fileHash !== 'string') return false;
-  const keyName = check_key_name(category, fileHash);
-  try {
-    const history = JSON.parse(localStorage.getItem(keyName))
-    return !history ? {} : history;
-  } catch (error) {
-    error_handle(error);
-    return {};
-  }
-}
-function deleteHistory(category, fileHash){
-  const keyName = check_key_name(category, fileHash);
-  localStorage.removeItem(keyName);
-}
+
 ///wrapped backend api//////////////
-function pull_history(fileHash, category, question){
-  const history = getFileDetail(fileHash, [category]);
-  try{
-    if(history[category][question]){
-      return history[category][question].data;
-    }
-    return false;
-  }catch(error){
-    return false;
-  }
-}
 const textToImage = (fileHash, question, callback) => {
   if (check_string(fileHash, question) === false ) return false;
   const history = pull_history(fileHash, 'image', question);
@@ -199,7 +193,7 @@ const textToImage = (fileHash, question, callback) => {
   } 
   //////////////////////////////
   srv.read_text_to_image(question, (data) => {
-    setHistory("image", fileHash, question, data.image_url);
+    setHistory("image", fileHash, question, {q: question, data :data.image_url});
     callback(data.image_url);
   })
 }
@@ -212,23 +206,30 @@ const textToExplanation = (fileHash, question, callback) => {
   } 
   //////////////////////////////
   srv.read_text_to_explaination(question, (data)=>{
-    setHistory("text", fileHash, question, data.data);
+    setHistory("text", fileHash, question, {q: question, data: data.data});
     callback(data.data);
   })
 }
 const textToComprehension = (fileHash, question, level = '2', callback) => {
   if (check_string(fileHash, question) === false ) return false;
-  const history = pull_history(fileHash, 'comprehension', `${question}-${level}`);
+  const subKeyName = `${question}-${level}`;
+  const history = pull_history(fileHash, 'comprehension', subKeyName);
   if(history !== false){
     callback(history);
     return;
   } 
   //////////////////////////////
   srv.question_to_reading_comprehension(fileHash, question, level = '2', (data) => {
-    setHistory("comprehension", fileHash, `${question}-${level}`, data.choices[0].message.content);
+    setHistory(
+      "comprehension", 
+      fileHash, 
+      subKeyName, 
+      {data: data.choices[0].message.content, level:data.level || level, q: question}
+    );
     callback(data.choices[0].message.content);
   })
 }
+/////////////////////////////////////////////////
 const wrapper = {
   getAllFiles, getFileDetail, deleteFile,
   uploadFile, downloadFile, getFileMeta,
@@ -237,77 +238,3 @@ const wrapper = {
   textToImage
 }
 export default wrapper;
-
-//////////////////////////////////////
-// const existingBooks = JSON.parse(localStorage.getItem("books")) || [];
-
-// //format book data
-// const declareBooks = (metadata, data) => {
-//   localStorage.setItem(
-//     "books",
-//     JSON.stringify([
-//       { bookID: metadata.file_hash, book_data: metadata, results: data.result },
-//     ])
-//   );
-//   localStorage.getItem("books");
-// }
-
-// //upload book 
-// const upload = (metadata, data) => {
-//   existingBooks.push({
-//     bookID: metadata.file_hash,
-//     book_data: metadata,
-//     results: data.result,
-//   });
-//   localStorage.setItem("books", JSON.stringify(existingBooks));
-// }
-
-// //by id
-// const getBookById = (id, metadata) => {
-//   const existingBook = JSON.parse(localStorage.getItem("books")) || []; 
-
-//   if (!existingBook) {
-//     return null;
-//   }
-//   const book = existingBook.find((b) => b.bookID === metadata.file_hash);
-//   if (!book) {
-//     return null;
-//   }
-//   console.log(book.bookID, book);
-//   return book;
-// };
-//    //set text to image
-// const text_to_image = (bookID, question, data) => {
-//   const book = getBookById(bookID);
-//   if (!book) {
-//     console.log(`Book with ID '${bookID}' not found in localStorage`);
-//     return;
-//   }
-//   const books = JSON.parse(localStorage.getItem("books")) || [];
-//   const updatedBooks = books.map((b) => {
-//     if (b.bookID === bookID) {
-//       return {...b, textImageHistory:[{questions: question, image_history: data.image_history, text_history: data.text_history}]}
-//     } else {
-//       return b;
-//     }
-//   });
-//   localStorage.setItem("books", JSON.stringify(updatedBooks));
-// }
-
-
-// const text_comprehension = (bookID, question, data) => {
-//   const book = getBookById(bookID);
-//   if (!book) {
-//     console.log(`Book with ID '${bookID}' not found in localStorage`);
-//     return;
-//   }
-//   const books = JSON.parse(localStorage.getItem("books")) || [];
-//   const updatedBooks = books.map((b) => {
-//     if(b.bookID === data.file_hash) {
-//       return {...b, textResponse:[{asked: question, textResponse: response}]}
-//     }else {
-//       return b
-//     }
-//   });
-//   localStorage.setItem("books", JSON.stringify(updatedBooks))
-// }

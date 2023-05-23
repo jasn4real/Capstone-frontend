@@ -64,10 +64,16 @@ body {
 	font-weight: 400;
 	padding: 0;
 } */
-
+.info-icon {
+  margin-left: 4px;
+  font-size: medium;
+  margin-bottom: 7px;
+  
+}
 .book-half {
   margin-top: 2rem;
   font-size: xx-large;
+  margin-right: 21rem;
 }
 
 
@@ -78,34 +84,66 @@ a {
 	color: #1e85c9;
 }
 .vertical-nav {
-  position: fixed; /* Change position to fixed */
-  top: 69px; /* Adjust the top position as per your design */
-  left: 90px; /* Adjust the left position as per your design */
+  position: fixed;
+  top: 69px;
+  left: 90px;
   z-index: 1;
+  overflow: scroll;
+  scrollbar-darkshadow-color: #1e85c9;
+  scrollbar-color: red yellow;
   background: white;
   box-shadow: 0 0 40px #00000021;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
   justify-content: space-around;
   align-items: center;
   padding: 0;
   width: 30rem;
-text-align: center;
-  transform: translate(-30rem, -7rem);
-  height: 38.3rem;
+  text-align: center;
+  transform: translate(1rem, 27.4rem);
+  height: 41.2rem;
 }
 
+::-webkit-scrollbar {
+  width: 0.8rem;
+
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+
+
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2096f3;
+  border-radius: 6rem;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #2096f3;
+}
+
+
 .vertical-nav ul {
-  /* ...existing styles... */
+
   overflow-y: auto; /* Add overflow-y property to enable scrolling */
 }
 
 .vertical-nav li {
-  /* ...existing styles... */
+
   display: flex;
+  /* transform: translate(-2rem, 1rem); */
   align-items: center;
+  /* margin-bottom: auto; */
+  margin-right: 3rem;
 }
 
+.inner-ul-text {
+  text-align: initial;
+  line-height: 2.4rem;
+  font-size: medium;
+  margin-top: 3rem;
+}
 
 .container {
   position: relative;
@@ -236,12 +274,24 @@ footer p{
   margin: 0;
   position: absolute;
   top: 50%;
+  overflow: scroll;
+
   left: 50%;
-  transform: translate(-50%, -16%);
+  overflow: scroll;
+
+  transform: translate(-40%, -16%)  ;
+
   width: 100rem;
   height: -webkit-fill-available;
   background-color: rgb(6,6,68);
 }
+
+.vertical-order {
+  flex-direction: column;
+}
+
+
+
 
   /*                       
             {
@@ -252,23 +302,35 @@ footer p{
                 )
               }))
 }*/
-
+/* 
 .history-column-text {
-  display: grid;
+  /* display: grid; */
   /* justify-items: start; */
-  margin-bottom: 32rem;
+  /* margin-bottom: 32rem;
+  border-bottom: dotted; */
+.history-column-text {
+  display: flex;
+  margin-left: 2rem;
+  flex-direction: column-reverse;
+  /* margin-right: 13rem; */
+  transform: translate(-6rem, -3rem);
+  font-size: 2rem;
 }
   
-  .rc-text {
 
-    font-size: 1.4rem;
+
+  .rc-text {
+color: #dee;
+font-size: 1.4rem;
+    /* font-size: 1.4rem;
     letter-spacing: 0.1rem;
     font-weight: 500;
-    margin-top: 2rem;
-    margin-left: 8rem;
+    margin-top: 5rem;
+    margin-left: 5rem;
     color: whitesmoke;
-    text-align: center;
-    width: fit-content;
+    text-align: initial;
+    /* width: -moz-fit-content; */
+    /* width: fit-content; */ 
 
   }
   
@@ -287,10 +349,13 @@ footer p{
   .rc-submit-button {
     padding: 0.5em 1em;
     background-color: rgb(6, 6, 68);
-    color: whitesmoke;
+    color: rgb(255, 255, 255);
     text-decoration: underline;
     line-height: normal;
     text-underline-position: under;
+    border-radius: 2rem;
+    letter-spacing: 1px;
+
   }
   
   .rc-submit-button:hover {
@@ -310,7 +375,7 @@ footer p{
   }
   
   .reading-level-text {
-
+    font-size: large;
     font-weight: 500;
   }
 
@@ -390,7 +455,7 @@ footer p{
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: #b4b4b5;
+    background: #ffffff;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   .lds-ellipsis div:nth-child(1) {

@@ -5,12 +5,13 @@ import lc from "../storage_";
 import "./ReadingComprehension.css";
 
 import Form from "react-bootstrap/Form";
-import { BsBookHalf } from "react-icons/bs";
+
 import { FcReading } from "react-icons/fc";
-import {FcFolder} from "react-icons/fc"
-import {FcBookmark} from "react-icons/fc"
-
-
+import { FcFolder } from "react-icons/fc";
+import { FcBookmark } from "react-icons/fc";
+import { FcInfo } from "react-icons/fc";
+import { FcAbout } from "react-icons/fc";
+import { FcDocument } from "react-icons/fc";
 export default function ReadingComprehension() {
   const [responseData, setResponseData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,8 +45,18 @@ export default function ReadingComprehension() {
       "2",
       (data) => {
         console.log(data);
-        setResponseData(data);
+        let modifiedData = data + 'pychsatm';
+        const hasNumberedText = /\d+\./.test(data);
+        console.log('Has numbered text:', hasNumberedText);
+  
+        if (hasNumberedText) {
+          modifiedData = data.replace(/\d+\./g, '\n$&');
+          console.log(modifiedData, 'modifiedD')
+        }
+  
+        setResponseData(modifiedData);
         setIsLoading(false);
+        
       }
     );
   };
@@ -57,7 +68,7 @@ export default function ReadingComprehension() {
       <div className="container content">
         <div className="reading-level-radio">
           <span className="reading-level-text">Select reading level</span>
-
+          <FcInfo className="info-icon" />
           <div class="group">
             <input type="radio" name="rb" id="rb1" />
             <label for="rb1">Easy</label>
@@ -84,8 +95,37 @@ export default function ReadingComprehension() {
         </Form>
         {/*  */}
       </div>
+      <div className="menu-container">
+          <ul className="vertical-nav">
+          
+              <FcReading className="book-half" />
+              <span className="history-column-text">
+              {/* <FcBookmark className="book-half" /> */}
+              {/* <FcFolder className="book-half" />
+              <FcDocument className="book-half" /> */}
+              History
+            </span>
+            <li>
+              <ul className="inner-ul-text">
+                {historyData &&
+                Array.isArray(historyData) &&
+                historyData.length !== 0 ? (
+                  historyData.map((history) => (
+                    <li key={history.q}>
+                      <p>{history.q}</p>
+                    </li>
+                  ))
+                ) : (
+                  <li>lable.No history data available.No history data available.No history data available.No history data available.No history data available. available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl</li>
+                  
+                  
+                )}
+              </ul>
+            </li>
+          </ul>
+        </div>
 
-      <div className="container rc-content">
+      <div className="container rc-content" >
         <div className="container rc-text">
           {" "}
           {isLoading ? (
@@ -96,35 +136,17 @@ export default function ReadingComprehension() {
               <div></div>
             </div>
           ) : (
-            responseData && <div className="rc-text">{responseData}</div>
+            responseData && <div className="rc-text">                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+            </div>
           )}
-        </div>
-        <div className="menu-container">
-          <ul className="vertical-nav">
-            
-          <span className="history-column-text">
-                <FcReading className="book-half" />
-               <FcBookmark className="book-half"/>
-               <FcFolder className="book-half" />
-          
-                History
-              </span>
-            <li>
-              <ul>
-                {historyData &&
-                Array.isArray(historyData) &&
-                historyData.length !== 0 ? (
-                  historyData.map((history) => (
-                    <li key={history.q}>
-                      <p>{history.q}</p>
-                    </li>
-                  ))
-                ) : (
-                  <li>No history data available.</li>
-                )}
-              </ul>
-            </li>
-          </ul>
         </div>
       </div>
     </div>

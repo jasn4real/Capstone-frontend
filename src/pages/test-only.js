@@ -1,19 +1,20 @@
 import React from "react";
-import lc from '../storage_';
+import lc from "../storage_";
 
-export default function TestOnly(){
-  function onFileUpload(evt){
+export default function TestOnly() {
+  function onFileUpload(evt) {
     evt.preventDefault();
-    lc.uploadFile(evt.target.files, (data)=>{
+    lc.uploadFile(evt.target.files, (data) => {
       console.log(data);
       //example of data :{"result":"success","fileHash":"0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef","message":"Successfully uploaded"}
       console.log(lc.getAllFiles());
-    })
+    });
   }
   //below are examples of all api call/////////////////
-  function onReadingComprehensionSubmit(evt){
+  function onReadingComprehensionSubmit(evt) {
     evt.preventDefault();
-    const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
+    const fileHash =
+      "0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef";
     //level are presented as "1","2","3","4","5" by default level = "2"
     lc.textToComprehension(fileHash, evt.target.readingcomprehenstion.value, '2', (data)=>{
       console.log(data);
@@ -39,9 +40,10 @@ export default function TestOnly(){
         }
     }
     */
+
   }
   ////////////////////////////////////////////
-  function onTextToExplanation (evt){
+  function onTextToExplanation(evt) {
     evt.preventDefault();
     const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
     lc.textToExplanation(fileHash, evt.target.texttoexplanation.value, (data)=>{
@@ -66,10 +68,11 @@ export default function TestOnly(){
     */
   }
   ////////////////////////////////////////////
-  function OnTextToImage(evt){
+  function OnTextToImage(evt) {
     evt.preventDefault();
-    const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    lc.textToImage(fileHash, evt.target.texttoimage.value, (data)=>{
+    const fileHash =
+      "0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef";
+    lc.textToImage(fileHash, evt.target.texttoimage.value, (data) => {
       console.log(data);
       //example of data: https://oaidalleapiprodscus.blob.core.windows.net/private/org-W3qTiYheuLe3KAAPdSI9HPnU/user-3AejdC7ysjGYoB9y8AWhpnCD/img-aUeIYTkaCZSdbhxo052u14EH.png?st=2023-05-21T17%3A59%3A52Z&se=2023-05-21T19%3A59%3A52Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-05-21T00%3A58%3A02Z&ske=2023-05-22T00%3A58%3A02Z&sks=b&skv=2021-08-06&sig=1LhBHOnMMb/3UkdtQKJR50fetR/5VZaKDo9tF74a1g0%3D
     })
@@ -92,11 +95,12 @@ export default function TestOnly(){
   }
 
   ////////////////////////////////////////////
-  function downloadFileClick(evt){
+  function downloadFileClick(evt) {
     evt.preventDefault();
-    const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
-    lc.downloadFile(fileHash, (result)=>{
-      if(result){
+    const fileHash =
+      "0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef";
+    lc.downloadFile(fileHash, (result) => {
+      if (result) {
         console.log(result);
         //example of result: 
         /**
@@ -112,12 +116,13 @@ export default function TestOnly(){
         Blob
          */
       }
-    })
+    });
   }
   ////////////////////////////////////////////
-  function getFileMetaClick(evt){
+  function getFileMetaClick(evt) {
     evt.preventDefault();
-    const fileHash = '0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef';
+    const fileHash =
+      "0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef";
     lc.getFileMeta(fileHash, (meta) => {
       console.log(meta);
       //example of meta: {"name":"oldmansea.pdf","type":"application/pdf","size":380238}
@@ -169,9 +174,11 @@ export default function TestOnly(){
 }
      */
   }
-  function getAllfiles(evt){
+  function getAllfiles(evt) {
     let allFiles = lc.getAllFiles();
-    allFiles = allFiles.map(el => lc.getFileDetail(el, ['metaData','textToImage']));
+    allFiles = allFiles.map((el) =>
+      lc.getFileDetail(el, ["metaData", "textToImage"])
+    );
     console.log(allFiles);
     /*/example of allFiles: [
       "0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef",
@@ -185,63 +192,83 @@ export default function TestOnly(){
     //
   }
   ////////////////////////////////////////////
-  return <div>
-    <h1>test fetch</h1>
+  return (
     <div>
-      <h3>upload file</h3>
-      <form onSubmit={onFileUpload}>
-        <input name="files" type="file"/>
-        <button>upload file</button>
-      </form>
-    </div>
-    <div>
-      <h3> specify Hash </h3>
-      <p>0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef</p>
-    </div>
-    <div>
-      <h3> Reading comprehension </h3>
+      <h1>test fetch</h1>
       <div>
-        <form onSubmit={onReadingComprehensionSubmit}>
-          <input type="text" name="readingcomprehenstion" value={'what is this story about?'} readOnly/>
+        <h3>upload file</h3>
+        <form onSubmit={onFileUpload}>
+          <input name="files" type="file" />
+          <button>upload file</button>
+        </form>
+      </div>
+      <div>
+        <h3> specify Hash </h3>
+        <p>0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef</p>
+      </div>
+      <div>
+        <h3> Reading comprehension </h3>
+        <div>
+          <form onSubmit={onReadingComprehensionSubmit}>
+            <input
+              type="text"
+              name="readingcomprehenstion"
+              value={"what is this story about?"}
+              readOnly
+            />
+            <button>submit</button>
+          </form>
+          <button onClick={printComprehenstionHistory}>
+            print comprehension history to console
+          </button>
+        </div>
+      </div>
+      <div>
+        <h3> Text to Explanation </h3>
+        <div>
+          <form onSubmit={onTextToExplanation}>
+            <input
+              type="text"
+              name="texttoexplanation"
+              value={"cute bunny"}
+              readOnly
+            />
+            <button>submit</button>
+          </form>
+          <button onClick={printTextToExplanation}>
+            print text to explanation history to console
+          </button>
+        </div>
+      </div>
+      <div>
+        <h3> Text to Image </h3>
+        <form onSubmit={OnTextToImage}>
+          <input type="text" name="texttoimage" value={"cute bunny"} readOnly />
           <button>submit</button>
         </form>
-        <button onClick={printComprehenstionHistory}>print comprehension history to console</button>
+        <button onClick={printTextToImage}>
+          print text to image history to console
+        </button>
       </div>
-    </div>
-    <div>
-      <h3> Text to Explanation </h3>
       <div>
-        <form onSubmit={onTextToExplanation}>
-          <input type="text" name="texttoexplanation" value={'cute bunny'} readOnly/>
-          <button>submit</button>
+        <h3> Download file by hash</h3>
+        <form onSubmit={downloadFileClick}>
+          <button>download</button>
         </form>
-        <button onClick={printTextToExplanation}>print text to explanation history to console</button>
+      </div>
+      <div>
+        <h3> read file meta by hash</h3>
+        <form onSubmit={getFileMetaClick}>
+          <button>get meta data</button>
+        </form>
+      </div>
+
+      <div>
+        <button onClick={getFileDetailClick}>
+          get all detail from file Hash
+        </button>
+        <button onClick={getAllfiles}>get all files</button>
       </div>
     </div>
-    <div>
-      <h3> Text to Image </h3>
-      <form onSubmit={OnTextToImage}>
-        <input type="text" name="texttoimage" value={'cute bunny'} readOnly />
-        <button>submit</button>
-      </form>
-      <button onClick={printTextToImage}>print text to image history to console</button>
-    </div>
-    <div>
-      <h3> Download file by hash</h3>
-      <form onSubmit={downloadFileClick}>
-        <button>download</button>
-      </form>
-    </div>
-    <div>
-      <h3> read file meta by hash</h3>
-      <form onSubmit={getFileMetaClick}>
-        <button>get meta data</button>
-      </form>
-    </div>
-    
-    <div>
-      <button onClick={getFileDetailClick}>get all detail from file Hash</button>
-      <button onClick={getAllfiles}>get all files</button>
-    </div>
-  </div>
+  );
 }

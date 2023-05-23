@@ -116,7 +116,7 @@ export default function ReadingComprehension() {
                     </li>
                   ))
                 ) : (
-                  <li>lable.No history data available.No history data available.No history data available.No history data available.No history data available. available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data availabl</li>
+                  <li>.No history data available.</li>
                   
                   
                 )}
@@ -136,15 +136,7 @@ export default function ReadingComprehension() {
               <div></div>
             </div>
           ) : (
-            responseData && <div className="rc-text">                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
-                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
-                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
-                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
-                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
-                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
-                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
-                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
-                  <li>No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.No history data available.</li>
+            responseData && <div className="rc-text">  {responseData}
             </div>
           )}
         </div>

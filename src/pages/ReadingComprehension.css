@@ -1,69 +1,19 @@
-/* 
-body {
-	background: linear-gradient(-45deg, #060644, #060644, #23a6d5, #ffffff);
-	background-size: 400% 400%;
-	animation: gradient 30s ease infinite;
-	height: 100vh;
-}
 
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-} */
-
-
-
-
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Roboto+Condensed");
-*,
-::after,
-::before {
-	box-sizing: border-box;
-}
 
 @media (max-width: 768px) {
   .container {
-    width: 90%; /* Adjust the width as per your design */
+    width: 90%; 
   }
 
   .reading-level-radio {
-    transform: translate(0, -19rem); /* Adjust the translation as per your design */
+    transform: translate(0, -19rem); 
   }
 
   .rc-form-box{
     width: 10rem;
   }
 }
-/* html,
-body {
-	margin: 0;
-	padding: 0;
-	height: 100vh;
-} */
-/* body {
-	webkit-text-size-adjust: 100%;
-	font-variant-ligatures: none;
-	-webkit-font-variant-ligatures: none;
-	text-rendering: optimizeLegibility;
-	-moz-osx-font-smoothing: grayscale;
-	font-smoothing: antialiased;
-	-webkit-font-feature-settings: "kern" on, "liga" on, "calt" on, "onum", "pnum";
-	-webkit-font-smoothing: subpixel-antialiased;
-	text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
-	background: #fff;
-	font-family: "Roboto", sans-serif;
-	font-size: 14px;
-	margin: 0;
-	font-weight: 400;
-	padding: 0;
-} */
+
 .info-icon {
   margin-left: 4px;
   font-size: medium;
@@ -126,15 +76,15 @@ a {
 
 .vertical-nav ul {
 
-  overflow-y: auto; /* Add overflow-y property to enable scrolling */
+  overflow-y: auto; 
 }
 
 .vertical-nav li {
 
   display: flex;
-  /* transform: translate(-2rem, 1rem); */
+
   align-items: center;
-  /* margin-bottom: auto; */
+
   margin-right: 3rem;
 }
 
@@ -227,7 +177,6 @@ p,
 	margin-bottom:0;
 }
 
-/* Zui table (modified) - https://jsfiddle.net/zinoui/dB93J/ */
 .zui-table {
 	border: solid 1px #ddeeee;
 	border-collapse: collapse;
@@ -236,29 +185,7 @@ p,
 	box-shadow: 0 0 40px #00000021;
 	margin: 50px 0;
 }
-.zui-table thead th {
-	background-color: #fff;
-	border: solid 1px #dee;
-	color: #343535;
-	border: solid 1px #f5f9f9;
-	padding: 20px;
 
-	text-align: left;
-}
-.zui-table tbody td {
-	border: solid 1px #edf1f1;
-	color: #949494;
-	font-size:16px;
-	padding: 20px;
-}
-footer{
-	padding:20px 0;
-	text-align:center;
-}
-footer p{
-	color:gray;
-	font-size:12px;
-}
 /**/
 .content {
   margin: 0;
@@ -290,47 +217,17 @@ footer p{
   flex-direction: column;
 }
 
-
-
-
-  /*                       
-            {
-              historyData.length !== 0 ? (historyData.map((history) => {
-                return (
-                  <li key={history.textComprehension.q}>{history.textComprehension.q}</li>
-
-                )
-              }))
-}*/
-/* 
-.history-column-text {
-  /* display: grid; */
-  /* justify-items: start; */
-  /* margin-bottom: 32rem;
-  border-bottom: dotted; */
 .history-column-text {
   display: flex;
   margin-left: 2rem;
   flex-direction: column-reverse;
-  /* margin-right: 13rem; */
   transform: translate(-6rem, -3rem);
   font-size: 2rem;
 }
   
-
-
   .rc-text {
 color: #dee;
 font-size: 1.4rem;
-    /* font-size: 1.4rem;
-    letter-spacing: 0.1rem;
-    font-weight: 500;
-    margin-top: 5rem;
-    margin-left: 5rem;
-    color: whitesmoke;
-    text-align: initial;
-    /* width: -moz-fit-content; */
-    /* width: fit-content; */ 
 
   }
   

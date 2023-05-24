@@ -161,8 +161,8 @@ function getFileDetail(fileHash, history_category = ['metaData']){
         case "textToImage":
           ret['textToImage'] = getHistory('image', fileHash);
         break;
-        case "textToComprehenstion":
-          ret['textToComprehenstion'] = getHistory('comprehension', fileHash);
+        case "textToComprehension":
+          ret['textToComprehension'] = getHistory('comprehension', fileHash);
         break;
         default:
           error_handle('not recognize in get file detail:' + x);

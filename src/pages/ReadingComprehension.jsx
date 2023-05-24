@@ -21,10 +21,12 @@ export default function ReadingComprehension() {
     const fetchHistoryData = async () => {
       const fileHash =
         "0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef";
-      const fileDetails = await lc.getFileDetail(fileHash, [
-        "textToComprehenstion",
-      ]);
-      setHistoryData(fileDetails.textToComprehenstion);
+      const fileDetails = Object.values(
+        lc.getFileDetail(fileHash, ["textToComprehenstion"])
+          .textToComprehenstion
+      );
+      console.log(fileDetails);
+      setHistoryData(fileDetails);
     };
 
     fetchHistoryData();
@@ -39,29 +41,29 @@ export default function ReadingComprehension() {
     const fileHash =
       "0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef";
     setIsLoading(true);
+    console.log(evt.target.readingcomprehension.value);
     lc.textToComprehension(
       fileHash,
-      evt.target.readingcomprehenstion.value,
+      evt.target.readingcomprehension.value,
       "2",
       (data) => {
         console.log(data);
-        let modifiedData = data + 'pychsatm';
+        let modifiedData = data + "pychsatm";
         const hasNumberedText = /\d+\./.test(data);
-        console.log('Has numbered text:', hasNumberedText);
-  
+        console.log("Has numbered text:", hasNumberedText);
+
         if (hasNumberedText) {
-          modifiedData = data.replace(/\d+\./g, '\n$&');
-          console.log(modifiedData, 'modifiedD')
+          modifiedData = data.replace(/\d+\./g, "\n$&");
+          console.log(modifiedData, "modifiedD");
         }
-  
+
         setResponseData(modifiedData);
         setIsLoading(false);
-        
       }
     );
   };
 
-  console.log(historyData.length);
+  // console.log(historyData.length);
 
   return (
     <div>
@@ -85,7 +87,7 @@ export default function ReadingComprehension() {
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Control
               type="text"
-              name="readingcomprehenstion"
+              name="readingcomprehension"
               placeholder="what is this text about ?"
             />
           </Form.Group>
@@ -96,36 +98,32 @@ export default function ReadingComprehension() {
         {/*  */}
       </div>
       <div className="menu-container">
-          <ul className="vertical-nav">
-          
-              <FcReading className="book-half" />
-              <span className="history-column-text">
-              {/* <FcBookmark className="book-half" /> */}
-              {/* <FcFolder className="book-half" />
+        <ul className="vertical-nav">
+          <FcReading className="book-half" />
+          <span className="history-column-text">
+            {/* <FcBookmark className="book-half" /> */}
+            {/* <FcFolder className="book-half" />
               <FcDocument className="book-half" /> */}
-              History
-            </span>
-            <li>
-              <ul className="inner-ul-text">
-                {historyData &&
-                Array.isArray(historyData) &&
-                historyData.length !== 0 ? (
-                  historyData.map((history) => (
-                    <li key={history.q}>
-                      <p>{history.q}</p>
-                    </li>
-                  ))
-                ) : (
-                  <li>.No history data available.</li>
-                  
-                  
-                )}
-              </ul>
-            </li>
-          </ul>
-        </div>
+            History
+          </span>
+          <li>
+            <ul className="inner-ul-text">
+              {historyData.length !== 0 ? (
+                historyData.map((history, idx) => (
+                  <li key={idx}>
+                    <p>{history.q}</p>
+                    <p>{history.data}</p>
+                  </li>
+                ))
+              ) : (
+                <li>No history data available.</li>
+              )}
+            </ul>
+          </li>
+        </ul>
+      </div>
 
-      <div className="container rc-content" >
+      <div className="container rc-content">
         <div className="container rc-text">
           {" "}
           {isLoading ? (
@@ -136,8 +134,56 @@ export default function ReadingComprehension() {
               <div></div>
             </div>
           ) : (
-            responseData && <div className="rc-text">  {responseData}
-            </div>
+            responseData && (
+              <div className="rc-text">
+                {" "}
+                <li>
+                  No history data available.No history data available.No history
+                  data available.No history data available.No history data
+                  available.No history data available.No history data available.
+                </li>
+                <li>
+                  No history data available.No history data available.No history
+                  data available.No history data available.No history data
+                  available.No history data available.No history data available.
+                </li>
+                <li>
+                  No history data available.No history data available.No history
+                  data available.No history data available.No history data
+                  available.No history data available.No history data available.
+                </li>
+                <li>
+                  No history data available.No history data available.No history
+                  data available.No history data available.No history data
+                  available.No history data available.No history data available.
+                </li>
+                <li>
+                  No history data available.No history data available.No history
+                  data available.No history data available.No history data
+                  available.No history data available.No history data available.
+                </li>
+                <li>
+                  No history data available.No history data available.No history
+                  data available.No history data available.No history data
+                  available.No history data available.No history data available.
+                </li>
+                <li>
+                  No history data available.No history data available.No history
+                  data available.No history data available.No history data
+                  available.No history data available.No history data available.
+                </li>
+                <li>
+                  No history data available.No history data available.No history
+                  data available.No history data available.No history data
+                  available.No history data available.No history data available.
+                </li>
+                <li>
+                  No history data available.No history data available.No history
+                  data available.No history data available.No history data
+                  available.No history data available.No history data available.
+                </li>
+              </div>
+            )
           )}
         </div>
       </div>

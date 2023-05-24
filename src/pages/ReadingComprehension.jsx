@@ -63,13 +63,13 @@ export default function ReadingComprehension() {
     );
   };
 
-  // console.log(historyData.length);
-
   return (
     <div>
       <div className="container content">
         <div className="reading-level-radio">
           <span className="reading-level-text">Select reading level</span>
+          {/* <p class="gradient-text">Hello, world!</p> */}
+
           <FcInfo className="info-icon" />
           <div class="group">
             <input type="radio" name="rb" id="rb1" />
@@ -107,12 +107,18 @@ export default function ReadingComprehension() {
             History
           </span>
           <li>
-            <ul className="inner-ul-text">
+            <ul>
               {historyData.length !== 0 ? (
                 historyData.map((history, idx) => (
                   <li key={idx}>
-                    <p>{history.q}</p>
-                    <p>{history.data}</p>
+                    <p>
+                      <span className="question-history">Question:</span>
+                      {history.q}
+                    </p>
+                    <p>
+                      <span className="response-history">Response:</span>
+                      {history.data.slice(0, 23)}
+                    </p>
                   </li>
                 ))
               ) : (
@@ -137,51 +143,7 @@ export default function ReadingComprehension() {
             responseData && (
               <div className="rc-text">
                 {" "}
-                <li>
-                  No history data available.No history data available.No history
-                  data available.No history data available.No history data
-                  available.No history data available.No history data available.
-                </li>
-                <li>
-                  No history data available.No history data available.No history
-                  data available.No history data available.No history data
-                  available.No history data available.No history data available.
-                </li>
-                <li>
-                  No history data available.No history data available.No history
-                  data available.No history data available.No history data
-                  available.No history data available.No history data available.
-                </li>
-                <li>
-                  No history data available.No history data available.No history
-                  data available.No history data available.No history data
-                  available.No history data available.No history data available.
-                </li>
-                <li>
-                  No history data available.No history data available.No history
-                  data available.No history data available.No history data
-                  available.No history data available.No history data available.
-                </li>
-                <li>
-                  No history data available.No history data available.No history
-                  data available.No history data available.No history data
-                  available.No history data available.No history data available.
-                </li>
-                <li>
-                  No history data available.No history data available.No history
-                  data available.No history data available.No history data
-                  available.No history data available.No history data available.
-                </li>
-                <li>
-                  No history data available.No history data available.No history
-                  data available.No history data available.No history data
-                  available.No history data available.No history data available.
-                </li>
-                <li>
-                  No history data available.No history data available.No history
-                  data available.No history data available.No history data
-                  available.No history data available.No history data available.
-                </li>
+                <p className="response-data">{responseData}</p>
               </div>
             )
           )}

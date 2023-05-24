@@ -5,11 +5,12 @@
     width: 90%; 
   }
 
-  .reading-level-radio {
+.reading-level-radio {
     transform: translate(0, -19rem); 
   }
 
-  .rc-form-box{
+  /*reading content form width*/
+.rc-form-box{
     width: 10rem;
   }
 }
@@ -30,9 +31,11 @@
 .nav-title {
   margin-top: 6rem;
 }
+
 a {
 	color: #1e85c9;
 }
+
 .vertical-nav {
   position: fixed;
   top: 69px;
@@ -51,6 +54,7 @@ a {
   transform: translate(1rem, 27.4rem);
   height: 41.2rem;
 }
+
 
 ::-webkit-scrollbar {
   width: 0.8rem;
@@ -76,24 +80,72 @@ a {
 
 .vertical-nav ul {
 
-  overflow-y: auto; 
+
+  overflow-y: auto;
+  text-align: -webkit-left;
+  transform: translate(-3rem);
 }
 
 .vertical-nav li {
 
-  display: flex;
 
-  align-items: center;
-
-  margin-right: 3rem;
+      align-items: center;
+      list-style: none;
+      display: initial;
+      font-style: oblique;
 }
 
-.inner-ul-text {
-  text-align: initial;
-  line-height: 2.4rem;
-  font-size: medium;
-  margin-top: 3rem;
+/* .ul-history {
+  margin-top: 2rem;
+
+} */
+
+/* .gradient-text {
+  /* Fallback: Set a background color. */
+  /* background-color: #CA4246;
+  
+  /* Create the gradient. */
+   /* background-image: linear-gradient(
+        45deg,
+        #ca7e22 16.666%, 
+        #E16541 16.666%, 
+        #E16541 33.333%, 
+        #0f2978 33.333%, 
+        #F18F43 50%, 
+        #8B9862 50%, 
+        #8B9862 66.666%, 
+        #476098 66.666%, 
+        #476098 83.333%, 
+        #271e26 83.333%); */ 
+  
+  /* Set the background size and repeat properties. */
+  /* background-size: 100%;
+  background-repeat: repeat;
+font-size: 20px;
+font-weight: 700;
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  /* -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;  */
+  
+  /* Animate the text when loading the element. */
+    /* This animates it on page load and when hovering out. */
+    /* animation: rainbow-text-simple-animation-rev 0.75s ease forwards; 
 }
+ */ 
+
+
+
+.question-history {
+  color: #7986cb;
+  font-weight: 700;
+}
+
+.response-history {
+  color: #fbb74e;
+  font-weight: 700;
+}
+
 
 .container {
   position: relative;
@@ -224,10 +276,11 @@ p,
   transform: translate(-6rem, -3rem);
   font-size: 2rem;
 }
-  
-  .rc-text {
-color: #dee;
-font-size: 1.4rem;
+
+
+ .rc-text {
+  color: rgb(222, 222, 222);
+  font-size: 1.4rem;
 
   }
   
@@ -254,7 +307,16 @@ font-size: 1.4rem;
     letter-spacing: 1px;
 
   }
-  
+
+
+  .response-data {
+    color: whitesmoke;
+    letter-spacing: 0.1rem;
+    margin-top: 3rem;
+    margin-left: 3rem;
+    display: flex;
+  }
+
   .rc-submit-button:hover {
     color: whitesmoke;
  

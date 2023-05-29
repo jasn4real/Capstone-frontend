@@ -11,7 +11,7 @@ function navbar() {
       <Helmet>
         <meta charSet="utf-8" />
       </Helmet>
-      <Navbar fluid bg="dark" variant="dark" expand="lg" sticky="top">
+      <Navbar fluid="true" bg="dark" variant="dark" expand="lg" sticky="top">
         <Container fluid>
           <Navbar.Brand
             href="/"

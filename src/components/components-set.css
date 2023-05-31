@@ -1,0 +1,11 @@
+.HButton{
+  background-color: #060644;
+  color: white;
+  transition: color 0.3s ease-in-out; /* 添加过渡效果 */
+  border: 1px violet solid;
+  
+}
+
+.HButton:hover{
+  color: blueviolet;
+}

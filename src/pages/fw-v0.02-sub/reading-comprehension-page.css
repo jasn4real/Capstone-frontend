@@ -1,0 +1,24 @@
+.comprehension-input-div{
+
+}
+input[type="radio"] {
+  position: initial !important;
+  opacity: 1 !important;
+  vertical-align: bottom;
+}
+.comprehension-input-button > input{
+  width: 80%;
+}
+.comprehension-input-button > button{
+  margin-left: 2%;
+  width: 18%;
+}
+.comprehensionp-panel{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.history-in-comprehension-page-div{
+  flex-grow: 1; /* Allow the last div to grow and take up remaining height */
+  overflow-y: scroll;
+}

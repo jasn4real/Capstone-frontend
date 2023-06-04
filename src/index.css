@@ -402,3 +402,39 @@ body.dark-mode .popup-action {
 .paragraph {
   flex-grow: 1; /* Allow the paragraph to take up any remaining space in the flex container */
 }
+
+
+.chapter-title {
+  font-size: 2em;
+  text-align: center;
+}
+
+.tutorial-modal {
+  position: fixed;  /* Fix position to the viewport */
+  top: 0;  /* Align to the top */
+  left: 0;  /* Align to the left */
+  width: 100%;  /* Full width */
+  height: 100%;  /* Full height */
+  background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent black background */
+  display: flex;  /* Using flex to center the content */
+  justify-content: center;  /* Center horizontally */
+  align-items: center;  /* Center vertically */
+  z-index: 9999;  /* High z-index to appear above other elements */
+}
+
+.tutorial-modal {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.tutorial-modal p {
+  font-size: 30px; /* Adjust as needed */
+  color: #eee;
+  overflow-wrap: break-word;
+  margin: 0 auto;
+  max-Width: 80%;
+  padding-top: 40px;
+}
+
+

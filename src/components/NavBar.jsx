@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../NavBar.css";
 
 function navbar() {
   return (
@@ -20,7 +21,7 @@ function navbar() {
           >
             <img
               className="d-inline-block "
-              src={process.env.PUBLIC_URL + "/caplogo.png"}
+              src={process.env.PUBLIC_URL + "/Caplogo2.png"}
               width="100"
               height="100"
               alt=""
@@ -32,14 +33,14 @@ function navbar() {
             className="justify-content-end"
           >
             <Nav className="ml-auto h2">
-              <Link to="/library" className="nav-link pill-link">
-                Library
-              </Link>
               <Link to="/login" className="nav-link pill-link">
                 Your Account
               </Link>
               <Link to="/about" className="nav-link pill-link">
-                About The Developers
+                About
+              </Link>
+              <Link to="/search" className="nav-link pill-link">
+                Search
               </Link>
             </Nav>
           </Navbar.Collapse>

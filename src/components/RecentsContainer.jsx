@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import lc from "../storage_";
+import "../RecentsContainer.css";
 
 const RecentsContainer = () => {
   const [recents, setRecents] = useState([]);

@@ -1,0 +1,101 @@
+:root {
+  --landing-page-min-width: 80px;
+  --comprehenion-page-min-width: 0px;
+  --assistance-page-min-width: 80px;
+}
+
+.btn-style-square{
+  height: 65px;
+  width: 65px;
+  margin: auto;
+}
+
+.btn-style-lg{
+  border: 1px solid violet;
+  background-color: #060644;
+  color: white !important;
+  font-size: 22px;
+  height: 2em;
+  width: 10em;
+}
+.btn-style-lg:active{
+  background-color: #060644 !important;
+  color: white !important;
+}
+.btn-style-lg:hover{
+  color: lightcyan;
+  background-color: #060644;
+  box-shadow: -5px 2px 5px purple;
+  border-color: violet;
+
+}
+
+.btn-style{
+  border: 1px solid violet;
+  background-color: #060644;
+  color: white !important;
+  margin: 3px;
+}
+.btn-style:active{
+  background-color: #060644 !important;
+  color: white !important;
+}
+.btn-style:hover{
+  color: lightcyan;
+  background-color: #060644;
+  box-shadow: -5px 2px 5px purple;
+  border-color: violet;
+}
+/* /////// */
+@media screen and (min-width: 480px) {
+  .main-containter {
+    background-color: #060644;
+  }
+  .main-containter{
+    height: 100%;
+    display: flex;
+    
+  }
+  .main-containter > div{
+    transition: all 0.3s ease-in-out; /* 添加过渡效果 */
+    overflow: hidden;
+  }
+  .page-active{
+    width: calc(100% - (var(--landing-page-min-width)) );
+  }
+
+  .landing-frame:not(.page-active){
+    width: var(--landing-page-min-width);
+  }
+
+  .assistance-frame:not(.page-active){
+    width: var(--assistance-page-min-width);
+  }
+
+  .comprehension-frame:not(.page-active){
+    width: var(--comprehenion-page-min-width);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main-containter {
+    background-color: aqua;
+  }
+
+  .main-containter{
+    height: 100%;
+    display: flex;
+  }
+
+  .landing-frame{
+
+  }
+
+  .assistance-frame{
+
+  }
+
+  .comprehension-frame{
+    
+  }
+}

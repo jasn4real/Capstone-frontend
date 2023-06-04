@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 // import RecentsContainer from "./components/RecentsContainer";
 
 import AllInOneFramework from "./pages/all-in-one-framework";
+import FW002 from "./pages/fw-v0.02";
 import ReadingAssistance from "./pages/ReadingAssistance";
 import ReadingComprehension from "./pages/ReadingComprehension";
 import TestOnly from "./pages/test-only";
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/assistance" element={<ReadingAssistance />} />
             <Route path="/comprehension" element={<ReadingComprehension />} />
             <Route path="/framework-testing" element={<AllInOneFramework />} />
+            <Route path="/framework-2" element={<FW002 />} />
             <Route path="/testing_fetch" element={<TestOnly />} />
           </Routes>
         </main>

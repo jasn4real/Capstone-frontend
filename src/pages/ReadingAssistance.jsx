@@ -5,6 +5,16 @@ import { Document, Page, pdfjs } from "react-pdf";
 import storageFunctions from "../storage_";
 import anime from "animejs";
 import { BsPencilSquare } from "react-icons/bs";
+import {
+  text,
+  notes,
+  historyex,
+  historyim,
+  note,
+  notesside,
+  normmode,
+  nightmode,
+} from "../userwalkthrough/index";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -19,7 +29,7 @@ const ReadingAssistance = () => {
   const [numPages, setNumPages] = useState(null);
   const [fileTextContent, setFileTextContent] = useState("");
   const [fileBlob, setFileBlob] = useState(null);
-  const [isNightMode, setIsNightMode] = useState(false);
+  // const [isNightMode, setIsNightMode] = useState(false);
   const [isNightModeActive, setIsNightModeActive] = useState(false);
   const [hoverAction, setHoverAction] = useState(false);
   const [highlightedText, setHighlightedText] = useState("");
@@ -28,6 +38,10 @@ const ReadingAssistance = () => {
   const [comments, setComments] = useState({});
   const [selectedPageIndex, setSelectedPageIndex] = useState(null);
   const [selectedParagraphIndex, setSelectedParagraphIndex] = useState(null);
+  const [firstTimeUser, setFirstTimeUser] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  let synth = window.speechSynthesis;
+  let voices = [];
 
   const extractTextFromBlob = async (blob) => {
     try {
@@ -66,17 +80,17 @@ const ReadingAssistance = () => {
   });
 
   const imageProps = useSpring({
-    transform: hoverAction === "image" ? "scale(1)" : "scale(1)",
+    transform: hoverAction === "image" ? "scale(1.2)" : "scale(1)",
     // config: { tension: 170, friction: 26 },
   });
 
   const copyProps = useSpring({
-    transform: hoverAction === "copy" ? "scale(1)" : "scale(1)",
+    transform: hoverAction === "copy" ? "scale(1.2)" : "scale(1)",
     // config: { tension: 170, friction: 26 },
   });
 
   const highlightProps = useSpring({
-    transform: hoverAction === "highlight" ? "scale(1)" : "scale(1)",
+    transform: hoverAction === "highlight" ? "scale(1.2)" : "scale(1)",
     // config: { tension: 170, friction: 16 },
   });
 
@@ -239,6 +253,136 @@ const ReadingAssistance = () => {
   };
 
   useEffect(() => {
+    populateVoices();
+  }, []);
+
+  const speak = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = voices[50];
+    synth.speak(utterance);
+  };
+
+  function populateVoices() {
+    voices = synth.getVoices();
+    for (let i = 0; i < voices.length; i++) {
+      console.log(`Voice ${i}: ${voices[i].name}, ${voices[i].lang}`);
+    }
+  }
+
+  populateVoices();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateVoices;
+  }
+
+  const nextSlide = () => setCurrentSlide((prevSlide) => prevSlide + 1);
+
+  const tutorialSlides = [
+    {
+      text: "Welcome! To Reading Assistance",
+      graphic: text,
+      speak: () => {
+        speak("Welcome! To Reeding Assistance");
+      },
+    },
+    {
+      text: "This application will fundamentally change your reading habits",
+      graphic: text,
+      speak: () => {
+        speak(
+          "This application will fundahmentally, change your reeding habits"
+        );
+      },
+    },
+    {
+      text: "This is the pop up interface. This block of powerful and unique user features are always a click away to assist you as you read. Simply highlight the pertinent text and then select your action",
+      graphic: notes,
+      speak: () => {
+        speak(
+          "This is the pop up interface. This block of powerful and unique user features are always a click away to assist you as you read. Simply highlight the pertinent text and then select your action"
+        );
+      },
+    },
+    {
+      text: "Take notes that conveniently gets pinned to the side of the relevant paragraph or passage",
+      graphic: notesside,
+      speak: () => {
+        speak(
+          "Take notes that conveniently gets pinned to the side of the relevant paragraph or passage"
+        );
+      },
+    },
+    {
+      text: "All text and image query results will get stored in the history tab, so you can keep track of all your newfound knowledge and info",
+      graphic: historyim,
+      speak: () => {
+        speak(
+          "All text and image query results will get stored in the history tab, so you can keep track of all your newfound knowledge and info"
+        );
+      },
+    },
+    {
+      text: "the expanded tab looks like this. A neatly catalogued snapshot of your query history with all the relevant information for each different instance",
+      graphic: historyex,
+      speak: () => {
+        speak(
+          "the expanded tab looks like this. A neatly catalogued snapshot of your query history with all the relevant information for each different instance"
+        );
+      },
+    },
+    {
+      text: "when the white background begins to stress your eyes during long or late night reading sessions",
+      graphic: normmode,
+      speak: () => {
+        speak(
+          "when the white background begins to stress your eyes during long or late night reading sessions"
+        );
+      },
+    },
+    {
+      text: "simply turn on the Night Mode feature by clicking the dark circle in the top left corner. This will provide instant relief for your pupils and make text more legible",
+      graphic: nightmode,
+      speak: () => {
+        speak(
+          "simply turn on the Night Mode feature by clicking the dark circle in the top left corner. This will provide instant relief for your pupils and make text more legible"
+        );
+      },
+    },
+  ];
+
+  useEffect(() => {
+    const handleSpeechSynthesisReady = () => {
+      if (currentSlide < tutorialSlides.length) {
+        tutorialSlides[currentSlide].speak();
+      }
+    };
+
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      if (window.speechSynthesis.getVoices().length > 0) {
+        handleSpeechSynthesisReady();
+      } else {
+        window.speechSynthesis.onvoiceschanged = handleSpeechSynthesisReady;
+      }
+    }
+  }, [currentSlide]);
+
+  const UserWalkthrough = ({ text }) => {
+    useEffect(() => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    }, [text]);
+
+    return <div>{text}</div>;
+  };
+
+  useEffect(() => {
+    const firstVisit = localStorage.getItem("firstVisit");
+    if (!firstVisit) {
+      setFirstTimeUser(true);
+      localStorage.setItem("firstVisit", "no");
+    }
+  }, []);
+
+  useEffect(() => {
     const handleMouseUp = () => {
       const selectedText = window.getSelection().toString();
       if (selectedText.trim() !== "") {
@@ -298,9 +442,9 @@ const ReadingAssistance = () => {
     });
   }, [hoverAction, set]);
 
-  const handleDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
+  // const handleDocumentLoadSuccess = ({ numPages }) => {
+  //   setNumPages(numPages);
+  // };
 
   if (!fileTextContent || !fileBlob) {
     return <div>Loading...</div>;
@@ -330,12 +474,21 @@ const ReadingAssistance = () => {
       let range = selection.getRangeAt(0);
       let span = document.createElement("span");
       span.className = "highlighted-text"; // Add the class name for highlighting
-      range.surroundContents(span);
+
+      if (
+        range.startContainer.parentNode.classList.contains("highlighted-text")
+      ) {
+        const parent = range.startContainer.parentNode;
+        const originalText = document.createTextNode(parent.textContent);
+        parent.parentNode.replaceChild(originalText, parent);
+      } else {
+        range.surroundContents(span);
+      }
+
       selection.removeAllRanges();
       selection.addRange(range);
       setHighlightedText(selection.toString());
     }
-    return { highlightedText, highlightText };
   };
 
   const handleNoteSubmit = (pageIndex, paragraphIndex) => {
@@ -350,6 +503,7 @@ const ReadingAssistance = () => {
     handleNoteToggle();
     setNote("");
   };
+
 
   // const handleMouseEnter = () => {
   //   anime({
@@ -378,6 +532,17 @@ const ReadingAssistance = () => {
           {pageIndex > 0 && <hr />}
           {page.split("\n\n").map((paragraph, paragraphIndex) => (
             <div className="paragraph-container" key={paragraphIndex}>
+              {comments[`${pageIndex}-${paragraphIndex}`] && (
+                <div className="comment-indicator">
+                  {comments[`${pageIndex}-${paragraphIndex}`].map(
+                    (comment, commentIndex) => (
+                      <div key={commentIndex} className="comment">
+                        {comment}
+                      </div>
+                    )
+                  )}
+                </div>
+              )}
               <p
                 className="paragraph-text"
                 onMouseUp={() => {
@@ -391,8 +556,16 @@ const ReadingAssistance = () => {
                     };
                     setMouse(mousePosition);
                     setAction(null);
+
+                    // Set the selected page and paragraph indexes here
+                    setSelectedPageIndex(pageIndex);
+                    setSelectedParagraphIndex(paragraphIndex);
+
+                    // Open the note taking area when a text is selected
+                    setIsNoteOpen(false);
                   } else {
                     setSelection(null);
+                    setIsNoteOpen(false); // Close note taking area if no text is selected
                   }
                 }}
               >
@@ -403,6 +576,44 @@ const ReadingAssistance = () => {
         </div>
       ))}
 
+      {firstTimeUser && (
+        <div className="tutorial-modal">
+          <img
+            src={tutorialSlides[currentSlide].graphic}
+            style={{ width: "400px" }}
+            alt="Tutorial"
+          />
+          <p>{tutorialSlides[currentSlide].text}</p>
+          {currentSlide < tutorialSlides.length - 1 ? (
+            <button
+              style={{
+                backgroundColor: "#f0f0f0",
+                color: "#000",
+                padding: "10px 20px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+              }}
+              onClick={nextSlide}
+            >
+              Next
+            </button>
+          ) : (
+            <button
+              style={{
+                backgroundColor: "#f0f0f0",
+                color: "#000",
+                padding: "10px 20px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+              }}
+              onClick={() => setFirstTimeUser(false)}
+            >
+              OK
+            </button>
+          )}
+        </div>
+      )}
+
       {selection && (
         <div
           className={[
@@ -412,6 +623,19 @@ const ReadingAssistance = () => {
           onClick={toggleNightMode}
           style={{ backgroundColor: isNightModeActive ? "#fff" : "#000" }}
         />
+      )}
+
+      {selection && (
+        <div
+          className="note-container"
+          style={{ display: isNoteOpen ? "block" : "none" }}
+        >
+          <textarea
+            value={note}
+            onChange={handleNoteChange}
+            placeholder="Write your note here..."
+          />
+        </div>
       )}
 
       {selection && (
@@ -439,7 +663,7 @@ const ReadingAssistance = () => {
               onMouseEnter={() => setHoverAction("image")}
               onMouseLeave={() => setHoverAction(null)}
             >
-              <img src="/icons/image.svg" alt="Image" />
+              <img src="/icons/image.svg" alt="" />
             </span>
             <span
               className={action === "copy" ? "active-action" : ""}
@@ -464,7 +688,33 @@ const ReadingAssistance = () => {
             >
               <img src="/icons/highlighter.svg" alt="Highlight" />
             </span>
+            <span
+              className={isNoteOpen ? "active-action" : ""}
+              onClick={handleNoteToggle}
+              onMouseEnter={() => setHoverAction("note")}
+              onMouseLeave={() => setHoverAction(null)}
+            >
+              <BsPencilSquare size={24} /> {/* Your note icon */}
+            </span>
           </div>
+          {isNoteOpen && (
+            <>
+              <textarea
+                value={note}
+                onChange={handleNoteChange}
+                placeholder="Take your notes here..."
+                className="note-area"
+              />
+              <button
+                onClick={() =>
+                  handleNoteSubmit(selectedPageIndex, selectedParagraphIndex)
+                }
+              >
+                Submit
+              </button>
+            </>
+          )}
+
           <div
             className={
               isHistoryExpanded

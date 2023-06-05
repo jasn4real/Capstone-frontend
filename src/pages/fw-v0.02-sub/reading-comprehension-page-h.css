@@ -1,0 +1,48 @@
+.comprehension-input-div{
+
+}
+input[type="radio"] {
+  position: initial !important;
+  opacity: 1 !important;
+  vertical-align: bottom;
+}
+.comprehension-input-button > input{
+  width: 80%;
+}
+.comprehension-input-button > button{
+  width: 18%;
+}
+.comprehensionp-panel{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.history-in-comprehension-page-div{
+  flex-grow: 1; /* Allow the last div to grow and take up remaining height */
+  height: 100%;
+}
+.history-in-comprehension-page-div{
+  display: flex;
+  height: 100%;
+  overflow-y: scroll;
+  flex-direction: column;
+}
+.history-in-comprehension-page-div > div{
+  margin-top: 10px;
+  border-bottom: 1px solid blueviolet;
+}
+.comprehension-input-button >.btn-style:hover{
+  box-shadow: 5px 2px 5px purple;
+}
+
+.comprehension-panel, .comprehension-panel > div {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.history-card{
+  padding: 2em;
+}
+.history-card li{
+  text-decoration: none;
+}

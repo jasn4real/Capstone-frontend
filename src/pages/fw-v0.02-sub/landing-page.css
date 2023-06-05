@@ -13,8 +13,8 @@
 .page-active .cols-container{
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two columns with equal width */
-  grid-gap: 10px; /* Gap between grid items */
-  padding: 64px;
+  grid-gap: 20px; /* Gap between grid items */
+  padding: 48px;
 }
 
 .page-active .text-panel-div{

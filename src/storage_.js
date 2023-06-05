@@ -120,7 +120,7 @@ function getFileMeta(fileHash, callback){
         callback(meta);
       }
       else{
-        throw "get file meta api return false";
+        throw new Error("get file meta api return false");
       }
     } catch (error) {
       error_handle(error);

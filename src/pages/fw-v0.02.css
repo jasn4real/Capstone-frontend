@@ -1,7 +1,7 @@
 :root {
   --landing-page-min-width: 80px;
   --comprehenion-page-min-width: 0px;
-  --assistance-page-min-width: 80px;
+  --assistance-page-min-width: 0px;
 }
 
 .btn-style-square{
@@ -25,7 +25,7 @@
 .btn-style-lg:hover{
   color: lightcyan;
   background-color: #060644;
-  box-shadow: -5px 2px 5px purple;
+  box-shadow: -3px 2px 5px purple;
   border-color: violet;
 
 }
@@ -60,8 +60,11 @@
     transition: all 0.3s ease-in-out; /* 添加过渡效果 */
     overflow: hidden;
   }
+  .landing-frame.page-active{
+    width: 100%;
+  }
   .page-active{
-    width: calc(100% - (var(--landing-page-min-width)) );
+    width: calc(100% - var(--landing-page-min-width));
   }
 
   .landing-frame:not(.page-active){

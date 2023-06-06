@@ -1,4 +1,10 @@
-.comprehension-input-div{
+.reading-comprehension-container {
+  border: solid 1px #dee2e6;
+  border-radius: 5px
+}
+
+.form-check{
+  display: contents;
 
 }
 input[type="radio"] {
@@ -49,14 +55,15 @@ input[type="radio"] {
 }
 
 .question-header{
-  border: solid #050643;
+    border: solid #050643;
     background-color: #050643;
+    color: #2096f3;
     font-weight: bolder;
     letter-spacing: .2rem;
     border-radius: 1rem;
     font-size: small;
-    color: #2096f3;
-    font-size: initial;;}
+    font-size: initial;
+  }
 
 .user-question-text{
   color: rgb(41, 49, 25);
@@ -73,11 +80,10 @@ input[type="radio"] {
 }
 
 .response-text{
-
- 
-  font-size: larger;
-  margin-left: 0.2rem;
   color: rgb(0 36 90 / 86%);
+  font-size: initial;
+  margin-left: 0.2rem;
+
 }
 
 .timestamp-text{

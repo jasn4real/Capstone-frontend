@@ -66,7 +66,7 @@ export default function ComprehensionPage({ fileHash }) {
   }
   ///////////////////////////////
   return (
-    <div>
+    <div className="reading-comprehension-container">
       <div className="comprehension-input-div">
         <form onSubmit={onSubmitClick}>
           <span className="reading-level-text">Select reading level</span>

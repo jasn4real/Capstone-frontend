@@ -504,6 +504,7 @@ const ReadingAssistance = () => {
     setNote("");
   };
 
+
   // const handleMouseEnter = () => {
   //   anime({
   //     targets: ".popup.active",

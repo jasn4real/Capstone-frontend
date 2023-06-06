@@ -13,6 +13,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  border: solid 1px lightgray;
 
 }
 .reading-function-panel{

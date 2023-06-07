@@ -1,6 +1,4 @@
-
 .page-active .landing-page{
-
   background: url("./sixteen-miles-out-ScvYtpYzgFI-unsplash.jpg")  no-repeat left bottom;
   width: 100%;
   height: 100%;
@@ -13,8 +11,8 @@
 .page-active .cols-container{
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two columns with equal width */
-  grid-gap: 10px; /* Gap between grid items */
-  padding: 64px;
+  grid-gap: 20px; /* Gap between grid items */
+  padding: 48px;
 }
 
 .page-active .text-panel-div{

@@ -1,6 +1,9 @@
 import React from "react";
-import './landing-page.css';
-export default function LandingPage({pop_frame}){
+import "../pages/fw-v0.02-sub/landing-page.css";
+
+
+function LandingPage({pop_frame}){
+
   function onButtonClick(evt){
     pop_frame(1);
   }
@@ -41,3 +44,5 @@ export default function LandingPage({pop_frame}){
     </div>
   </div>
 }
+
+export default LandingPage;

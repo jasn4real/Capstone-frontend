@@ -19,7 +19,7 @@ code {
   min-width: 100px;  /* increased from 50px */
   max-width: 200px;  /* increased from 50px */
   min-height: 100px; /* add this line if you also want to increase the height */
-  max-height: 200px; /* add this line if you also want to increase the height */
+  max-height: 400px; /* add this line if you also want to increase the height */
   text-align: center;
   z-index: 99;
 }
@@ -32,6 +32,7 @@ code {
   display: inline-block;
   margin: 0 auto;
   line-height: 1;
+  z-index: 1
 }
 
 .popup-action span {
@@ -67,11 +68,10 @@ code {
 }
 
 .popup-detail {
-  background: #000;
-  color: #fff;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  text-align: left;
+  /* other styles */
+
+  /* Update the z-index */
+  z-index: 2;
 }
 
 .popup-detail img {
@@ -403,6 +403,13 @@ body.dark-mode .popup-action {
   flex-grow: 1; /* Allow the paragraph to take up any remaining space in the flex container */
 }
 
+.paragraph p {
+  flex-grow: 1; /* Allow the paragraph to take up any remaining space in the flex container */
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 50px;
+  line-height: 1.5;
+}
 
 .chapter-title {
   font-size: 2em;

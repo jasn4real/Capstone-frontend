@@ -5,6 +5,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import storageFunctions from "../storage_";
 import anime from "animejs";
 import { BsPencilSquare } from "react-icons/bs";
+import fetchFunctions from "../fetch_";
 import {
   text,
   notes,
@@ -29,7 +30,6 @@ const ReadingAssistance = () => {
   const [numPages, setNumPages] = useState(null);
   const [fileTextContent, setFileTextContent] = useState("");
   const [fileBlob, setFileBlob] = useState(null);
-  // const [isNightMode, setIsNightMode] = useState(false);
   const [isNightModeActive, setIsNightModeActive] = useState(false);
   const [hoverAction, setHoverAction] = useState(false);
   const [highlightedText, setHighlightedText] = useState("");
@@ -42,6 +42,12 @@ const ReadingAssistance = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   let synth = window.speechSynthesis;
   let voices = [];
+  const [queryInfo, setQueryInfo] = useState(null);
+
+  const handleQueryInfo = (newQueryInfo) => {
+    setQueryInfo(newQueryInfo);
+  };
+
 
   const extractTextFromBlob = async (blob) => {
     try {
@@ -235,6 +241,8 @@ const ReadingAssistance = () => {
     return <p>Error</p>;
   };
 
+ 
+
   const toggleHistory = () => {
     setHistoryExpanded((prevState) => !prevState);
   };
@@ -412,12 +420,15 @@ const ReadingAssistance = () => {
     const fileHash =
       "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
 
-    const fetchFileContent = async () => {
+    const fetchFileContent = () =>  {
       try {
-        const blob = await storageFunctions.getFileContent(fileHash);
-        const textContent = await extractTextFromBlob(blob);
-        setFileTextContent(textContent);
+        const blob = fetchFunctions.download_file(fileHash, async (blob) => {
+          const textContent = await extractTextFromBlob(blob);
+          setFileTextContent(textContent);
         setFileBlob(blob);
+        } );
+        
+        
       } catch (error) {
         console.error("Error retrieving file content:", error);
       }
@@ -555,11 +566,11 @@ const ReadingAssistance = () => {
                     };
                     setMouse(mousePosition);
                     setAction(null);
-
+  
                     // Set the selected page and paragraph indexes here
                     setSelectedPageIndex(pageIndex);
                     setSelectedParagraphIndex(paragraphIndex);
-
+  
                     // Open the note taking area when a text is selected
                     setIsNoteOpen(false);
                   } else {
@@ -574,7 +585,7 @@ const ReadingAssistance = () => {
           ))}
         </div>
       ))}
-
+  
       {firstTimeUser && (
         <div className="tutorial-modal">
           <img
@@ -612,7 +623,7 @@ const ReadingAssistance = () => {
           )}
         </div>
       )}
-
+  
       {selection && (
         <div
           className={[
@@ -623,7 +634,7 @@ const ReadingAssistance = () => {
           style={{ backgroundColor: isNightModeActive ? "#fff" : "#000" }}
         />
       )}
-
+  
       {selection && (
         <div
           className="note-container"
@@ -636,7 +647,7 @@ const ReadingAssistance = () => {
           />
         </div>
       )}
-
+  
       {selection && (
         <div
           className={["popup", selection ? "active" : ""].join(" ")}
@@ -713,7 +724,7 @@ const ReadingAssistance = () => {
               </button>
             </>
           )}
-
+  
           <div
             className={
               isHistoryExpanded
@@ -781,6 +792,5 @@ const ReadingAssistance = () => {
       )}
     </div>
   );
-};
-
-export default ReadingAssistance;
+          }  
+          export default ReadingAssistance;

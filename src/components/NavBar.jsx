@@ -2,16 +2,12 @@ import { Container } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../NavBar.css";
 
 function navbar() {
   return (
     <>
-      <Helmet>
-        <meta charSet="utf-8" />
-      </Helmet>
       <Navbar fluid="true" bg="dark" variant="dark" expand="lg" sticky="top">
         <Container fluid>
           <Navbar.Brand

@@ -127,7 +127,7 @@ function read_text_to_image(q, callback) {
 
 
 function read_text_to_explaination(q, callback) {
-  const body  = {
+  const body = {
     method: "POST",
     body: new URLSearchParams({q}),
     headers: {
@@ -156,4 +156,6 @@ export default {
   upload_file, 
   download_file, 
   read_file_metadata,
-  question_to_reading_comprehension };
+  question_to_reading_comprehension,
+  pdf_download_url_prefix: `${API}/download_file/`
+ };

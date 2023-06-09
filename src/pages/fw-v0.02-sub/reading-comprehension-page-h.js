@@ -52,15 +52,21 @@ export default function ComprehensionPage({ fileHash }) {
     const ret = [];
     for (let catalog_key in raw)
       for (let content in raw[catalog_key]) {
-        const timestamp = new Date(raw[catalog_key][content].timestamp).toLocaleString(undefined, {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric'
-        });  
-        ret.push({ ...raw[catalog_key][content], type: catalog_key, timestamp });
+        const timestamp = new Date(
+          raw[catalog_key][content].timestamp
+        ).toLocaleString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          // hour: "numeric",
+          // minute: "numeric",
+          // second: "numeric",
+        });
+        ret.push({
+          ...raw[catalog_key][content],
+          type: catalog_key,
+          timestamp,
+        });
       }
     ret.sort((a, b) =>
       new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime() > 0
@@ -96,6 +102,7 @@ export default function ComprehensionPage({ fileHash }) {
           </div>
           <div className="comprehension-input-button">
             <input
+              className="reading-comprehension-input"
               type="text"
               name="readingcomprehension"
               placeholder="what is this text about ?"
@@ -110,35 +117,53 @@ export default function ComprehensionPage({ fileHash }) {
           </div>
         </form>
       </div>
-      <div className="history-in-comprehension-page-div">
-        {historyData.map((el, idx) => (
-          <div className="history-card" key={idx}>
-            <li>
-              <div className="history-card-tags">
-              <span className="response-type">{el.type.toUpperCase()}{" "}⎮{" "}</span>
-              <span className="date-text">Date {el.timestamp}</span>
-              </div>
-              <span className="question-header">Q</span>
-
-              <span className="user-question-text">{el.q}</span>
-            </li>
-            {el.type === "image" ? (
-              <img
-                src={el.data}
-                alt="Not Found"
-                alt-src="./Caplogo2.png"
-                onError={onImgError}
-              />
-            ) : (
+      {isLoading ? (
+        <div className="history-in-comprehension-page-div lds">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      ) : (
+        <div className="history-in-comprehension-page-div">
+          {historyData.map((el, idx) => (
+            <div className="history-card" key={idx}>
               <li>
-                <span className="answer-header">answer :</span>
-                <span className="response-text">{el.data}</span>
+                <div className="history-card-tags">
+                  <span
+                    className="response-type"
+                    style={{
+                      color:
+                        el.type === "comprehension" ? "#b5a671" : "#2096f3",
+                    }}
+                  >
+                    {el.type.toUpperCase()}
+                  </span>
+                  ⎮ <span className="date-text">DATE {el.timestamp}</span>
+                </div>
+
+                <span className="question-header">Q</span>
+
+                <span className="user-question-text">{el.q}</span>
               </li>
-            )}
-            <li></li>
-          </div>
-        ))}
-      </div>
+              {el.type === "image" ? (
+                <img
+                  src={el.data}
+                  alt="Not Found"
+                  alt-src="./Caplogo2.png"
+                  onError={onImgError}
+                />
+              ) : (
+                <li>
+                  <span className="answer-header">response :</span>
+                  <span className="response-text">{el.data}</span>
+                </li>
+              )}
+              <li></li>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

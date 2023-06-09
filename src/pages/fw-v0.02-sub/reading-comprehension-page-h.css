@@ -1,6 +1,7 @@
 .reading-comprehension-container {
-  border: solid 1px #dee2e6;
-  border-radius: 5px
+  border: solid 1px #7d9cba;
+  border-radius: 5px;
+ padding: 10px;
 }
 
 .form-check{
@@ -48,10 +49,20 @@ input[type="radio"] {
 
 .history-card{
   padding: 2em;
+  transition: box-shadow .3s;
+  border-radius:10px;
+  border: 1px solid #ccc;
+  background: #fff;
 }
+.history-card:hover{
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+
+}
+
 .history-card li{
   text-decoration: none;
   list-style: none;
+
 }
 
 .question-header{
@@ -68,8 +79,8 @@ input[type="radio"] {
 .user-question-text{
   color: rgb(41, 49, 25);
   font-size: 1.5rem;
-  font-weight: 600;
-  margin-left: 0.6rem;
+  font-weight: 550;
+  margin-left: 0.7rem;
 }
 
 .answer-header{
@@ -86,7 +97,19 @@ input[type="radio"] {
 
 }
 
-.timestamp-text{
-float: right;
+.response-type{
+  font-weight: 600;
+}
 
+.date-text{
+  /* float: right; */
+
+}
+
+.timestamp-text{
+
+}
+
+.history-card-tags{
+  float: right;
 }

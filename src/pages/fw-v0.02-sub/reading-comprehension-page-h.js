@@ -9,6 +9,7 @@ export default function ComprehensionPage({ fileHash }) {
   const [isLoading, setIsLoading] = useState(false);
   const [historyData, setHistoryData] = useState([]);
   useEffect(() => {
+    console.log(getAllHistorywithUnifyTime(fileHash));
     setHistoryData(getAllHistorywithUnifyTime(fileHash));
   }, []);
   ///////////////////////////////
@@ -51,7 +52,15 @@ export default function ComprehensionPage({ fileHash }) {
     const ret = [];
     for (let catalog_key in raw)
       for (let content in raw[catalog_key]) {
-        ret.push({ ...raw[catalog_key][content], type: catalog_key });
+        const timestamp = new Date(raw[catalog_key][content].timestamp).toLocaleString(undefined, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        });  
+        ret.push({ ...raw[catalog_key][content], type: catalog_key, timestamp });
       }
     ret.sort((a, b) =>
       new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime() > 0
@@ -105,7 +114,12 @@ export default function ComprehensionPage({ fileHash }) {
         {historyData.map((el, idx) => (
           <div className="history-card" key={idx}>
             <li>
+              <div className="history-card-tags">
+              <span className="response-type">{el.type.toUpperCase()}{" "}⎮{" "}</span>
+              <span className="date-text">Date {el.timestamp}</span>
+              </div>
               <span className="question-header">Q</span>
+
               <span className="user-question-text">{el.q}</span>
             </li>
             {el.type === "image" ? (
@@ -121,9 +135,7 @@ export default function ComprehensionPage({ fileHash }) {
                 <span className="response-text">{el.data}</span>
               </li>
             )}
-            <li>
-              <span className="timestamp-text">{el.timestamp}</span>
-            </li>
+            <li></li>
           </div>
         ))}
       </div>

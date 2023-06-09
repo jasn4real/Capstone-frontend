@@ -13,7 +13,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  border: solid 1px lightgray;
+  border: solid 1px #7d9cba;
+  border-radius: 5px;
+  padding: 10px;
 
 }
 .reading-function-panel{

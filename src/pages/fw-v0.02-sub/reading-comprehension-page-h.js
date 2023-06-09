@@ -134,7 +134,7 @@ export default function ComprehensionPage({ fileHash }) {
                     className="response-type"
                     style={{
                       color:
-                        el.type === "comprehension" ? "#b5a671" : "#2096f3",
+                        el.type === "comprehension" ? "rgb(145 113 180)" : "#2096f3",
                     }}
                   >
                     {el.type.toUpperCase()}

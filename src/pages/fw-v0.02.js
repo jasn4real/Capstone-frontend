@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import './fw-v0.02.css';
 import LandingPage from "../components/Landing-page";
-import AssistancePage from "./fw-v0.02-sub/reading-assistance-page-h";
+import AssistancePage from "./fw-v0.02-sub/reading-assistance-page";
 
 
 let frames = undefined;

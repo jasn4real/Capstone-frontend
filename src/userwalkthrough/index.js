@@ -1,15 +1,18 @@
-import text from './text.jpeg';
-import notes from './notes.jpeg';
-import historyim from './historyim.jpeg'
-import historyex from './historyex.jpeg'
-import notesside from './notesside.jpeg';
-import normmode from './normmode.jpeg'
+import highlighter from './highlighter.png';
+import  image  from './image.png';
+import textex from './textex.png'
 import nightmode from './nightmode.jpeg'
-// import text from './userwalkthrough';
-// import text from './userwalkthrough';
+import popupbar from './popupbar.jpeg'
+import recents from './recents.jpeg'
+import readas from './readas.jpeg'
+import readcomp from './readcomp.jpeg'
+import imgres from './imgres.jpeg'
+import explain from './explain.jpeg'
+import highlightword from './highlightword.jpeg'
 
 
-export {text, notes, historyim, historyex, notesside, normmode, nightmode};
+
+export {nightmode, highlighter, image, textex, popupbar, recents, readas, readcomp, imgres, highlightword, explain};
 
 
 

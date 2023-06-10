@@ -1,5 +1,5 @@
 :root {
-  --landing-page-min-width: 120px;
+  --landing-page-min-width: 140px;
   --comprehenion-page-min-width: 0px;
   --assistance-page-min-width: 0px;
 }
@@ -35,7 +35,7 @@
   border: 1px solid violet;
   background-color: #060644;
   color: white !important;
-  margin-left: 3px;
+
 }
 .btn-style:active{
   background-color: #060644 !important;

@@ -58,6 +58,7 @@ input[type="radio"] {
   height: 100%;
 }
 .history-in-comprehension-page-div{
+  padding-bottom: 200px;
   display: flex;
   height: 100%;
   overflow-y: auto;

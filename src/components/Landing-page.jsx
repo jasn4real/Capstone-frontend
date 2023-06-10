@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
-import UploadModal from "./UploadModal";
+// import { Spinner } from "react-bootstrap";
+// import UploadModal from "./UploadModal";
 import "../pages/fw-v0.02-sub/landing-page.css";
 import lc from "../storage_";
 
@@ -8,13 +9,22 @@ function LandingPage({ pop_frame }) {
   const [recents, setRecents] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    let allFiles = lc.getAllFiles();
+    allFiles = allFiles.map((el) =>
+      lc.getFileDetail(el, ["metaData", "textToImage"])
+    );
+    setRecents(allFiles);
+    console.log(allFiles);
+  }, []);
   function onGoLandingPageClick(evt) {
     pop_frame(0);
   }
 
   function UploadButtonClick(evt) {
-    document.querySelector("#files_input").click()
+    document.querySelector("#files_input").click();
   }
 
   function toggleFileSelection(file) {
@@ -28,8 +38,9 @@ function LandingPage({ pop_frame }) {
   }
 
   function OnUploadInputChange(evt) {
-    if(evt.target.files[0]) {
-      //loading animation and inactivates all buttons
+    if (evt.target.files[0]) {
+      setIsLoading(true); //start animation loading
+
       lc.uploadFile(evt.target, (data) => {
         let allFiles = lc.getAllFiles();
         allFiles = allFiles.map((el) =>
@@ -38,7 +49,7 @@ function LandingPage({ pop_frame }) {
         setRecents(allFiles);
         console.log(allFiles);
         pop_frame(1);
-        //loading animation ends here
+        setIsLoading(false); // Stop loading animation
       });
     }
     console.log(evt.target.files);
@@ -57,7 +68,7 @@ function LandingPage({ pop_frame }) {
   }
 
   return (
-    <div className="landing-page">
+    <div className={`landing-page ${isLoading ? "blurry" : ""}`}>
       <Container className="cols-container">
         <Row className="text-panel-div">
           <Col>
@@ -93,6 +104,26 @@ function LandingPage({ pop_frame }) {
           </Col>
         </Row>
       </Container>
+
+      {isLoading && (
+        <div className={`loader-container ${isLoading ? "loading" : ""}`}>
+          <div className="loader">
+            <span>B</span>
+            <span>I</span>
+            <span>N</span>
+            <span>A</span>
+            <span>R</span>
+            <span>Y</span>
+            <span>&nbsp;</span>
+            <span>M</span>
+            <span>I</span>
+            <span>N</span>
+            <span>D</span>
+            <span>...</span>
+          </div>
+        </div>
+      )}
+
       <Container className="min-status-col">
         <Row>
           <Col>

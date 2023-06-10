@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./landing-page.css";
 export default function LandingPage({ pop_frame }) {
   function onButtonClick(evt) {
@@ -7,6 +7,25 @@ export default function LandingPage({ pop_frame }) {
   function onGoLandingPageClick(evt) {
     pop_frame(0);
   }
+
+  const [showOption, setShowOption] = useState(false);
+
+  const recentBoxes = [
+    "recent box 1",
+    "recent box 2",
+    "recent box 3",
+    "recent box 4",
+    "recent box 5",
+    "recent box 6",
+  ];
+
+  const handleMouseEnter = () => {
+    setShowOption(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowOption(false);
+  };
   ///////////////////////////////////
   return (
     <div className="landing-page">
@@ -44,15 +63,19 @@ export default function LandingPage({ pop_frame }) {
             </button>
           </div>
           <div className="recents-box">
-            <div> recent box 1</div>
-            <div> recent box 2</div>
-            <div> recent box 3</div>
-            <div> recent box 4</div>
-            <div> recent box 5</div>
-            <div> recent box 6</div>
+            {recentBoxes.map((box, index) => (
+              <div
+                key={index}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                {box}
+                {showOption}
+              </div>
+            ))}
           </div>
-        </div>
       </div>
+    </div>
     </div>
   );
 }

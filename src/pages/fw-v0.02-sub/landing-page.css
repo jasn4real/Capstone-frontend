@@ -61,6 +61,8 @@ div:not(.page-active) > .landing-page > .cols-container{
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 1em;
+
 
 }
 div:not(.page-active) > .landing-page > .min-status-col {
@@ -77,6 +79,8 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   row-gap: 4em;
   width: 100%;
   margin-top: 20px;
+  margin-left: 1em;
+
 }
 .min-status-col .recents-box > div{
   margin: auto;
@@ -90,6 +94,35 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   border-radius: 2px;
 }
 .min-status-col .recents-box > div:hover{
-  box-shadow: 0px 1px 3px 3px purple;
+  box-shadow: 0px 1px 3px 3px rgb(215, 87, 215);
 }
 
+
+.recents-box > div {
+  position: relative;
+}
+
+.recents-box > div::after {
+  content: "...";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.recents-box > div:hover::after {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.9);
+}

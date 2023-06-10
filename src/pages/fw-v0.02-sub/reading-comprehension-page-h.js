@@ -75,6 +75,11 @@ export default function ComprehensionPage({ fileHash }) {
     );
     return ret;
   }
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   function onImgError(evt) {
     console.log("img error", evt.target);
     evt.target.src = evt.target.getAttribute("alt-src");
@@ -148,7 +153,7 @@ export default function ComprehensionPage({ fileHash }) {
 
                 <span className="question-header">Q</span>
 
-                <span className="user-question-text">{el.q}</span>
+                <span className="user-question-text">{capitalizeFirstLetter(el.q)}</span>
               </li>
               {el.type === "image" ? (
                 <img

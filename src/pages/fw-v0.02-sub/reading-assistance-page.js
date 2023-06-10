@@ -1,14 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import "./reading-assistance-page.css";
-import ComprehensionPage from "./reading-comprehension-page";
-import { FcAbout } from "react-icons/fc";
-import { FaSearchPlus, FaSearchMinus } from "react-icons/fa";
-import ReadingAssistance from "../ReadingAssistance";
-import { getHistory } from "../../storage_";
+import ComprehensionPage from "./reading-comprehension-page-h";
+import ReadingAssistance from "../ReadingAssistance-h";
 
+let triggerHistoryUpdate_callback ;
+const setTriggerHistoryUpdate = ( func ) => {
+  if(func) triggerHistoryUpdate_callback = func;
+}
+const triggerHistoryUpdate = (q) =>{
+  if(triggerHistoryUpdate_callback) triggerHistoryUpdate_callback(q);
+}
 export default function AssistancePage({pop_frame, fileHash}){
 
-  const [readingAssistanceWidth, setReadingAssistanceWidth] = useState(50);
 
   function onLandingClick(){
     pop_frame(0);
@@ -27,16 +30,16 @@ export default function AssistancePage({pop_frame, fileHash}){
   return (
     <div className="assistance-page">
       <div className="cols-container">
-        <div className="reading-panel" style={{ flex: readingAssistanceWidth }}>
+        <div className="reading-panel" style={{ flex: "50px" }}>
           <div className="text-reading-panel">
             <div className="popup-detail">
-              <ReadingAssistance/> 
+              <ReadingAssistance fileHash={fileHash} triggerHistoryUpdate={triggerHistoryUpdate}/> 
             </div>
           </div>
         </div>
 
         <div className="comprehension-panel">
-        <ComprehensionPage fileHash={fileHash} />
+        <ComprehensionPage fh={fileHash} setTriggerHistoryUpdate={setTriggerHistoryUpdate} />
       </div>
     </div>
   </div>

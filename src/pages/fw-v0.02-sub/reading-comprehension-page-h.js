@@ -4,14 +4,18 @@ import { useState, useEffect } from "react";
 import { FcInfo } from "react-icons/fc";
 import "./reading-comprehension-page-h.css";
 import lc from "../../storage_";
-
-export default function ComprehensionPage({ fileHash }) {
+let fileHash = undefined;
+export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
+  fileHash = fh;
   const [isLoading, setIsLoading] = useState(false);
   const [historyData, setHistoryData] = useState([]);
   useEffect(() => {
-    console.log(getAllHistorywithUnifyTime(fileHash));
+    // console.log(getAllHistorywithUnifyTime(fileHash));
     setHistoryData(getAllHistorywithUnifyTime(fileHash));
   }, []);
+  setTriggerHistoryUpdate((q)=>{
+    setHistoryData(getAllHistorywithUnifyTime(fileHash));
+  })
   ///////////////////////////////
   function onSubmitClick(evt) {
     evt.preventDefault();
@@ -52,7 +56,7 @@ export default function ComprehensionPage({ fileHash }) {
     const ret = [];
     for (let catalog_key in raw)
       for (let content in raw[catalog_key]) {
-        const timestamp = new Date(
+        const date_str = new Date(
           raw[catalog_key][content].timestamp
         ).toLocaleString(undefined, {
           year: "numeric",
@@ -65,13 +69,16 @@ export default function ComprehensionPage({ fileHash }) {
         ret.push({
           ...raw[catalog_key][content],
           type: catalog_key,
-          timestamp,
+          timestamp: raw[catalog_key][content].timestamp,
+          date_str
         });
       }
-    ret.sort((a, b) =>
-      new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime() > 0
-        ? -1
-        : 1
+    ret.sort((a, b) =>{
+      return new Date(a.timestamp).getTime() > new Date(b.timestamp).getTime()
+      ? -1
+      : 1
+    }
+      
     );
     return ret;
   }
@@ -163,7 +170,7 @@ export default function ComprehensionPage({ fileHash }) {
                   >
                     {el.type.toUpperCase()}
                   </span>
-                  ⎮ <span className="date-text">DATE {el.timestamp}</span>
+                  ⎮ <span className="date-text">DATE: {el.date_str}</span>
                 </div>
 
                 <span className="question-header">Q</span>

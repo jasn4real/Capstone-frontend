@@ -5,16 +5,22 @@ import { Document, Page, pdfjs } from "react-pdf";
 import storageFunctions from "../storage_";
 import anime from "animejs";
 import { BsPencilSquare } from "react-icons/bs";
+import fetchFunctions from "../fetch_";
 import {
-  text,
-  notes,
-  historyex,
-  historyim,
-  note,
-  notesside,
-  normmode,
   nightmode,
+  highlighter,
+  image,
+  textex,
+  explain,
+  highlightword,
+  imgres,
+  popupbar,
+  readas, 
+  readcomp,
+  recents,
 } from "../userwalkthrough/index";
+
+
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -29,7 +35,6 @@ const ReadingAssistance = () => {
   const [numPages, setNumPages] = useState(null);
   const [fileTextContent, setFileTextContent] = useState("");
   const [fileBlob, setFileBlob] = useState(null);
-  // const [isNightMode, setIsNightMode] = useState(false);
   const [isNightModeActive, setIsNightModeActive] = useState(false);
   const [hoverAction, setHoverAction] = useState(false);
   const [highlightedText, setHighlightedText] = useState("");
@@ -42,6 +47,13 @@ const ReadingAssistance = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   let synth = window.speechSynthesis;
   let voices = [];
+  const [queryInfo, setQueryInfo] = useState(null);
+  const POPUP_WIDTH = 200; // Replace with the desired width of your pop-up interface
+
+
+  const handleQueryInfo = (newQueryInfo) => {
+    setQueryInfo(newQueryInfo);
+  };
 
   const extractTextFromBlob = async (blob) => {
     try {
@@ -213,7 +225,7 @@ const ReadingAssistance = () => {
     console.log("Result: ", result);
     if (result === "") return null;
     if (result === "loading") return <p>Loading...</p>;
-
+  
     if (action === "text") {
       if (typeof result === "string") {
         return <p>{result}</p>;
@@ -223,18 +235,27 @@ const ReadingAssistance = () => {
         return <p>Unexpected result format</p>;
       }
     } else if (action === "image") {
+      const slide = tutorialSlides[currentSlide]; // Get the current slide object
       if (typeof result === "string") {
-        return <img src={result} alt="" />;
+        if (slide.style) {
+          return <img src={result} alt="" style={slide.style} />;
+        } else {
+          return <img src={result} alt="" />;
+        }
       } else if (result && typeof result === "object" && result.url) {
-        return <img src={result.url} alt="" />;
+        if (slide.style) {
+          return <img src={result.url} alt="" style={slide.style} />;
+        } else {
+          return <img src={result.url} alt="" />;
+        }
       } else {
         return <p>Unexpected result format</p>;
       }
     }
-
+  
     return <p>Error</p>;
   };
-
+  
   const toggleHistory = () => {
     setHistoryExpanded((prevState) => !prevState);
   };
@@ -274,19 +295,31 @@ const ReadingAssistance = () => {
     speechSynthesis.onvoiceschanged = populateVoices;
   }
 
-  const nextSlide = () => setCurrentSlide((prevSlide) => prevSlide + 1);
+  const nextSlide = () => {
+    // Cancel any ongoing speech before moving to the next slide
+    window.speechSynthesis.cancel();
+    setCurrentSlide((prevSlide) => prevSlide + 1);
+  };
 
   const tutorialSlides = [
     {
       text: "Welcome! To Reading Assistance",
-      graphic: text,
+      graphic: readas,
+      style: { maxWidth: "100%",}, // Set the maximum width of the image
+      speak: () => {
+        speak("Welcome! To Reeding Assistance");
+      },
+    },
+    {
+      text: "Welcome! To Reading Assistance",
+      graphic: readas,
       speak: () => {
         speak("Welcome! To Reeding Assistance");
       },
     },
     {
       text: "This application will fundamentally change your reading habits",
-      graphic: text,
+      graphic: readas,
       speak: () => {
         speak(
           "This application will fundahmentally, change your reeding habits"
@@ -294,56 +327,83 @@ const ReadingAssistance = () => {
       },
     },
     {
-      text: "This is the pop up interface. This block of powerful and unique user features are always a click away to assist you as you read. Simply highlight the pertinent text and then select your action",
-      graphic: notes,
+      text: "on the right hand side is your recents tab. This is where you'll be able to quickly access other files you've uploaded in the past and all their relevant texts and queries",
+      graphic: recents,
       speak: () => {
         speak(
-          "This is the pop up interface. This block of powerful and unique user features are always a click away to assist you as you read. Simply highlight the pertinent text and then select your action"
+          "on the right hand side is your recents tab. This is where you'll be able to quickly access other files you've uploaded in the past and all their relevant texts and queries"
         );
       },
     },
     {
-      text: "Take notes that conveniently gets pinned to the side of the relevant paragraph or passage",
-      graphic: notesside,
+      text: "In the center, you'll find your uploaded text in a window along with a host of with powerful and useful functionalities. Simply higlight the pertinent text and select your action",
+      graphic: popupbar,
       speak: () => {
         speak(
-          "Take notes that conveniently gets pinned to the side of the relevant paragraph or passage"
+          "In the center, you'll find your uploaded text in a window along with a host of with powerful and useful functionalities. Simply higlight the pertinent text and select your action"
         );
       },
     },
     {
-      text: "All text and image query results will get stored in the history tab, so you can keep track of all your newfound knowledge and info",
-      graphic: historyim,
+      text: "if you ever run across a confusing word, sentence or even paragraph, higlighting the problematic text and selecting text to explanation will decipher, clarify, and explain what was said like a tutor guiding a student",
+      graphic: explain,
       speak: () => {
         speak(
-          "All text and image query results will get stored in the history tab, so you can keep track of all your newfound knowledge and info"
+          "if you ever run across a confusing word, sentence or even paragraph, higlighting the problematic text and selecting text to explanation will decipher, clarify, and explain what was said like a tutor guiding a student"
         );
       },
     },
     {
-      text: "the expanded tab looks like this. A neatly catalogued snapshot of your query history with all the relevant information for each different instance",
-      graphic: historyex,
+      text: "We all often wish for visual aid when we read. It's common for us to read things we cant visualize because we've simply never seen them before or are unfamilar with the concept. Text to image provides on demand imagery for things and concepts",
+      graphic: imgres,
       speak: () => {
         speak(
-          "the expanded tab looks like this. A neatly catalogued snapshot of your query history with all the relevant information for each different instance"
+          "We all often wish for visual aid when we read. It's common for us to read things we cant visualize because we've simply never seen them before or are unfamilar with the concept. Text to image provides on demand imagery for things and concepts"
         );
       },
     },
     {
-      text: "when the white background begins to stress your eyes during long or late night reading sessions",
-      graphic: normmode,
+      text: "Highlight words and paragraphs you'll want to come back",
+      graphic: highlightword,
       speak: () => {
         speak(
-          "when the white background begins to stress your eyes during long or late night reading sessions"
+          "Highlight words and paragraphs you'll want to come back"
         );
       },
     },
     {
-      text: "simply turn on the Night Mode feature by clicking the dark circle in the top left corner. This will provide instant relief for your pupils and make text more legible",
+      text: "when the white background begins to stress your eyes during long or late night reading sessions, simply turn on the Night Mode feature by clicking the blue circle in the top left corner",
       graphic: nightmode,
       speak: () => {
         speak(
-          "simply turn on the Night Mode feature by clicking the dark circle in the top left corner. This will provide instant relief for your pupils and make text more legible"
+          "when the white background begins to stress your eyes during long or late night reading sessions, simply turn on the Night Mode feature by clicking the blue circle in the top left corner"
+        );
+      },
+    },
+    {
+      text: "On the right hand side is the reading comprehension page. This will be your personal tutor. You can ask any question pertaining to the uploaded text on the right and The ai will explain and give context, like you're talking to an expert on the subject",
+      graphic: readcomp,
+      speak: () => {
+        speak(
+          "On the right hand side is the reading comprehension page. This will be your personal tutor. You can ask any question pertaining to the uploaded text on the right and The ai will explain and give context, like you're talking to an expert on the subject"
+        );
+      },
+    },
+    {
+      text: "you have the option to choose from three different aptitude levels. Kids, General, and advanced",
+      graphic: readcomp,
+      speak: () => {
+        speak(
+          "you have the option to choose from three different aptitude levels. Kids, General, and advanced" 
+        );
+      },
+    },
+    {
+      text: "all text and image query results from the reading assistance page will be displayed in this space, as well as all questions asked on the reading comprehension page and their respective responses.",
+      graphic: readcomp,
+      speak: () => {
+        speak(
+          "all text and image query results from the reading assistance page will be displayed in this space, as well as all questions asked on the reading comprehension page and their respective responses." 
         );
       },
     },
@@ -382,42 +442,55 @@ const ReadingAssistance = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const handleMouseUp = () => {
-      const selectedText = window.getSelection().toString();
-      if (selectedText.trim() !== "") {
-        setSelection(selectedText);
-        setResult(""); // Reset the result when new text is selected
-        const mousePosition = {
-          x: window.event.clientX,
-          y: window.event.clientY,
-        };
-        setMouse(mousePosition);
-        setAction(null); // Reset action when new text is selected
+  const handleMouseUp = () => {
+    const selectedText = window.getSelection().toString();
+    if (selectedText.trim() !== "") {
+      setSelection(selectedText);
+      setResult(""); // Reset the result when new text is selected
+  
+      // Get the bounding box of the parent div
+      const container = con.current.getBoundingClientRect();
+  
+      // Calculate the maximum left and right positions for the pop-up
+      const maxLeftPosition = container.left + container.width - POPUP_WIDTH;
+      const maxRightPosition = container.left + container.width;
+  
+      // Adjust the x-coordinate to keep the pop-up within the text content area
+      const mouseX = window.event.clientX;
+      let popupX;
+  
+      if (mouseX > maxLeftPosition) {
+        popupX = maxLeftPosition;
+      } else if (mouseX < maxRightPosition) {
+        popupX = maxRightPosition - POPUP_WIDTH;
       } else {
-        setSelection(null);
+        popupX = mouseX;
       }
-    };
-
-    if (con.current) {
-      con.current.addEventListener("mouseup", handleMouseUp);
-
-      return () => {
-        con.current.removeEventListener("mouseup", handleMouseUp);
-      };
+  
+      // Calculate the y-coordinate of the pop-up
+      const mouseY = window.event.clientY;
+      const popupY = mouseY - container.top;
+  
+      setMouse({ x: popupX, y: popupY });
+      setAction(null); // Reset action when new text is selected
+    } else {
+      setSelection(null);
     }
-  }, []);
+  };
+  
+  
 
   useEffect(() => {
     const fileHash =
       "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
 
-    const fetchFileContent = async () => {
+    const fetchFileContent = () => {
       try {
-        const blob = await storageFunctions.getFileContent(fileHash);
-        const textContent = await extractTextFromBlob(blob);
-        setFileTextContent(textContent);
-        setFileBlob(blob);
+        const blob = fetchFunctions.download_file(fileHash, async (blob) => {
+          const textContent = await extractTextFromBlob(blob);
+          setFileTextContent(textContent);
+          setFileBlob(blob);
+        });
       } catch (error) {
         console.error("Error retrieving file content:", error);
       }
@@ -469,27 +542,30 @@ const ReadingAssistance = () => {
   const handleNoteChange = (event) => setNote(event.target.value);
 
   const highlightText = () => {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-      let range = selection.getRangeAt(0);
-      let span = document.createElement("span");
-      span.className = "highlighted-text"; // Add the class name for highlighting
-
-      if (
-        range.startContainer.parentNode.classList.contains("highlighted-text")
-      ) {
-        const parent = range.startContainer.parentNode;
-        const originalText = document.createTextNode(parent.textContent);
-        parent.parentNode.replaceChild(originalText, parent);
-      } else {
-        range.surroundContents(span);
+    try {
+      const selection = window.getSelection();
+      if (selection.rangeCount > 0) {
+        let range = selection.getRangeAt(0);
+        let span = document.createElement("span");
+        span.className = "highlighted-text"; // Add the class name for highlighting
+  
+        if (range.startContainer.parentNode.classList.contains("highlighted-text")) {
+          const parent = range.startContainer.parentNode;
+          const originalText = document.createTextNode(parent.textContent);
+          parent.parentNode.replaceChild(originalText, parent);
+        } else {
+          range.surroundContents(span);
+        }
+  
+        selection.removeAllRanges();
+        selection.addRange(range);
+        setHighlightedText(selection.toString());
       }
-
-      selection.removeAllRanges();
-      selection.addRange(range);
-      setHighlightedText(selection.toString());
+    } catch (error) {
+      console.error("An error occurred while highlighting:", error);
     }
   };
+  
 
   const handleNoteSubmit = (pageIndex, paragraphIndex) => {
     if (!note) return;
@@ -503,7 +579,6 @@ const ReadingAssistance = () => {
     handleNoteToggle();
     setNote("");
   };
-
 
   // const handleMouseEnter = () => {
   //   anime({
@@ -524,9 +599,9 @@ const ReadingAssistance = () => {
   // };
 
   return (
-    <div className="bigcontainer" ref={con}>
+    <div className="bigcontainer" ref={con} style={{ position: "relative", overflow: 'auto' }}>
       <h2>Reading Assistance</h2>
-      {numPages && <pre>Number of Pages: {numPages}</pre>}
+      {numPages && <div>Number of Pages: {numPages}</div>}
       {fileTextContent.split("-- PAGE START -- ").map((page, pageIndex) => (
         <div key={pageIndex} className="page-content">
           {pageIndex > 0 && <hr />}
@@ -550,17 +625,22 @@ const ReadingAssistance = () => {
                   if (selectedText.trim() !== "") {
                     setSelection(selectedText);
                     setResult("");
+  
+                    // Get the bounding box of the parent div
+                    const container = con.current.getBoundingClientRect();
+  
+                    // Adjust mouse position to be relative to the parent div
                     const mousePosition = {
-                      x: window.event.clientX,
-                      y: window.event.clientY,
+                      x: window.event.clientX - container.left,
+                      y: window.event.clientY - container.top,
                     };
                     setMouse(mousePosition);
                     setAction(null);
-
+  
                     // Set the selected page and paragraph indexes here
                     setSelectedPageIndex(pageIndex);
                     setSelectedParagraphIndex(paragraphIndex);
-
+  
                     // Open the note taking area when a text is selected
                     setIsNoteOpen(false);
                   } else {
@@ -575,12 +655,12 @@ const ReadingAssistance = () => {
           ))}
         </div>
       ))}
-
+  
       {firstTimeUser && (
         <div className="tutorial-modal">
           <img
             src={tutorialSlides[currentSlide].graphic}
-            style={{ width: "400px" }}
+            style={{ maxWidth: "400px", height: "auto", objectFit: "contain" }}
             alt="Tutorial"
           />
           <p>{tutorialSlides[currentSlide].text}</p>
@@ -606,14 +686,17 @@ const ReadingAssistance = () => {
                 borderRadius: "5px",
                 border: "1px solid #ccc",
               }}
-              onClick={() => setFirstTimeUser(false)}
+              onClick={() => {
+                synth.cancel();
+                setFirstTimeUser(false);
+              }}
             >
-              OK
+              Ok
             </button>
           )}
         </div>
       )}
-
+  
       {selection && (
         <div
           className={[
@@ -621,27 +704,23 @@ const ReadingAssistance = () => {
             isNightModeActive ? "active" : "",
           ].join(" ")}
           onClick={toggleNightMode}
-          style={{ backgroundColor: isNightModeActive ? "#fff" : "#000" }}
+          style={{
+            backgroundColor: isNightModeActive ? "#fff" : "#000080",
+            position: "",
+            top: "10px",
+            right: "10px",
+          }}
         />
       )}
-
-      {selection && (
-        <div
-          className="note-container"
-          style={{ display: isNoteOpen ? "block" : "none" }}
-        >
-          <textarea
-            value={note}
-            onChange={handleNoteChange}
-            placeholder="Write your note here..."
-          />
-        </div>
-      )}
-
+  
       {selection && (
         <div
           className={["popup", selection ? "active" : ""].join(" ")}
-          style={{ left: mouse.x, top: mouse.y }}
+          style={{
+            position: "absolute",
+            left: mouse.x,
+            top: mouse.y,
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="popup-action">
@@ -653,7 +732,7 @@ const ReadingAssistance = () => {
               onMouseEnter={() => setHoverAction("text")}
               onMouseLeave={() => setHoverAction(null)}
             >
-              <img src="/icons/text.svg" alt="Text" />
+              <img src={textex} alt="Text" />
             </span>
             <span
               className={action === "image" ? "active-action" : ""}
@@ -663,7 +742,7 @@ const ReadingAssistance = () => {
               onMouseEnter={() => setHoverAction("image")}
               onMouseLeave={() => setHoverAction(null)}
             >
-              <img src="/icons/image.svg" alt="" />
+              <img src={image} alt="" />
             </span>
             <span
               className={action === "copy" ? "active-action" : ""}
@@ -679,97 +758,76 @@ const ReadingAssistance = () => {
               />
             </span>
             <span
-              className={action === "highlight" ? "active-action" : ""}
-              id="highlight"
-              onClick={highlightText}
-              style={highlightProps}
-              onMouseEnter={() => setHoverAction("highlight")}
-              onMouseLeave={() => setHoverAction(null)}
-            >
-              <img src="/icons/highlighter.svg" alt="Highlight" />
-            </span>
-            <span
-              className={isNoteOpen ? "active-action" : ""}
-              onClick={handleNoteToggle}
-              onMouseEnter={() => setHoverAction("note")}
-              onMouseLeave={() => setHoverAction(null)}
-            >
-              <BsPencilSquare size={24} /> {/* Your note icon */}
-            </span>
-          </div>
-          {isNoteOpen && (
-            <>
-              <textarea
-                value={note}
-                onChange={handleNoteChange}
-                placeholder="Take your notes here..."
-                className="note-area"
-              />
-              <button
-                onClick={() =>
-                  handleNoteSubmit(selectedPageIndex, selectedParagraphIndex)
-                }
-              >
-                Submit
-              </button>
-            </>
-          )}
+  className={action === "highlight" ? "active-action" : ""}
+  id="highlight"
+  onClick={highlightText}
+  style={highlightProps}
+  onMouseEnter={() => setHoverAction("highlight")}
+  onMouseLeave={() => setHoverAction(null)}
+>
+  <img src={highlighter} alt="Highlight" /> {/* Use the highlighter icon */}
+</span>
 
-          <div
-            className={
-              isHistoryExpanded
-                ? "history expanded" + (isNightModeActive ? " night-mode" : "")
-                : "history collapsed" + (isNightModeActive ? " night-mode" : "")
-            }
-            onClick={toggleHistory}
-          >
-            <h2>
-              History{" "}
-              {isHistoryExpanded && (
-                <img
-                  src="/icons/trash.png"
-                  onClick={clearHistory}
-                  style={{ cursor: "pointer" }}
-                  alt="Clear History"
-                />
-              )}
-            </h2>
-            {isHistoryExpanded && (
-              <ul>
-                {history.map((item, index) => (
-                  <li
-                    key={index}
-                    className={
-                      "historyItem" + (isNightModeActive ? " night-mode" : "")
-                    }
-                  >
-                    <div className="historyItemNumber">{index + 1}</div>
-                    <p className="historyItemP textBlock">
-                      Text: {item.text}
-                      <span className="historyItemBorder" />
-                    </p>
-                    <p className="historyItemP">
-                      Action: {item.action}
-                      <span className="historyItemBorder" />
-                    </p>
-                    <div className="resultBlock">
-                      <p className="historyItemResult">
-                        Result:{" "}
-                        {item.action === "image" ? (
-                          <img src={item.result.url} alt="" />
-                        ) : (
-                          item.result
-                        )}
-                      </p>
-                    </div>
-                    <p className="historyItemTimestamp">
-                      {item.timestamp.toLocaleString()}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
+  
+          {isHistoryExpanded && (
+            <div
+              className={
+                isNightModeActive
+                  ? "history expanded night-mode"
+                  : "history collapsed"
+              }
+              onClick={toggleHistory}
+            >
+              <h2>
+                History{" "}
+                {isHistoryExpanded && (
+                  <img
+                    src=""
+                    onClick={clearHistory}
+                    style={{ cursor: "pointer" }}
+                    alt="Clear History"
+                  />
+                )}
+              </h2>
+              {isHistoryExpanded && (
+                <ul>
+                  {history.map((item, index) => (
+                    <li
+                      key={index}
+                      className={
+                        "historyItem" +
+                        (isNightModeActive ? " night-mode" : "")
+                      }
+                    >
+                      <div className="historyItemNumber">{index + 1}</div>
+                      <p className="historyItemP textBlock">
+                        Text: {item.text}
+                        <span className="historyItemBorder" />
+                      </p>
+                      <p className="historyItemP">
+                        Action: {item.action}
+                        <span className="historyItemBorder" />
+                      </p>
+                      <div className="resultBlock">
+                        <p className="historyItemResult">
+                          Result:{" "}
+                          {item.action === "image" ? (
+                            <img src={item.result.url} alt="" />
+                          ) : (
+                            item.result
+                          )}
+                        </p>
+                      </div>
+                      <p className="historyItemTimestamp">
+                        {item.timestamp.toLocaleString()}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
           <div
             className={
               "popup-detail " + (isNightModeActive ? "night-mode" : "light")
@@ -782,6 +840,7 @@ const ReadingAssistance = () => {
       )}
     </div>
   );
-};
-
-export default ReadingAssistance;
+  };
+  
+  export default ReadingAssistance;
+  

@@ -66,8 +66,9 @@ export default function ReadingComprehension() {
   return (
     <div>
       <div className="container content">
+      <span className="reading-level-text">Select reading level</span>
+
         <div className="reading-level-radio">
-          <span className="reading-level-text">Select reading level</span>
           {/* <p class="gradient-text">Hello, world!</p> */}
 
           <FcInfo className="info-icon" />

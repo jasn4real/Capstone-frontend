@@ -22,10 +22,13 @@ code {
   max-height: 400px; /* add this line if you also want to increase the height */
   text-align: center;
   z-index: 99;
+  left: 0;
+  right: 0;
+  transform: translate(-50%, -50%);
 }
 
 .popup.active {
-  opacity: 1;
+  opacity: 10;
 }
 
 .popup-action {
@@ -68,11 +71,26 @@ code {
 }
 
 .popup-detail {
-  /* other styles */
-
-  /* Update the z-index */
+overflow-x: auto; 
   z-index: 2;
+  background-color: white;
+  color: black;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  text-align: left;
 }
+
+.popup-detail.night-mode {
+  overflow-x: auto; 
+    z-index: 2;
+    background-color: black;
+    color: black;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+
+
 
 .popup-detail img {
   width: 100%;
@@ -112,13 +130,6 @@ code {
   margin-bottom: 1rem;
 }
 
- /* .history li {
-  border: 1px solid black;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-}  */
 
 .history li a {
   text-decoration: none;
@@ -131,7 +142,7 @@ code {
 
 .history {
   position: fixed;
-  top: 20px;
+  top: 60px;
   right: 20px;
   background: white;
   border: 1px solid #ccc;
@@ -314,16 +325,19 @@ code {
 
 .night-mode-button {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
+  top: 166px !important;
+  left: 130px;
+  width: 20px; /* Updated width */
+  height: 20px; /* Updated height */
+  border-radius: 10px; /* Adjusted border radius */
   cursor: pointer;
 }
 
+
+
+
 body.dark-mode {
-  background: #111;
+  background: #1a1a1a;
   color: #eee;
 }
 
@@ -422,11 +436,13 @@ body.dark-mode .popup-action {
   left: 0;  /* Align to the left */
   width: 100%;  /* Full width */
   height: 100%;  /* Full height */
+  background-color: rgba(0, 0, 0, 0.8);
   background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent black background */
   display: flex;  /* Using flex to center the content */
   justify-content: center;  /* Center horizontally */
   align-items: center;  /* Center vertically */
   z-index: 9999;  /* High z-index to appear above other elements */
+  color: #f0f0f0;
 }
 
 .tutorial-modal {
@@ -442,6 +458,12 @@ body.dark-mode .popup-action {
   margin: 0 auto;
   max-Width: 80%;
   padding-top: 40px;
+}
+
+.tutorial-modal img {
+  max-width: 400px;  /* Adjust as needed */
+  height: auto;
+  object-fit: contain;  /* Scale the image while maintaining its aspect ratio (even if the width and height are not the same) */
 }
 
 

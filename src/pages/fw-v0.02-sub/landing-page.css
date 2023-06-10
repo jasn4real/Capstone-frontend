@@ -84,10 +84,10 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 }
 .min-status-col .recents-box > div{
   margin: auto;
-  width: calc(100% - 1px);
+  width: calc(100% - -19px);
   background-color: gray;
   border: 1px solid violet;
-  height: 11em;
+  height: 14em;
   text-align: center;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
@@ -98,31 +98,21 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 }
 
 
-.recents-box > div {
-  position: relative;
-}
-
-.recents-box > div::after {
-  content: "...";
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 24px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.7);
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
+/*three dots under recents box */
+.delete-button {
+  color: #ffff;
+  margin-left: 5px;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-top: 9rem;
 }
 
-.recents-box > div:hover::after {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, 0.9);
+.delete-button:hover{
+  transition: 0.4s;
+  color: #ee82ee;
+  ;
+
 }
+

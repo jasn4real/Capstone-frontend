@@ -9,6 +9,9 @@ export default function LandingPage({ pop_frame }) {
   }
 
   const [showOption, setShowOption] = useState(false);
+  const [activeBoxIndex, setActiveBoxIndex] = useState(null);
+
+  const [confirmDelete, setConfirmDelete] = useState(false)
 
   const recentBoxes = [
     "recent box 1",
@@ -19,12 +22,28 @@ export default function LandingPage({ pop_frame }) {
     "recent box 6",
   ];
 
-  const handleMouseEnter = () => {
-    setShowOption(true);
+  const handleMouseEnter = (index) => {
+    setActiveBoxIndex(index);
   };
+  
 
   const handleMouseLeave = () => {
-    setShowOption(false);
+    setActiveBoxIndex(null);
+  };
+  
+
+  const handleDeleteClick = (index) => {
+    console.log("Deleting box at index:", index);
+  };
+
+  const handleConfirmDelete = (index) => {
+    // Handle the confirmed delete action for the box at the specified index
+    console.log("Confirm delete box at index:", index);
+    // Perform your delete logic here
+
+    // After deletion, reset the state
+    // setDeleteIndex(null);
+    setConfirmDelete(false);
   };
   ///////////////////////////////////
   return (
@@ -66,11 +85,18 @@ export default function LandingPage({ pop_frame }) {
             {recentBoxes.map((box, index) => (
               <div
                 key={index}
-                onMouseEnter={handleMouseEnter}
+                onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={handleMouseLeave}
               >
                 {box}
-                {showOption}
+                {activeBoxIndex === index && (
+                  <button
+                    className="delete-button"
+                    // onClick={() => setConfirmDelete(true)}
+                  >
+                    ...
+                  </button>
+                )}
               </div>
             ))}
           </div>

@@ -92,15 +92,30 @@ export default function ComprehensionPage({ fileHash }) {
           <span className="reading-level-text">Select reading level</span>
           <div className="form-check">
             <label htmlFor="rb1">
-              <input className="form-check-input" type="radio" name="rb" id="rb1"/>
+              <input
+                className="form-check-input"
+                type="radio"
+                name="rb"
+                id="rb1"
+              />
               Easy
             </label>
             <label htmlFor="rb2">
-              <input className="form-check-input" type="radio" name="rb" id="rb2"/>
+              <input
+                className="form-check-input"
+                type="radio"
+                name="rb"
+                id="rb2"
+              />
               Medium
             </label>
             <label htmlFor="rb3">
-              <input className="form-check-input" type="radio" name="rb" id="rb3" />
+              <input
+                className="form-check-input"
+                type="radio"
+                name="rb"
+                id="rb3"
+              />
               Advanced
             </label>
             <FcInfo className="info-icon" />
@@ -153,7 +168,9 @@ export default function ComprehensionPage({ fileHash }) {
 
                 <span className="question-header">Q</span>
 
-                <span className="user-question-text">{capitalizeFirstLetter(el.q)}</span>
+                <span className="user-question-text">
+                  {capitalizeFirstLetter(el.q)}
+                </span>
               </li>
               {el.type === "image" ? (
                 <img
@@ -164,7 +181,7 @@ export default function ComprehensionPage({ fileHash }) {
                 />
               ) : (
                 <li>
-                  <span className="answer-header">response :</span>
+                  <span className="answer-header">response: </span>
                   <span className="response-text">{el.data}</span>
                 </li>
               )}

@@ -26,10 +26,23 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  flex-shrink: 0;
-  flex-basis: auto;
-  overflow-x: auto;
+  border: solid 1px #7d9cba;
+  border-radius: 5px;
+  padding: 10px;
+
+}
+.reading-function-panel{
+  display: grid;
+  grid-template-columns: 25px 50px 50px 1fr 1fr;
+  align-items: center;
+  text-align: center;
+}
+    
+.page-active > .assistance-page > .cols-container > div > .text-reading-panel{
+  overflow-y: scroll;
+  height: 100%;
+  flex-grow: 1; /* Allow the last div to grow and take up remaining height */
+  overflow-y: scroll;
 }
 
 .text-reading-panel {

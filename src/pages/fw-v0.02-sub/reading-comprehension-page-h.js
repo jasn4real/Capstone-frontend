@@ -9,6 +9,7 @@ export default function ComprehensionPage({ fileHash }) {
   const [isLoading, setIsLoading] = useState(false);
   const [historyData, setHistoryData] = useState([]);
   useEffect(() => {
+    console.log(getAllHistorywithUnifyTime(fileHash));
     setHistoryData(getAllHistorywithUnifyTime(fileHash));
   }, []);
   ///////////////////////////////
@@ -51,7 +52,21 @@ export default function ComprehensionPage({ fileHash }) {
     const ret = [];
     for (let catalog_key in raw)
       for (let content in raw[catalog_key]) {
-        ret.push({ ...raw[catalog_key][content], type: catalog_key });
+        const timestamp = new Date(
+          raw[catalog_key][content].timestamp
+        ).toLocaleString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          // hour: "numeric",
+          // minute: "numeric",
+          // second: "numeric",
+        });
+        ret.push({
+          ...raw[catalog_key][content],
+          type: catalog_key,
+          timestamp,
+        });
       }
     ret.sort((a, b) =>
       new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime() > 0
@@ -60,6 +75,11 @@ export default function ComprehensionPage({ fileHash }) {
     );
     return ret;
   }
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   function onImgError(evt) {
     console.log("img error", evt.target);
     evt.target.src = evt.target.getAttribute("alt-src");
@@ -71,25 +91,43 @@ export default function ComprehensionPage({ fileHash }) {
         <form onSubmit={onSubmitClick}>
           <span className="reading-level-text">Select reading level</span>
           <div className="form-check">
-            <label>
-              <input className="form-check-input" type="radio" name="rb" />
+            <label htmlFor="rb1">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="rb"
+                id="rb1"
+              />
               Easy
             </label>
-            <label>
-              <input className="form-check-input" type="radio" name="rb" />
+            <label htmlFor="rb2">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="rb"
+                id="rb2"
+              />
               Medium
             </label>
-            <label>
-              <input className="form-check-input" type="radio" name="rb" />
+            <label htmlFor="rb3">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="rb"
+                id="rb3"
+              />
               Advanced
             </label>
             <FcInfo className="info-icon" />
           </div>
+
           <div className="comprehension-input-button">
             <input
+              className="reading-comprehension-input"
               type="text"
               name="readingcomprehension"
               placeholder="what is this text about ?"
+              id="read-comp-i"
             />
             {isLoading ? (
               <button className="btn btn-style">Loading</button>
@@ -101,32 +139,57 @@ export default function ComprehensionPage({ fileHash }) {
           </div>
         </form>
       </div>
-      <div className="history-in-comprehension-page-div">
-        {historyData.map((el, idx) => (
-          <div className="history-card" key={idx}>
-            <li>
-              <span className="question-header">Q</span>
-              <span className="user-question-text">{el.q}</span>
-            </li>
-            {el.type === "image" ? (
-              <img
-                src={el.data}
-                alt="Not Found"
-                alt-src="./Caplogo2.png"
-                onError={onImgError}
-              />
-            ) : (
+      {isLoading ? (
+        <div className="history-in-comprehension-page-div lds">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      ) : (
+        <div className="history-in-comprehension-page-div">
+          {historyData.map((el, idx) => (
+            <div className="history-card" key={idx}>
               <li>
-                <span className="answer-header">answer :</span>
-                <span className="response-text">{el.data}</span>
+                <div className="history-card-tags">
+                  <span
+                    className="response-type"
+                    style={{
+                      color:
+                        el.type === "comprehension"
+                          ? "rgb(145 113 180)"
+                          : "#2096f3",
+                    }}
+                  >
+                    {el.type.toUpperCase()}
+                  </span>
+                  ⎮ <span className="date-text">DATE {el.timestamp}</span>
+                </div>
+
+                <span className="question-header">Q</span>
+
+                <span className="user-question-text">
+                  {capitalizeFirstLetter(el.q)}
+                </span>
               </li>
-            )}
-            <li>
-              <span className="timestamp-text">{el.timestamp}</span>
-            </li>
-          </div>
-        ))}
-      </div>
+              {el.type === "image" ? (
+                <img
+                  src={el.data}
+                  alt="Not Found"
+                  alt-src="./Caplogo2.png"
+                  onError={onImgError}
+                />
+              ) : (
+                <li>
+                  <span className="answer-header">response: </span>
+                  <span className="response-text">{el.data}</span>
+                </li>
+              )}
+              <li></li>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

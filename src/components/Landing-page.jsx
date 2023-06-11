@@ -183,7 +183,8 @@ function LandingPage({ pop_frame }) {
                       </button>
                     )}
                     {confirmDeletionArray[idx] && (
-                      <button className="confirm-deletion-button">
+                      <button className="confirm-deletion-button"
+                      onClick={deleteFile}>
                         Delete
                       </button>
                     )}

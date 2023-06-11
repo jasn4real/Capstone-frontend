@@ -81,7 +81,7 @@ export default function LandingPage({ pop_frame }) {
               upload <br></br> PDF
             </button>
           </div>
-          <div className="recents-box">
+          {/* <div className="recents-box">
             {recentBoxes.map((box, index) => (
               <div
                 key={index}
@@ -99,7 +99,7 @@ export default function LandingPage({ pop_frame }) {
                 )}
               </div>
             ))}
-          </div>
+          </div> */}
       </div>
     </div>
     </div>

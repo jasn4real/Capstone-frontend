@@ -11,6 +11,9 @@ function LandingPage({ pop_frame }) {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [activeBoxIndex, setActiveBoxIndex] = useState(null);
+  const [confirmDeletion, setConfirmDeletion] = useState(false);
+
   useEffect(() => {
     let allFiles = lc.getAllFiles();
     allFiles = allFiles.map((el) =>
@@ -66,6 +69,16 @@ function LandingPage({ pop_frame }) {
       setShowModal(false);
     }
   }
+
+  const handleMouseEnter = (idx) => {
+    console.log("mosue entered", idx);
+    setActiveBoxIndex(idx);
+  };
+
+  const handleMouseLeave = () => {
+    console.log("mouse left");
+    setActiveBoxIndex(null);
+  };
 
   return (
     <div className={`landing-page ${isLoading ? "blurry" : ""}`}>
@@ -143,44 +156,13 @@ function LandingPage({ pop_frame }) {
                     //   selectedFiles.includes(recent) ? "selected" : ""
                     // }`}
                     key={idx}
-                    onClick={() => toggleFileSelection(recent)}
+                    onMouseEnter={() => handleMouseEnter(idx)}
+                    onMouseLeave={handleMouseLeave}
                   >
-                    {/* <img src={recent.image} alt={recent.title} /> */}
-                    <div className="card-body">
-                      <h5 className="card-title">{recent.metaData.name}</h5>
-                      <p className="card-text">{recent.description}</p>
-                    </div>
+                    <span>{recent.metaData.name}</span>
+                    {activeBoxIndex === idx && (<Button className="delete-button" >delete</Button>)}
                   </div>
                 ))}
-                <div className="delete-files-container">
-                  <Button
-                    onClick={() => setShowModal(true)}
-                    disabled={selectedFiles.length === 0}
-                  >
-                    Delete Files
-                  </Button>
-                </div>
-
-                <Modal show={showModal} onHide={() => setShowModal(false)}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Delete Files</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    Are you sure you want to delete the selected{" "}
-                    {selectedFiles.length} files?
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button
-                      variant="secondary"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button variant="danger" onClick={deleteFile}>
-                      Delete
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
               </div>
             </div>
           </Col>

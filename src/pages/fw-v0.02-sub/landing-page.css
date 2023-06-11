@@ -8,12 +8,15 @@
   opacity: 1;
 }
 
+
+/*page active reading assistant, comp container*/
 .page-active .cols-container{
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns with equal width */
-  grid-gap: 20px; /* Gap between grid items */
+  grid-template-columns: 1fr 1fr; 
+  grid-gap: 20px; 
   padding: 48px;
 }
+
 
 .page-active .text-panel-div{
   padding: 48px;
@@ -47,10 +50,9 @@ div:not(.page-active) > .landing-page > .cols-container{
 
 .min-status-col{
   display: none;
-  width: 140px;
+  width: -10px; /*boxes*/
   opacity: 0;
   transition: all 0.3s ease-in-out; /* 添加过渡效果 */
-
 }
 
 .min-status-col .hp-ctn-howItWorks{
@@ -59,10 +61,14 @@ div:not(.page-active) > .landing-page > .cols-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* margin-left: 1em; */
-
-
+  margin-top: 2em;
 }
+
+.btn-style-square{
+margin-right:11rem;
+}
+
+
 div:not(.page-active) > .landing-page > .min-status-col {
   display: grid;
   opacity: 1;
@@ -81,8 +87,8 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 
 }
 .min-status-col .recents-box > div{
-  margin: auto;
-  width: calc(100% - 10px);
+  margin-left:3px;
+  width: calc(100% - (90px));
   background-color: gray;
   border: 1px solid violet;
   height: 14em;
@@ -104,7 +110,7 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
-  margin-top: 9rem;
+  margin-top: 10rem;
 }
 
 .delete-button:hover{

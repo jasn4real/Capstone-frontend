@@ -173,7 +173,7 @@ function LandingPage({ pop_frame }) {
                     onMouseEnter={() => handleMouseEnter(idx)}
                     onMouseLeave={() => handleMouseLeave(idx)}
                   >
-                    <span>{recent.metaData.name}</span>
+                    <span className="file-name">{recent.metaData.name}</span>
                     {activeBoxIndex === idx && (
                       <button
                         className="delete-button"
@@ -183,11 +183,16 @@ function LandingPage({ pop_frame }) {
                       </button>
                     )}
                     {confirmDeletionArray[idx] && (
-                      <button className="confirm-deletion-button"
-                      onClick={deleteFile}>
+                      <button
+                        className="confirm-deletion-button"
+                        onClick={deleteFile}
+                      >
                         Delete
                       </button>
                     )}
+                    {/* <>
+                      <span className="file-index-number">{idx}</span>
+                       </> */}
                   </div>
                 ))}
               </div>

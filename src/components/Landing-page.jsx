@@ -5,7 +5,7 @@ import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import "../pages/fw-v0.02-sub/landing-page.css";
 import lc from "../storage_";
 
-function LandingPage({ pop_frame }) {
+function LandingPage({ pop_frame, setCurrentFileHash }) {
   const [recents, setRecents] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -47,9 +47,10 @@ function LandingPage({ pop_frame }) {
           lc.getFileDetail(el, ["metaData", "textToImage"])
         );
         setRecents(allFiles);
-        console.log(allFiles);
         pop_frame(1);
         setIsLoading(false); // Stop loading animation
+        if(data.fileHash) setCurrentFileHash(data.fileHash);
+        evt.target.value = "";
       });
     }
     console.log(evt.target.files);

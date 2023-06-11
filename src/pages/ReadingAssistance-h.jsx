@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "../index.css";
 import { useSpring, animated } from "react-spring";
-import { Document, Page, pdfjs } from "react-pdf";
 import storageFunctions from "../storage_";
 import anime from "animejs";
-import { BsPencilSquare } from "react-icons/bs";
+import {extractTextAndImageFromPDF, custom_split_by_jeans_format} from '../pdf-wrapper_';
+
 import fetchFunctions from "../fetch_";
 import {
   nightmode,
@@ -20,28 +20,22 @@ import {
   recents,
 } from "../userwalkthrough/index";
 
+import { Document, Page, pdfjs } from "react-pdf";
 
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const ReadingAssistance = ({ fileHash, triggerHistoryUpdate }) => {
   const [selection, setSelection] = useState("");
   const [result, setResult] = useState("");
   const [action, setAction] = useState(null);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const con = useRef(null);
-  const [numPages, setNumPages] = useState(null);
   const [fileTextContent, setFileTextContent] = useState("");
   const [isNightModeActive, setIsNightModeActive] = useState(false);
   const [hoverAction, setHoverAction] = useState(false);
-  const [highlightedText, setHighlightedText] = useState("");
-  const [isNoteOpen, setIsNoteOpen] = useState(false);
   const [comments, setComments] = useState({});
-  const [selectedPageIndex, setSelectedPageIndex] = useState(null);
-  const [selectedParagraphIndex, setSelectedParagraphIndex] = useState(null);
-  const POPUP_WIDTH = 200; // Replace with the desired width of your pop-up interface
-
+  const con = useRef(null);
   const extractTextFromBlob = async (url) => {
+    pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
     try {
       const loadingTask = pdfjs.getDocument(url);
       const pdf = await loadingTask.promise;
@@ -152,10 +146,13 @@ const ReadingAssistance = ({ fileHash, triggerHistoryUpdate }) => {
   };
 
   useEffect(() => {
-
+    if(!fileHash) return;
     const fetchFileContent = async () => {
       try {
-        const textContent = await extractTextFromBlob(fetchFunctions.pdf_download_url_prefix + fileHash);
+        // const textContent = await extractTextFromBlob(fetchFunctions.pdf_download_url_prefix + fileHash);
+
+        const textContent = await custom_split_by_jeans_format(fetchFunctions.pdf_download_url_prefix + fileHash);
+        console.log(textContent);
         setFileTextContent(textContent);
 
       } catch (error) {
@@ -164,7 +161,7 @@ const ReadingAssistance = ({ fileHash, triggerHistoryUpdate }) => {
     };
 
     fetchFileContent();
-  }, []);
+  }, [fileHash]);
 
   useEffect(() => {
     // Create an animation for the popup when it appears
@@ -215,7 +212,6 @@ const ReadingAssistance = ({ fileHash, triggerHistoryUpdate }) => {
 
         selection.removeAllRanges();
         selection.addRange(range);
-        setHighlightedText(selection.toString());
       }
     } catch (error) {
       console.error("An error occurred while highlighting:", error);
@@ -223,8 +219,7 @@ const ReadingAssistance = ({ fileHash, triggerHistoryUpdate }) => {
   };
 
   return (
-    <div className="bigcontainer" ref={con} style={{ position: "relative", overflow: 'auto' }}>
-      {numPages && <div>Number of Pages: {numPages}</div>}
+    <div className="bigcontainer" style={{ position: "relative", overflow: 'auto' }}>
       {fileTextContent.split("-- PAGE START -- ").map((page, pageIndex) => (
         <div key={pageIndex} className="page-content">
           {pageIndex > 0 && <hr />}
@@ -259,16 +254,8 @@ const ReadingAssistance = ({ fileHash, triggerHistoryUpdate }) => {
                     };
                     setMouse(mousePosition);
                     setAction(null);
-
-                    // Set the selected page and paragraph indexes here
-                    setSelectedPageIndex(pageIndex);
-                    setSelectedParagraphIndex(paragraphIndex);
-
-                    // Open the note taking area when a text is selected
-                    setIsNoteOpen(false);
                   } else {
                     setSelection(null);
-                    setIsNoteOpen(false); // Close note taking area if no text is selected
                   }
                 }}
               >

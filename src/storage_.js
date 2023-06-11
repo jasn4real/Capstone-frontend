@@ -193,7 +193,7 @@ const textToImage = (fileHash, question, callback) => {
   } 
   //////////////////////////////
   srv.read_text_to_image(question, (data) => {
-    setHistory("image", fileHash, question, {q: question, data :data.image_url});
+    setHistory("image", fileHash, question, {q: question, data :data.image_url, alt_image_url:data.alt_image_url});
     callback(data.image_url);
   })
 }

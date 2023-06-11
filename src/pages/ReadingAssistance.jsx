@@ -24,7 +24,7 @@ import {
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const ReadingAssistance = () => {
+const ReadingAssistance = ({fileHash}) => {
   const [selection, setSelection] = useState("");
   const [result, setResult] = useState("");
   const [action, setAction] = useState(null);
@@ -481,8 +481,7 @@ const ReadingAssistance = () => {
   
 
   useEffect(() => {
-    const fileHash =
-      "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
+
 
     const fetchFileContent = () => {
       try {

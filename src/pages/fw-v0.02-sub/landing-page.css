@@ -88,7 +88,7 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 }
 .min-status-col .recents-box > div{
   margin-left:3px;
-  width: calc(100% - (90px));
+  width: calc(100% - 90px);
   background-color: gray;
   border: 1px solid violet;
   height: 14em;
@@ -99,6 +99,7 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 }
 .min-status-col .recents-box > div:hover{
   box-shadow: 0px 1px 3px 3px rgb(215, 87, 215);
+  background-color: #fcfcfc;
 }
 
 
@@ -134,6 +135,26 @@ font-size: 1.9rem;
   background-color: #22249b;
   color: #fcfcfc;
 
+}
+
+.file-name{
+
+}
+
+.file-index-number{
+
+  /* position: absolute; */
+  /*  
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 1; /* Ensure the index number appears above other elements 
+  */
 }
 
 .landing-page.blurry > *:not(.loader-container) {

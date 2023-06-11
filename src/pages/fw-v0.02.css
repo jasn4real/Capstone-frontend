@@ -35,6 +35,7 @@
   border: 1px solid violet;
   background-color: #060644;
   color: white !important;
+  margin-bottom:1px;
 
 }
 .btn-style:active{

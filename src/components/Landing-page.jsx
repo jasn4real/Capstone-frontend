@@ -5,11 +5,25 @@ import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import "../pages/fw-v0.02-sub/landing-page.css";
 import lc from "../storage_";
 
+import { FcFullTrash } from "react-icons/fc";
 function LandingPage({ pop_frame, setCurrentFileHash }) {
+
   const [recents, setRecents] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [activeBoxIndex, setActiveBoxIndex] = useState(null);
+  const [confirmDeletion, setConfirmDeletion] = useState(false);
+  const [confirmDeletionArray, setConfirmDeletionArray] = useState(
+    Array(recents.length).fill(false)
+  );
+
+  const handleConfirmDelete = (index) => {
+    const updatedConfirmDeletionArray = [...confirmDeletionArray];
+    updatedConfirmDeletionArray[index] = !updatedConfirmDeletionArray[index];
+    setConfirmDeletionArray(updatedConfirmDeletionArray);
+  };
 
   useEffect(() => {
     let allFiles = lc.getAllFiles();
@@ -67,6 +81,19 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
       setShowModal(false);
     }
   }
+
+  const handleMouseEnter = (idx) => {
+    console.log("mosue entered", idx);
+    setActiveBoxIndex(idx);
+  };
+
+  const handleMouseLeave = (idx) => {
+    console.log("mouse left");
+    setActiveBoxIndex(null);
+    const updatedConfirmDeletionArray = [...confirmDeletionArray];
+    updatedConfirmDeletionArray[idx] = false;
+    setConfirmDeletionArray(updatedConfirmDeletionArray);
+  };
 
   return (
     <div className={`landing-page ${isLoading ? "blurry" : ""}`}>
@@ -144,44 +171,26 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
                     //   selectedFiles.includes(recent) ? "selected" : ""
                     // }`}
                     key={idx}
-                    onClick={() => toggleFileSelection(recent)}
+                    onMouseEnter={() => handleMouseEnter(idx)}
+                    onMouseLeave={() => handleMouseLeave(idx)}
                   >
-                    {/* <img src={recent.image} alt={recent.title} /> */}
-                    <div className="card-body">
-                      <h5 className="card-title">{recent.metaData.name}</h5>
-                      <p className="card-text">{recent.description}</p>
-                    </div>
+                    <span>{recent.metaData.name}</span>
+                    {activeBoxIndex === idx && (
+                      <button
+                        className="delete-button"
+                        onClick={() => handleConfirmDelete(idx)}
+                      >
+                        <FcFullTrash className="trash-icon" />
+                      </button>
+                    )}
+                    {confirmDeletionArray[idx] && (
+                      <button className="confirm-deletion-button"
+                      onClick={deleteFile}>
+                        Delete
+                      </button>
+                    )}
                   </div>
                 ))}
-                <div className="delete-files-container">
-                  <Button
-                    onClick={() => setShowModal(true)}
-                    disabled={selectedFiles.length === 0}
-                  >
-                    Delete Files
-                  </Button>
-                </div>
-
-                <Modal show={showModal} onHide={() => setShowModal(false)}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Delete Files</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    Are you sure you want to delete the selected{" "}
-                    {selectedFiles.length} files?
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button
-                      variant="secondary"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button variant="danger" onClick={deleteFile}>
-                      Delete
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
               </div>
             </div>
           </Col>

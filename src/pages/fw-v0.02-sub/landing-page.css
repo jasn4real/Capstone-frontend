@@ -8,12 +8,15 @@
   opacity: 1;
 }
 
+
+/*page active reading assistant, comp container*/
 .page-active .cols-container{
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns with equal width */
-  grid-gap: 20px; /* Gap between grid items */
+  grid-template-columns: 1fr 1fr; 
+  grid-gap: 20px; 
   padding: 48px;
 }
+
 
 .page-active .text-panel-div{
   padding: 48px;
@@ -47,10 +50,9 @@ div:not(.page-active) > .landing-page > .cols-container{
 
 .min-status-col{
   display: none;
-  width: 80px;
+  width: -10px; /*boxes*/
   opacity: 0;
   transition: all 0.3s ease-in-out; /* 添加过渡效果 */
-
 }
 
 .min-status-col .hp-ctn-howItWorks{
@@ -59,10 +61,14 @@ div:not(.page-active) > .landing-page > .cols-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 1em;
-
-
+  margin-top: 2em;
 }
+
+.btn-style-square{
+margin-right:11rem;
+}
+
+
 div:not(.page-active) > .landing-page > .min-status-col {
   display: grid;
   opacity: 1;
@@ -74,18 +80,18 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 .min-status-col .recents-box {
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 4em;
+  row-gap: 6.5em;
   width: 100%;
   margin-top: 20px;
-  margin-left: 1em;
+  /* margin-left: 1em; */
 
 }
 .min-status-col .recents-box > div{
-  margin: auto;
-  width: calc(100% - 1px);
+  margin-left:3px;
+  width: calc(100% - (90px));
   background-color: gray;
   border: 1px solid violet;
-  height: 11em;
+  height: 14em;
   text-align: center;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
@@ -96,33 +102,38 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 }
 
 
-.recents-box > div {
-  position: relative;
-}
-
-.recents-box > div::after {
-  content: "...";
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 24px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.7);
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
+.delete-button {
+  background-color: #ffff;
+  margin-left: 40px;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-top: 102px;
+  transition: background-color 0.4s;
 }
 
-.recents-box > div:hover::after {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, 0.9);
+.delete-button:hover{
+  transition: 0.4s;
+  background-color: #fddd3a;
+}
+
+.trash-icon{
+font-size: 1.9rem;
+}
+
+.confirm-deletion-button{
+  background-color: #fff;
+  border: none;
+  width: -webkit-fill-available;
+  transition: background-color 0.4s, color 0.4s;
+
+}
+
+.confirm-deletion-button:hover{
+  background-color: #22249b;
+  color: #fcfcfc;
+
 }
 
 .landing-page.blurry > *:not(.loader-container) {

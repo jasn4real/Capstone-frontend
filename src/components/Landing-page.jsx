@@ -5,6 +5,8 @@ import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import "../pages/fw-v0.02-sub/landing-page.css";
 import lc from "../storage_";
 
+import {FcFullTrash} from "react-icons/fc"
+
 function LandingPage({ pop_frame }) {
   const [recents, setRecents] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -160,7 +162,7 @@ function LandingPage({ pop_frame }) {
                     onMouseLeave={handleMouseLeave}
                   >
                     <span>{recent.metaData.name}</span>
-                    {activeBoxIndex === idx && (<Button className="delete-button" >delete</Button>)}
+                   <button className="delete-button" ><FcFullTrash className="trash-icon"/></button>
                   </div>
                 ))}
               </div>

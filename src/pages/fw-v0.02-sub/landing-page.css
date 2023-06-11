@@ -102,22 +102,25 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 }
 
 
-/*three dots under recents box */
 .delete-button {
-  color: #ffff;
-  margin-left: 5px;
+  background-color: #ffff;
+  margin-left: 40px;
   cursor: pointer;
   border: none;
   padding: 5px 10px;
-  border-radius: 4px;
-  margin-top: 10rem;
+  border-radius: 20px;
+  margin-top: 102px;
 }
+
 
 .delete-button:hover{
   transition: 0.4s;
-  color: #ee82ee;
-  ;
+  background-color: #fddd3a;
 
+}
+
+.trash-icon{
+font-size: 1.9rem;
 }
 
 .landing-page.blurry > *:not(.loader-container) {

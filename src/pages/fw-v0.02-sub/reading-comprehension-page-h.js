@@ -73,11 +73,11 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
           date_str
         });
       }
-    ret.sort((a, b) =>{
-      return new Date(a.timestamp).getTime() > new Date(b.timestamp).getTime()
-      ? -1
-      : 1
-    }
+      ret.sort((a, b) =>{
+        return new Date(a.timestamp).getTime() > new Date(b.timestamp).getTime()
+        ? -1
+        : 1
+      }
       
     );
     return ret;
@@ -183,7 +183,7 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
                 <img
                   src={el.data}
                   alt="Not Found"
-                  alt-src="./Caplogo2.png"
+                  alt-src={el.alt_image_url || "./Caplogo2.png"}
                   onError={onImgError}
                 />
               ) : (

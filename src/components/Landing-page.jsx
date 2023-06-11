@@ -5,7 +5,7 @@ import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import "../pages/fw-v0.02-sub/landing-page.css";
 import lc from "../storage_";
 
-import {FcFullTrash} from "react-icons/fc"
+import { FcFullTrash } from "react-icons/fc";
 
 function LandingPage({ pop_frame }) {
   const [recents, setRecents] = useState([]);
@@ -15,6 +15,15 @@ function LandingPage({ pop_frame }) {
 
   const [activeBoxIndex, setActiveBoxIndex] = useState(null);
   const [confirmDeletion, setConfirmDeletion] = useState(false);
+  const [confirmDeletionArray, setConfirmDeletionArray] = useState(
+    Array(recents.length).fill(false)
+  );
+
+  const handleConfirmDelete = (index) => {
+    const updatedConfirmDeletionArray = [...confirmDeletionArray];
+    updatedConfirmDeletionArray[index] = !updatedConfirmDeletionArray[index];
+    setConfirmDeletionArray(updatedConfirmDeletionArray);
+  };
 
   useEffect(() => {
     let allFiles = lc.getAllFiles();
@@ -77,9 +86,12 @@ function LandingPage({ pop_frame }) {
     setActiveBoxIndex(idx);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (idx) => {
     console.log("mouse left");
     setActiveBoxIndex(null);
+    const updatedConfirmDeletionArray = [...confirmDeletionArray];
+    updatedConfirmDeletionArray[idx] = false;
+    setConfirmDeletionArray(updatedConfirmDeletionArray);
   };
 
   return (
@@ -159,10 +171,22 @@ function LandingPage({ pop_frame }) {
                     // }`}
                     key={idx}
                     onMouseEnter={() => handleMouseEnter(idx)}
-                    onMouseLeave={handleMouseLeave}
+                    onMouseLeave={() => handleMouseLeave(idx)}
                   >
                     <span>{recent.metaData.name}</span>
-                   <button className="delete-button" ><FcFullTrash className="trash-icon"/></button>
+                    {activeBoxIndex === idx && (
+                      <button
+                        className="delete-button"
+                        onClick={() => handleConfirmDelete(idx)}
+                      >
+                        <FcFullTrash className="trash-icon" />
+                      </button>
+                    )}
+                    {confirmDeletionArray[idx] && (
+                      <button className="confirm-deletion-button">
+                        Delete
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>

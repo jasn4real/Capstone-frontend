@@ -80,7 +80,7 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 .min-status-col .recents-box {
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 4em;
+  row-gap: 6.5em;
   width: 100%;
   margin-top: 20px;
   /* margin-left: 1em; */
@@ -110,17 +110,30 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   padding: 5px 10px;
   border-radius: 20px;
   margin-top: 102px;
+  transition: background-color 0.4s;
 }
-
 
 .delete-button:hover{
   transition: 0.4s;
   background-color: #fddd3a;
-
 }
 
 .trash-icon{
 font-size: 1.9rem;
+}
+
+.confirm-deletion-button{
+  background-color: #fff;
+  border: none;
+  width: -webkit-fill-available;
+  transition: background-color 0.4s, color 0.4s;
+
+}
+
+.confirm-deletion-button:hover{
+  background-color: #22249b;
+  color: #fcfcfc;
+
 }
 
 .landing-page.blurry > *:not(.loader-container) {

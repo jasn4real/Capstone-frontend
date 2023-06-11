@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./reading-assistance-page.css";
 import ComprehensionPage from "./reading-comprehension-page-h";
-import ReadingAssistance from "../ReadingAssistance-h";
+import ReadingAssistance from "../ReadingAssistance";
 
 let triggerHistoryUpdate_callback ;
 const setTriggerHistoryUpdate = ( func ) => {

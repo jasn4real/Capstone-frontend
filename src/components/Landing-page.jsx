@@ -69,16 +69,23 @@ function LandingPage({ pop_frame }) {
     console.log(evt.target.files);
   }
 
-  function deleteFile() {
-    if (selectedFiles.length > 0) {
-      selectedFiles.forEach((file) => lc.deleteFile(file.id));
-      const updatedRecents = recents.filter(
-        (file) => !selectedFiles.includes(file)
-      );
-      setRecents(updatedRecents);
-      setSelectedFiles([]);
-      setShowModal(false);
-    }
+  function deleteFile(index) {
+    // if (selectedFiles.length > 0) {
+    //   selectedFiles.forEach((file) => lc.deleteFile(file.id));
+    //   const updatedRecents = recents.filter(
+    //     (file) => !selectedFiles.includes(file)
+    //   );
+    //   setRecents(updatedRecents);
+    //   setSelectedFiles([]);
+    //   setShowModal(false);
+    // }
+    lc.deleteFile(recents[index].id);
+    const updatedRecents = [...recents];
+    updatedRecents.splice(index, 1);
+    setRecents(updatedRecents);
+    const updatedConfirmDeletionArray = [...confirmDeletionArray];
+    updatedConfirmDeletionArray.splice(index, 1);
+    setConfirmDeletionArray(updatedConfirmDeletionArray);
   }
 
   const handleMouseEnter = (idx) => {
@@ -185,7 +192,7 @@ function LandingPage({ pop_frame }) {
                     {confirmDeletionArray[idx] && (
                       <button
                         className="confirm-deletion-button"
-                        onClick={deleteFile}
+                        onClick={() => deleteFile(idx)}
                       >
                         Delete
                       </button>

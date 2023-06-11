@@ -37,7 +37,7 @@ export default function Welcome(){
         <AssistancePage pop_frame={pop_frame} fileHash={currentFileHash} />
       </div>
       <div className="comprehension-frame">
-        this is reading comprehenion page
+        Please rotate your device horizontally to utilize this app optimally.
       </div>
     </div>
   );

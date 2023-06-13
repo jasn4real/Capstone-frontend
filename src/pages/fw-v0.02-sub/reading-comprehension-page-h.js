@@ -12,10 +12,12 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
   useEffect(() => {
     // console.log(getAllHistorywithUnifyTime(fileHash));
     setHistoryData(getAllHistorywithUnifyTime(fileHash));
-  }, []);
+  }, [fileHash]);
   setTriggerHistoryUpdate((q)=>{
     setHistoryData(getAllHistorywithUnifyTime(fileHash));
   })
+
+
   ///////////////////////////////
   function onSubmitClick(evt) {
     evt.preventDefault();

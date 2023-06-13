@@ -12,7 +12,6 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
   const [recents, setRecents] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
-<<<<<<< Updated upstream
   const [isLoading, setIsLoading] = useState(false);
 
   const [activeBoxIndex, setActiveBoxIndex] = useState(null);
@@ -20,33 +19,6 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
   const [confirmDeletionArray, setConfirmDeletionArray] = useState(
     Array(recents.length).fill(false)
   );
-=======
-  const [showTutorial, setShowTutorial] = useState(false);
-
-  function openTutorialModal() {
-    setShowTutorial(true);
-  }
-
-  function renderTutorialButton() {
-  return (
-    <>
-      <button
-        onClick={openTutorialModal}
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          zIndex: "9999",
-        }}
-      >
-        Open Tutorial
-      </button>
-      {showTutorial && <TutorialModal onClose={() => setShowTutorial(false)} />}
-    </>
-  );
-}
-
->>>>>>> Stashed changes
 
   const handleConfirmDelete = (index) => {
     const updatedConfirmDeletionArray = [...confirmDeletionArray];
@@ -80,28 +52,21 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
 
   function OnUploadInputChange(evt) {
     if (evt.target.files[0]) {
-<<<<<<< Updated upstream
       setIsLoading(true); //start animation loading
 
-=======
->>>>>>> Stashed changes
       lc.uploadFile(evt.target, (data) => {
         let allFiles = lc.getAllFiles();
         allFiles = allFiles.map((el) => lc.getFileDetail(el, ["metaData", "textToImage"]));
         setRecents(allFiles);
         pop_frame(1);
-<<<<<<< Updated upstream
         setIsLoading(false); // Stop loading animation
         if(data.fileHash) setCurrentFileHash(data.fileHash);
         evt.target.value = "";
-=======
->>>>>>> Stashed changes
       });
     }
     console.log(evt.target.files);
   }
 
-<<<<<<< Updated upstream
   function deleteFile(index) {
     // if (selectedFiles.length > 0) {
     //   selectedFiles.forEach((file) => lc.deleteFile(file.id));
@@ -119,16 +84,6 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
     const updatedConfirmDeletionArray = [...confirmDeletionArray];
     updatedConfirmDeletionArray.splice(index, 1);
     setConfirmDeletionArray(updatedConfirmDeletionArray);
-=======
-  function deleteFile() {
-    if (selectedFiles.length > 0) {
-      selectedFiles.forEach((file) => lc.deleteFile(file.id));
-      const updatedRecents = recents.filter((file) => !selectedFiles.includes(file));
-      setRecents(updatedRecents);
-      setSelectedFiles([]);
-      setShowModal(false);
-    }
->>>>>>> Stashed changes
   }
 
   const handleMouseEnter = (idx) => {
@@ -165,17 +120,7 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
                 >
                   Upload PDF
                 </Button>
-                <button
-                  onClick={openTutorialModal}
-                  style={{
-                    position: "fixed",
-                    bottom: "20px",
-                    right: "20px",
-                    zIndex: "9999",
-                  }}
-                >
-                  Open Tutorial
-                </button>
+                
                 <input
                   id="files_input"
                   type="file"
@@ -229,7 +174,6 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
                     onMouseEnter={() => handleMouseEnter(idx)}
                     onMouseLeave={() => handleMouseLeave(idx)}
                   >
-<<<<<<< Updated upstream
                     <span className="file-name">{recent.metaData.name}</span>
                     {activeBoxIndex === idx && (
                       <button
@@ -252,47 +196,11 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
                        </> */}
                   </div>
                 ))}
-=======
-                    <div className="card-body">
-                      <h5 className="card-title">{recent.metaData.name}</h5>
-                      <p className="card-text">{recent.description}</p>
-                    </div>
-                  </div>
-                ))}
-                <div className="delete-files-container">
-                  <Button
-                    onClick={() => setShowModal(true)}
-                    disabled={selectedFiles.length === 0}
-                  >
-                    Delete Files
-                  </Button>
-                </div>
-                <Modal show={showModal} onHide={() => setShowModal(false)}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Delete Files</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    Are you sure you want to delete the selected {selectedFiles.length} files?
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button
-                      variant="secondary"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button variant="danger" onClick={deleteFile}>
-                      Delete
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
->>>>>>> Stashed changes
               </div>
             </div>
           </Col>
         </Row>
       </Container>
-      {showTutorial && <TutorialModal onClose={() => setShowTutorial(false)} />}
     </div>
   );
 }

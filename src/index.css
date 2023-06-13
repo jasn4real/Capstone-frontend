@@ -5,12 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-weight: bold; /* Add a bolder font weight */
+  font-size: 16px; /* Adjust the font size as desired */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+  font-weight: bold; /* Add a bolder font weight */
+  font-size: 14px; /* Adjust the font size as desired */
 }
+
 
 .popup {
   position: fixed;
@@ -81,14 +86,16 @@ overflow-x: auto;
 }
 
 .popup-detail.night-mode {
-  overflow-x: auto; 
-    z-index: 2;
-    background-color: black;
-    color: black;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    text-align: left;
-  }
+  overflow-x: auto;
+  z-index: 2;
+  background-color: #333; /* Updated background color */
+  color: #fff; /* Updated text color */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+
 
 
 
@@ -431,39 +438,53 @@ body.dark-mode .popup-action {
 }
 
 .tutorial-modal {
-  position: fixed;  /* Fix position to the viewport */
-  top: 0;  /* Align to the top */
-  left: 0;  /* Align to the left */
-  width: 100%;  /* Full width */
-  height: 100%;  /* Full height */
+  position: fixed;
+  top: 115px; /* Adjusted based on the height of your navbar */
+  left: 0;
+  width: 100%;
+  height: calc(100% - 115px); /* Adjusted based on the height of your navbar */
   background-color: rgba(0, 0, 0, 0.8);
-  background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent black background */
-  display: flex;  /* Using flex to center the content */
-  justify-content: center;  /* Center horizontally */
-  align-items: center;  /* Center vertically */
-  z-index: 9999;  /* High z-index to appear above other elements */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
   color: #f0f0f0;
 }
 
-.tutorial-modal {
-  display: flex;
-  flex-direction: column;
-}
-
-
 .tutorial-modal p {
-  font-size: 30px; /* Adjust as needed */
+  font-size: 18px; /* Adjust the font size as desired */
   color: #eee;
   overflow-wrap: break-word;
-  margin: 0 auto;
-  max-Width: 80%;
-  padding-top: 40px;
+  margin: 20px auto; /* Adjust the margin as desired */
+  max-width: 80%;
+  text-align: center; /* Center the text */
 }
 
 .tutorial-modal img {
-  max-width: 400px;  /* Adjust as needed */
-  height: auto;
-  object-fit: contain;  /* Scale the image while maintaining its aspect ratio (even if the width and height are not the same) */
+  max-width: 90%; /* Adjust the maximum width as desired */
+  max-height: 60vh; /* Adjust the maximum height as desired */
+  object-fit: contain;
+  margin-bottom: 20px; /* Add margin at the bottom */
+}
+
+.tutorial-modal button {
+  background-color: #f0f0f0;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  position: fixed;
+  bottom: 20px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #f0f0f0;
+  cursor: pointer;
 }
 
 

@@ -47,4 +47,11 @@
   overflow-x: auto;
 }
 
+.Assistancepage.night-mode {
+  background-color: black;
+  color: white;
+}
+
+/* Rest of the parent page styles */
+
 

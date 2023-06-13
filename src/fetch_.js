@@ -149,8 +149,18 @@ function read_text_to_explaination(q, callback) {
   */
 }
 
+function get_latest_file_hash(callback) {
+  fetch(`${API}/download_file/latest`)
+    .then((response) => response.json())
+    .then((data) => {
+      callback(data.hash);
+    })
+    .catch(error_handle);
+}
+
 
 export default { 
+  get_latest_file_hash,
   read_text_to_image, 
   read_text_to_explaination, 
   upload_file, 

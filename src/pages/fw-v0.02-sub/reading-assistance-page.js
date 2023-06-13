@@ -8,11 +8,13 @@ const setTriggerHistoryUpdate = ( func ) => {
   if(func) triggerHistoryUpdate_callback = func;
 }
 const triggerHistoryUpdate = (q) =>{
+  console.log("tr")
   if(triggerHistoryUpdate_callback) triggerHistoryUpdate_callback(q);
 }
-export default function AssistancePage({pop_frame, fileHash}){
-  const [isNightModeActive, setIsNightModeActive] = useState(false);
 
+export default function AssistancePage({ pop_frame, fileHash }) {
+  const [isNightModeActive, setIsNightModeActive] = useState(false);
+  
 
   function onLandingClick() {
     pop_frame(0);
@@ -48,7 +50,8 @@ export default function AssistancePage({pop_frame, fileHash}){
         </div>
 
         <div className="comprehension-panel">
-          <ComprehensionPage fh={fileHash} setTriggerHistoryUpdate={setTriggerHistoryUpdate} />
+
+        <ComprehensionPage fh={fileHash} setTriggerHistoryUpdate={setTriggerHistoryUpdate} />
         </div>
       </div>
     </div> // Missing in the original code

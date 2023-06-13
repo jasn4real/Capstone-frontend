@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "../index.css";
-import { useSpring, animated } from "react-spring";
-import { Document, Page, pdfjs } from "react-pdf";
+import { useSpring } from "react-spring";
+import { pdfjs } from "react-pdf";
 import storageFunctions from "../storage_";
 import anime from "animejs";
-import { BsPencilSquare } from "react-icons/bs";
 import fetchFunctions from "../fetch_";
 import {
   highlighter,
@@ -18,7 +17,7 @@ import {
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const ReadingAssistance = ({fileHash}) => {
+const ReadingAssistance = ({fileHash, triggerHistoryUpdate}) => {
   const [selection, setSelection] = useState("");
   const [result, setResult] = useState("");
   const [action, setAction] = useState(null);
@@ -38,10 +37,8 @@ const ReadingAssistance = ({fileHash}) => {
   const [selectedPageIndex, setSelectedPageIndex] = useState(null);
   const [selectedParagraphIndex, setSelectedParagraphIndex] = useState(null);
   const [firstTimeUser, setFirstTimeUser] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
   let synth = window.speechSynthesis;
   let voices = [];
-  const [queryInfo, setQueryInfo] = useState(null);
   const POPUP_WIDTH = 200; // Replace with the desired width of your pop-up interface
 
 
@@ -121,38 +118,8 @@ const ReadingAssistance = ({fileHash}) => {
     ]);
   };
 
-  const query = (evt) => {
-    evt.preventDefault();
-    const fileHash =
-      "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
-    const queryText = evt.target.texttoexplanation.value;
 
-    storageFunctions.textToExplanation(fileHash, queryText, (data) => {
-      console.log(data);
-      addToHistory(queryText, data, "textToExplanation");
-    });
-  };
 
-  const onTextToImage = (evt) => {
-    evt.preventDefault();
-    const fileHash =
-      "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
-    const query = evt.target.texttoimage.value;
-    storageFunctions.textToImage(fileHash, selection, (data) => {
-      setResult(data.url); // Use data.url instead of data
-      addToHistory(selection, data, "textToImage");
-    });
-  };
-
-  const printTextToExplanation = (evt) => {
-    evt.preventDefault();
-    const fileHash =
-      "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
-    const data = storageFunctions.getFileDetail(fileHash, [
-      "textToExplanation",
-    ]);
-    console.log(data);
-  };
 
   const toggleNightMode = () => {
     setIsNightModeActive((prevState) => !prevState);
@@ -170,8 +137,7 @@ const ReadingAssistance = ({fileHash}) => {
       if (selection) {
         setResult("loading");
         setAction(type); // Set the action here
-        const fileHash =
-          "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
+
         if (type === "text") {
           storageFunctions.textToExplanation(fileHash, selection, (data) => {
             if (data.error) {
@@ -179,6 +145,7 @@ const ReadingAssistance = ({fileHash}) => {
             } else if (data) {
               setResult(data);
               addToHistory(selection, data, "textToExplanation");
+              triggerHistoryUpdate(selection);
             } else {
               setResult("No data returned");
             }
@@ -191,6 +158,8 @@ const ReadingAssistance = ({fileHash}) => {
               if (data) {
                 setResult(data);
                 addToHistory(selection, data, "textToImage");
+                triggerHistoryUpdate(selection);
+
               } else {
                 setResult("No data returned");
               }
@@ -318,9 +287,9 @@ const ReadingAssistance = ({fileHash}) => {
         console.error("Error retrieving file content:", error);
       }
     };
-
-    fetchFileContent();
-  }, []);
+    if(fileHash) fetchFileContent();
+    
+  }, [fileHash]);
 
   useEffect(() => {
     // Create an animation for the popup when it appears

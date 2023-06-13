@@ -229,12 +229,47 @@ const textToComprehension = (fileHash, question, level = '2', callback) => {
     callback(data.choices[0].message.content);
   })
 }
+/////////////////////////////////////
+const print_you_local_storage = () => {
+  let ret = {};
+  for(let key in localStorage){
+    ret[key] = localStorage.getItem(key);
+  }
+  // console.log(JSON.stringify(ret))
+}
+
+/////////////////////////////////////
+const init_local_storage = () => {
+  try {
+    const currentLC = localStorage.getItem("files");
+    console.log(Array.isArray(JSON.parse(currentLC)))
+    if(!Array.isArray(JSON.parse(currentLC))){
+      throw "local stroage files key is not an array";
+    }
+  } catch (error) {
+    localStorage.clear();
+    srv.download_localstorage_init((data) => {
+      try {
+        const json = JSON.parse(data);
+        for(let key in json) if(json[key]){
+          localStorage.setItem(key, json[key]);
+        }
+      } catch (error) {
+        console.log("error in init localStroage", error);
+      }
+    })
+  }
+  
+}
+init_local_storage()
 /////////////////////////////////////////////////
 const wrapper = {
   getAllFiles, getFileDetail, deleteFile,
   uploadFile, downloadFile, getFileMeta,
   textToComprehension,
   textToExplanation,
-  textToImage
+  textToImage,
+  print_you_local_storage,
+  init_local_storage
 }
 export default wrapper;

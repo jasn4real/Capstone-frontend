@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { FcInfo } from "react-icons/fc";
 import "./reading-comprehension-page-h.css";
 import lc from "../../storage_";
+import srv from "../../fetch_";
 let fileHash = undefined;
 export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
   fileHash = fh;
@@ -12,10 +13,12 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
   useEffect(() => {
     // console.log(getAllHistorywithUnifyTime(fileHash));
     setHistoryData(getAllHistorywithUnifyTime(fileHash));
-  }, []);
+  }, [fileHash]);
   setTriggerHistoryUpdate((q)=>{
     setHistoryData(getAllHistorywithUnifyTime(fileHash));
   })
+
+
   ///////////////////////////////
   function onSubmitClick(evt) {
     evt.preventDefault();
@@ -86,10 +89,21 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
-
+  
   function onImgError(evt) {
-    console.log("img error", evt.target);
-    evt.target.src = evt.target.getAttribute("alt-src");
+    try {
+      //first check alt src
+      let alt_image_url = evt.target.getAttribute("alt-src");
+      if(!alt_image_url) throw "img alt src broken";
+
+      alt_image_url = `${srv.pdf_download_url_prefix}/image/${evt.target.getAttribute("alt-src")}`;
+      //check alt src available
+      if(!srv.imageExists(alt_image_url)) throw "img alt src broken";
+      evt.target.src = alt_image_url;
+    } catch (error) {
+      //if alt src broken
+      evt.target.src = `${srv.pdf_download_url_prefix}/image/Caplogo2png`;
+    }
   }
   ///////////////////////////////
   return (
@@ -183,7 +197,7 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
                 <img
                   src={el.data}
                   alt="Not Found"
-                  alt-src={el.alt_image_url || "./Caplogo2.png"}
+                  alt-src={el.alt_image_url}
                   onError={onImgError}
                 />
               ) : (

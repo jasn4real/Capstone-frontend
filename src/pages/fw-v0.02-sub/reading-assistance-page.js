@@ -3,7 +3,6 @@ import "./reading-assistance-page.css";
 import ComprehensionPage from "./reading-comprehension-page-h";
 import ReadingAssistance from "../ReadingAssistance";
 
-
 let triggerHistoryUpdate_callback ;
 const setTriggerHistoryUpdate = ( func ) => {
   if(func) triggerHistoryUpdate_callback = func;
@@ -46,10 +45,8 @@ export default function AssistancePage({ pop_frame, fileHash }) {
           <div className="text-reading-panel">
             <div className="popup-detail">
               <ReadingAssistance fileHash={fileHash} triggerHistoryUpdate={triggerHistoryUpdate}/> 
-
             </div>
           </div>
-          
         </div>
 
         <div className="comprehension-panel">
@@ -57,6 +54,6 @@ export default function AssistancePage({ pop_frame, fileHash }) {
         <ComprehensionPage fh={fileHash} setTriggerHistoryUpdate={setTriggerHistoryUpdate} />
         </div>
       </div>
-    </div>
+    </div> // Missing in the original code
   );
 }

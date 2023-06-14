@@ -182,7 +182,6 @@ function imageExists(image_url){
 }
 
 export default { 
-  get_latest_file_hash,
   read_text_to_image, 
   read_text_to_explaination, 
   upload_file, 

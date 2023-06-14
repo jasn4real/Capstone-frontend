@@ -2,10 +2,10 @@ import srv from './fetch_';
 const [ fileTable, file_list_prefix ] = [ "files", "filehash" ];
 function error_handle(error) {
   console.log(error);
+  alert(error);
 }
 function check_string(){
   for(let item of arguments) if(typeof item !== 'string'){
-    error_handle(item, ' not string');
     return false;
   }
   return true;
@@ -75,7 +75,8 @@ function downloadFile(fileHash, callback){
 function uploadFile(files, callback){
   srv.upload_file(files, (data)=>{
     try {
-      if(data.fileHash.length === 64) {
+      if(data.error) throw new Error("upload failed")
+      else if(data.fileHash.length === 64) {
         let files_table = localStorage.getItem(fileTable);
         try {
           files_table = JSON.parse(files_table);
@@ -89,7 +90,7 @@ function uploadFile(files, callback){
         }
         localStorage.setItem(`${file_list_prefix}-${data.fileHash}`, fileObjToString(files.files[0]));
         callback(data);
-      }else throw new Error("upload failed");
+      }
     } catch (error) {
       error_handle(error);
       callback(false);
@@ -220,6 +221,11 @@ const textToComprehension = (fileHash, question, level = '2', callback) => {
   } 
   //////////////////////////////
   srv.question_to_reading_comprehension(fileHash, question, level = '2', (data) => {
+    console.log(data);
+    if(!data){
+      callback(data);
+      return;
+    }
     setHistory(
       "comprehension", 
       fileHash, 

@@ -38,7 +38,10 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
       evt.target.readingcomprehension.value,
       readingLevel + 1,
       (data) => {
-        console.log(data);
+        if(!data){
+          setIsLoading(false);
+          return;
+        }
         setHistoryData(getAllHistorywithUnifyTime(fileHash));
         // let modifiedData = data + "pychsatm";
         // const hasNumberedText = /\d+\./.test(data);

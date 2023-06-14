@@ -11,11 +11,11 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
 
   const [recents, setRecents] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [activeBoxIndex, setActiveBoxIndex] = useState(null);
-  const [confirmDeletion, setConfirmDeletion] = useState(false);
+  // const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [confirmDeletionArray, setConfirmDeletionArray] = useState(
     Array(recents.length).fill(false)
   );
@@ -42,24 +42,28 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
     document.querySelector("#files_input").click();
   }
 
-  function toggleFileSelection(file) {
-    if (selectedFiles.includes(file)) {
-      setSelectedFiles(selectedFiles.filter((selectedFile) => selectedFile !== file));
-    } else {
-      setSelectedFiles([...selectedFiles, file]);
-    }
-  }
+  // function toggleFileSelection(file) {
+  //   if (selectedFiles.includes(file)) {
+  //     setSelectedFiles(selectedFiles.filter((selectedFile) => selectedFile !== file));
+  //   } else {
+  //     setSelectedFiles([...selectedFiles, file]);
+  //   }
+  // }
 
   function OnUploadInputChange(evt) {
     if (evt.target.files[0]) {
       setIsLoading(true); //start animation loading
 
       lc.uploadFile(evt.target, (data) => {
+        setIsLoading(false); // Stop loading animation
+        if(data === false){
+          return;
+        } 
         let allFiles = lc.getAllFiles();
         allFiles = allFiles.map((el) => lc.getFileDetail(el, ["metaData", "textToImage"]));
         setRecents(allFiles);
         pop_frame(1);
-        setIsLoading(false); // Stop loading animation
+        
         if(data.fileHash) setCurrentFileHash(data.fileHash);
         evt.target.value = "";
       });

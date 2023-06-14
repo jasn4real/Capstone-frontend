@@ -28,7 +28,11 @@ function question_to_reading_comprehension(fileHash, q, level, callback){
     .then((data) => {
       callback(data);
     })
-    .catch(error_handle);
+    .catch(error => {
+      error_handle(error);
+      callback(false);
+    });
+
     /* result example
       {
         "id":"chatcmpl-7FtdtwCgRUMg6nEx64M0RPrNOpZJc","object":"chat.completion",

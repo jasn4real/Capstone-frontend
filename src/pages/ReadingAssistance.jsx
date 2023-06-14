@@ -457,7 +457,7 @@ const ReadingAssistance = ({fileHash, triggerHistoryUpdate}) => {
     onClick={toggleNightMode}
     style={{
       top: "166px !important",
-      left: "130px",
+      left: "187px",
       width: "26px",
       height: "26px",
       borderRadius: "10px",

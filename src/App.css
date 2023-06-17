@@ -403,9 +403,6 @@ body {
   .footer-section-columns {
     margin: 1rem 0rem;
   }
-  .App {
-    max-width: 95vw;
-  }
 }
 
 @media (max-width: 600px) {

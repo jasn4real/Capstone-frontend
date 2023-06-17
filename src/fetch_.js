@@ -28,7 +28,11 @@ function question_to_reading_comprehension(fileHash, q, level, callback){
     .then((data) => {
       callback(data);
     })
-    .catch(error_handle);
+    .catch(error => {
+      error_handle(error);
+      callback(false);
+    });
+
     /* result example
       {
         "id":"chatcmpl-7FtdtwCgRUMg6nEx64M0RPrNOpZJc","object":"chat.completion",
@@ -54,6 +58,18 @@ download file / access file by filehash
 API_URL + /download_file/ + file hash
 http://150.230.113.32:8899/download_file/0ad1d820761a5aca9df52c22ea1cfc4ca5dad64923f51270dbe8f106f3817eef
 */
+function download_localstorage_init(callback){
+  fetch(`${API}/download_file/download_localstorage_init`)
+    .then(response => response.text())
+    .then(text => {
+      console.log(text);
+      callback(text);
+    })
+    .catch(error => {
+      error_handle('Error downloading file:' + error.toString());
+      callback(false);
+    });
+}
 function download_file(fileHash, callback){
   fetch(`${API}/download_file/${fileHash}`)
     .then(response => response.blob())
@@ -149,6 +165,21 @@ function read_text_to_explaination(q, callback) {
   */
 }
 
+function get_latest_file_hash(callback) {
+  fetch(`${API}/download_file/latest`)
+    .then((response) => response.json())
+    .then((data) => {
+      callback(data.hash);
+    })
+    .catch(error_handle);
+}
+
+function imageExists(image_url){
+  var http = new XMLHttpRequest();
+  http.open('HEAD', image_url, false);
+  http.send();
+  return http.status != 404;
+}
 
 export default { 
   read_text_to_image, 
@@ -157,5 +188,7 @@ export default {
   download_file, 
   read_file_metadata,
   question_to_reading_comprehension,
-  pdf_download_url_prefix: `${API}/download_file/`
+  imageExists,
+  pdf_download_url_prefix: `${API}/download_file/`,
+  download_localstorage_init
  };

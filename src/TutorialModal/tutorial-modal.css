@@ -1,0 +1,61 @@
+.tutorial-modal {
+  position: fixed;
+  top: 115px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 115px);
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+  color: #f0f0f0;
+}
+
+.slide-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slide-image {
+  max-width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.slide-text {
+  font-size: 18px;
+  color: #eee;
+  overflow-wrap: break-word;
+  margin: 20px auto;
+  max-width: 80%;
+  text-align: center;
+}
+
+.next-button, .done-button {
+  background-color: #f0f0f0;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #f0f0f0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.close-button:hover {
+  color: #ccc;
+}

@@ -1,30 +1,23 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "../index.css";
-import { useSpring, animated } from "react-spring";
-import { Document, Page, pdfjs } from "react-pdf";
+import { useSpring } from "react-spring";
+import { pdfjs } from "react-pdf";
 import storageFunctions from "../storage_";
 import anime from "animejs";
-import { BsPencilSquare } from "react-icons/bs";
 import fetchFunctions from "../fetch_";
 import {
-  nightmode,
   highlighter,
   image,
-  textex,
-  explain,
-  highlightword,
-  imgres,
-  popupbar,
-  readas, 
-  readcomp,
-  recents,
+  textplanation,
+  yellowsun,
+  bluemoon
 } from "../userwalkthrough/index";
 
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const ReadingAssistance = () => {
+const ReadingAssistance = ({fileHash, triggerHistoryUpdate}) => {
   const [selection, setSelection] = useState("");
   const [result, setResult] = useState("");
   const [action, setAction] = useState(null);
@@ -44,16 +37,12 @@ const ReadingAssistance = () => {
   const [selectedPageIndex, setSelectedPageIndex] = useState(null);
   const [selectedParagraphIndex, setSelectedParagraphIndex] = useState(null);
   const [firstTimeUser, setFirstTimeUser] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
   let synth = window.speechSynthesis;
   let voices = [];
-  const [queryInfo, setQueryInfo] = useState(null);
   const POPUP_WIDTH = 200; // Replace with the desired width of your pop-up interface
 
 
-  const handleQueryInfo = (newQueryInfo) => {
-    setQueryInfo(newQueryInfo);
-  };
+
 
   const extractTextFromBlob = async (blob) => {
     try {
@@ -129,38 +118,8 @@ const ReadingAssistance = () => {
     ]);
   };
 
-  const query = (evt) => {
-    evt.preventDefault();
-    const fileHash =
-      "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
-    const queryText = evt.target.texttoexplanation.value;
 
-    storageFunctions.textToExplanation(fileHash, queryText, (data) => {
-      console.log(data);
-      addToHistory(queryText, data, "textToExplanation");
-    });
-  };
 
-  const onTextToImage = (evt) => {
-    evt.preventDefault();
-    const fileHash =
-      "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
-    const query = evt.target.texttoimage.value;
-    storageFunctions.textToImage(fileHash, selection, (data) => {
-      setResult(data.url); // Use data.url instead of data
-      addToHistory(selection, data, "textToImage");
-    });
-  };
-
-  const printTextToExplanation = (evt) => {
-    evt.preventDefault();
-    const fileHash =
-      "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
-    const data = storageFunctions.getFileDetail(fileHash, [
-      "textToExplanation",
-    ]);
-    console.log(data);
-  };
 
   const toggleNightMode = () => {
     setIsNightModeActive((prevState) => !prevState);
@@ -178,8 +137,7 @@ const ReadingAssistance = () => {
       if (selection) {
         setResult("loading");
         setAction(type); // Set the action here
-        const fileHash =
-          "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
+
         if (type === "text") {
           storageFunctions.textToExplanation(fileHash, selection, (data) => {
             if (data.error) {
@@ -187,6 +145,7 @@ const ReadingAssistance = () => {
             } else if (data) {
               setResult(data);
               addToHistory(selection, data, "textToExplanation");
+              triggerHistoryUpdate(selection);
             } else {
               setResult("No data returned");
             }
@@ -199,6 +158,8 @@ const ReadingAssistance = () => {
               if (data) {
                 setResult(data);
                 addToHistory(selection, data, "textToImage");
+                triggerHistoryUpdate(selection);
+
               } else {
                 setResult("No data returned");
               }
@@ -225,7 +186,7 @@ const ReadingAssistance = () => {
     console.log("Result: ", result);
     if (result === "") return null;
     if (result === "loading") return <p>Loading...</p>;
-  
+
     if (action === "text") {
       if (typeof result === "string") {
         return <p>{result}</p>;
@@ -235,24 +196,15 @@ const ReadingAssistance = () => {
         return <p>Unexpected result format</p>;
       }
     } else if (action === "image") {
-      const slide = tutorialSlides[currentSlide]; // Get the current slide object
       if (typeof result === "string") {
-        if (slide.style) {
-          return <img src={result} alt="" style={slide.style} />;
-        } else {
-          return <img src={result} alt="" />;
-        }
+        return <img src={result} alt="" />;
       } else if (result && typeof result === "object" && result.url) {
-        if (slide.style) {
-          return <img src={result.url} alt="" style={slide.style} />;
-        } else {
-          return <img src={result.url} alt="" />;
-        }
+        return <img src={result.url} alt="" />;
       } else {
         return <p>Unexpected result format</p>;
       }
     }
-  
+
     return <p>Error</p>;
   };
   
@@ -273,166 +225,7 @@ const ReadingAssistance = () => {
     getData(type);
   };
 
-  useEffect(() => {
-    populateVoices();
-  }, []);
-
-  const speak = (text) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = voices[50];
-    synth.speak(utterance);
-  };
-
-  function populateVoices() {
-    voices = synth.getVoices();
-    for (let i = 0; i < voices.length; i++) {
-      console.log(`Voice ${i}: ${voices[i].name}, ${voices[i].lang}`);
-    }
-  }
-
-  populateVoices();
-  if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = populateVoices;
-  }
-
-  const nextSlide = () => {
-    // Cancel any ongoing speech before moving to the next slide
-    window.speechSynthesis.cancel();
-    setCurrentSlide((prevSlide) => prevSlide + 1);
-  };
-
-  const tutorialSlides = [
-    {
-      text: "Welcome! To Reading Assistance",
-      graphic: readas,
-      style: { maxWidth: "100%",}, // Set the maximum width of the image
-      speak: () => {
-        speak("Welcome! To Reeding Assistance");
-      },
-    },
-    {
-      text: "Welcome! To Reading Assistance",
-      graphic: readas,
-      speak: () => {
-        speak("Welcome! To Reeding Assistance");
-      },
-    },
-    {
-      text: "This application will fundamentally change your reading habits",
-      graphic: readas,
-      speak: () => {
-        speak(
-          "This application will fundahmentally, change your reeding habits"
-        );
-      },
-    },
-    {
-      text: "on the right hand side is your recents tab. This is where you'll be able to quickly access other files you've uploaded in the past and all their relevant texts and queries",
-      graphic: recents,
-      speak: () => {
-        speak(
-          "on the right hand side is your recents tab. This is where you'll be able to quickly access other files you've uploaded in the past and all their relevant texts and queries"
-        );
-      },
-    },
-    {
-      text: "In the center, you'll find your uploaded text in a window along with a host of with powerful and useful functionalities. Simply higlight the pertinent text and select your action",
-      graphic: popupbar,
-      speak: () => {
-        speak(
-          "In the center, you'll find your uploaded text in a window along with a host of with powerful and useful functionalities. Simply higlight the pertinent text and select your action"
-        );
-      },
-    },
-    {
-      text: "if you ever run across a confusing word, sentence or even paragraph, higlighting the problematic text and selecting text to explanation will decipher, clarify, and explain what was said like a tutor guiding a student",
-      graphic: explain,
-      speak: () => {
-        speak(
-          "if you ever run across a confusing word, sentence or even paragraph, higlighting the problematic text and selecting text to explanation will decipher, clarify, and explain what was said like a tutor guiding a student"
-        );
-      },
-    },
-    {
-      text: "We all often wish for visual aid when we read. It's common for us to read things we cant visualize because we've simply never seen them before or are unfamilar with the concept. Text to image provides on demand imagery for things and concepts",
-      graphic: imgres,
-      speak: () => {
-        speak(
-          "We all often wish for visual aid when we read. It's common for us to read things we cant visualize because we've simply never seen them before or are unfamilar with the concept. Text to image provides on demand imagery for things and concepts"
-        );
-      },
-    },
-    {
-      text: "Highlight words and paragraphs you'll want to come back",
-      graphic: highlightword,
-      speak: () => {
-        speak(
-          "Highlight words and paragraphs you'll want to come back"
-        );
-      },
-    },
-    {
-      text: "when the white background begins to stress your eyes during long or late night reading sessions, simply turn on the Night Mode feature by clicking the blue circle in the top left corner",
-      graphic: nightmode,
-      speak: () => {
-        speak(
-          "when the white background begins to stress your eyes during long or late night reading sessions, simply turn on the Night Mode feature by clicking the blue circle in the top left corner"
-        );
-      },
-    },
-    {
-      text: "On the right hand side is the reading comprehension page. This will be your personal tutor. You can ask any question pertaining to the uploaded text on the right and The ai will explain and give context, like you're talking to an expert on the subject",
-      graphic: readcomp,
-      speak: () => {
-        speak(
-          "On the right hand side is the reading comprehension page. This will be your personal tutor. You can ask any question pertaining to the uploaded text on the right and The ai will explain and give context, like you're talking to an expert on the subject"
-        );
-      },
-    },
-    {
-      text: "you have the option to choose from three different aptitude levels. Kids, General, and advanced",
-      graphic: readcomp,
-      speak: () => {
-        speak(
-          "you have the option to choose from three different aptitude levels. Kids, General, and advanced" 
-        );
-      },
-    },
-    {
-      text: "all text and image query results from the reading assistance page will be displayed in this space, as well as all questions asked on the reading comprehension page and their respective responses.",
-      graphic: readcomp,
-      speak: () => {
-        speak(
-          "all text and image query results from the reading assistance page will be displayed in this space, as well as all questions asked on the reading comprehension page and their respective responses." 
-        );
-      },
-    },
-  ];
-
-  useEffect(() => {
-    const handleSpeechSynthesisReady = () => {
-      if (currentSlide < tutorialSlides.length) {
-        tutorialSlides[currentSlide].speak();
-      }
-    };
-
-    if (window.speechSynthesis.onvoiceschanged !== undefined) {
-      if (window.speechSynthesis.getVoices().length > 0) {
-        handleSpeechSynthesisReady();
-      } else {
-        window.speechSynthesis.onvoiceschanged = handleSpeechSynthesisReady;
-      }
-    }
-  }, [currentSlide]);
-
-  const UserWalkthrough = ({ text }) => {
-    useEffect(() => {
-      const utterance = new SpeechSynthesisUtterance(text);
-      window.speechSynthesis.speak(utterance);
-    }, [text]);
-
-    return <div>{text}</div>;
-  };
+ 
 
   useEffect(() => {
     const firstVisit = localStorage.getItem("firstVisit");
@@ -481,8 +274,7 @@ const ReadingAssistance = () => {
   
 
   useEffect(() => {
-    const fileHash =
-      "7c9b82a1225c3089059c8c67bb42116facd6273a27a4686093059c88caf1b6af";
+
 
     const fetchFileContent = () => {
       try {
@@ -495,9 +287,9 @@ const ReadingAssistance = () => {
         console.error("Error retrieving file content:", error);
       }
     };
-
-    fetchFileContent();
-  }, []);
+    if(fileHash) fetchFileContent();
+    
+  }, [fileHash]);
 
   useEffect(() => {
     // Create an animation for the popup when it appears
@@ -656,62 +448,23 @@ const ReadingAssistance = () => {
         </div>
       ))}
   
-      {firstTimeUser && (
-        <div className="tutorial-modal">
-          <img
-            src={tutorialSlides[currentSlide].graphic}
-            style={{ maxWidth: "400px", height: "auto", objectFit: "contain" }}
-            alt="Tutorial"
-          />
-          <p>{tutorialSlides[currentSlide].text}</p>
-          {currentSlide < tutorialSlides.length - 1 ? (
-            <button
-              style={{
-                backgroundColor: "#f0f0f0",
-                color: "#000",
-                padding: "10px 20px",
-                borderRadius: "5px",
-                border: "1px solid #ccc",
-              }}
-              onClick={nextSlide}
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              style={{
-                backgroundColor: "#f0f0f0",
-                color: "#000",
-                padding: "10px 20px",
-                borderRadius: "5px",
-                border: "1px solid #ccc",
-              }}
-              onClick={() => {
-                synth.cancel();
-                setFirstTimeUser(false);
-              }}
-            >
-              Ok
-            </button>
-          )}
-        </div>
-      )}
-  
-      {selection && (
-        <div
-          className={[
-            "night-mode-button",
-            isNightModeActive ? "active" : "",
-          ].join(" ")}
-          onClick={toggleNightMode}
-          style={{
-            backgroundColor: isNightModeActive ? "#fff" : "#000080",
-            position: "",
-            top: "10px",
-            right: "10px",
-          }}
-        />
-      )}
+
+  {selection && (
+  <img
+    className={`night-mode-button ${isNightModeActive ? "active" : ""}`}
+    src={isNightModeActive ? yellowsun : bluemoon}
+    alt={isNightModeActive ? "Yellow Sun" : "Bluemoon"}
+    onClick={toggleNightMode}
+    style={{
+      top: "166px !important",
+      left: "187px",
+      width: "26px",
+      height: "26px",
+      borderRadius: "10px",
+      cursor: "pointer",
+    }}
+  />
+)}
   
       {selection && (
         <div
@@ -732,7 +485,7 @@ const ReadingAssistance = () => {
               onMouseEnter={() => setHoverAction("text")}
               onMouseLeave={() => setHoverAction(null)}
             >
-              <img src={textex} alt="Text" />
+              <img src={textplanation} alt="Text" />
             </span>
             <span
               className={action === "image" ? "active-action" : ""}

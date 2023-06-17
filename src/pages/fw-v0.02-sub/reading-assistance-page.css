@@ -11,6 +11,7 @@
   height: 100%; /* Or any fixed height based on your design */
   flex-grow: 1;
   display: flex;
+
 }
 
 .cols-container {
@@ -36,10 +37,21 @@
   flex-grow: 1;
   overflow: auto;
   overflow-x: auto;
+  border: solid 1px #7d9cba;
+  border-radius: 5px;
+  padding: 10px;
+
 }
 
 .popup-detail {
   overflow-x: auto;
 }
+
+.Assistancepage.night-mode {
+  background-color: black;
+  color: white;
+}
+
+/* Rest of the parent page styles */
 
 

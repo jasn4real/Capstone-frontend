@@ -2,10 +2,10 @@ import srv from './fetch_';
 const [ fileTable, file_list_prefix ] = [ "files", "filehash" ];
 function error_handle(error) {
   console.log(error);
+  alert(error);
 }
 function check_string(){
   for(let item of arguments) if(typeof item !== 'string'){
-    error_handle(item, ' not string');
     return false;
   }
   return true;
@@ -75,7 +75,8 @@ function downloadFile(fileHash, callback){
 function uploadFile(files, callback){
   srv.upload_file(files, (data)=>{
     try {
-      if(data.fileHash.length === 64) {
+      if(data.error) throw new Error("upload failed")
+      else if(data.fileHash.length === 64) {
         let files_table = localStorage.getItem(fileTable);
         try {
           files_table = JSON.parse(files_table);
@@ -89,7 +90,7 @@ function uploadFile(files, callback){
         }
         localStorage.setItem(`${file_list_prefix}-${data.fileHash}`, fileObjToString(files.files[0]));
         callback(data);
-      }else throw new Error("upload failed");
+      }
     } catch (error) {
       error_handle(error);
       callback(false);
@@ -193,7 +194,7 @@ const textToImage = (fileHash, question, callback) => {
   } 
   //////////////////////////////
   srv.read_text_to_image(question, (data) => {
-    setHistory("image", fileHash, question, {q: question, data :data.image_url});
+    setHistory("image", fileHash, question, {q: question, data :data.image_url, alt_image_url:data.alt_image_url});
     callback(data.image_url);
   })
 }
@@ -220,6 +221,11 @@ const textToComprehension = (fileHash, question, level = '2', callback) => {
   } 
   //////////////////////////////
   srv.question_to_reading_comprehension(fileHash, question, level = '2', (data) => {
+    console.log(data);
+    if(!data){
+      callback(data);
+      return;
+    }
     setHistory(
       "comprehension", 
       fileHash, 
@@ -229,12 +235,47 @@ const textToComprehension = (fileHash, question, level = '2', callback) => {
     callback(data.choices[0].message.content);
   })
 }
+/////////////////////////////////////
+const print_you_local_storage = () => {
+  let ret = {};
+  for(let key in localStorage){
+    ret[key] = localStorage.getItem(key);
+  }
+  // console.log(JSON.stringify(ret))
+}
+
+/////////////////////////////////////
+const init_local_storage = () => {
+  try {
+    const currentLC = localStorage.getItem("files");
+    console.log(Array.isArray(JSON.parse(currentLC)))
+    if(!Array.isArray(JSON.parse(currentLC))){
+      throw "local stroage files key is not an array";
+    }
+  } catch (error) {
+    localStorage.clear();
+    srv.download_localstorage_init((data) => {
+      try {
+        const json = JSON.parse(data);
+        for(let key in json) if(json[key]){
+          localStorage.setItem(key, json[key]);
+        }
+      } catch (error) {
+        console.log("error in init localStroage", error);
+      }
+    })
+  }
+  
+}
+init_local_storage()
 /////////////////////////////////////////////////
 const wrapper = {
   getAllFiles, getFileDetail, deleteFile,
   uploadFile, downloadFile, getFileMeta,
   textToComprehension,
   textToExplanation,
-  textToImage
+  textToImage,
+  print_you_local_storage,
+  init_local_storage
 }
 export default wrapper;

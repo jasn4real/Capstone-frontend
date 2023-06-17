@@ -13,6 +13,8 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   // const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  
 
   const [activeBoxIndex, setActiveBoxIndex] = useState(null);
   // const [confirmDeletion, setConfirmDeletion] = useState(false);
@@ -34,6 +36,7 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
     setRecents(allFiles);
     console.log(allFiles);
   }, []);
+
   function onGoLandingPageClick(evt) {
     pop_frame(0);
   }

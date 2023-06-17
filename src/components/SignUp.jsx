@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import { Card, Form, Button } from "react-bootstrap";
 
 function SignUp(props) {
@@ -8,6 +10,13 @@ function SignUp(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log("Name:", name);
     console.log("Email:", email);
     console.log("Password:", password);
@@ -23,7 +32,7 @@ function SignUp(props) {
     <div className="d-flex justify-content-center align-items-center vh-100">
       <Card>
         <Card.Body>
-          <h2 className="text-center">Sign Up</h2>
+          <h2 className="text-center">Create Account</h2>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicName">
               <Form.Label>Name</Form.Label>

@@ -5,11 +5,16 @@ import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import "../pages/fw-v0.02-sub/landing-page.css";
 import lc from "../storage_";
 
+
+
+
 function LandingPage({ pop_frame }) {
   const [recents, setRecents] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  
 
   useEffect(() => {
     let allFiles = lc.getAllFiles();
@@ -19,6 +24,7 @@ function LandingPage({ pop_frame }) {
     setRecents(allFiles);
     console.log(allFiles);
   }, []);
+
   function onGoLandingPageClick(evt) {
     pop_frame(0);
   }

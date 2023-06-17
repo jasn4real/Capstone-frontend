@@ -1,11 +1,41 @@
-import { Container } from "react-bootstrap";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import React, { useState, useEffect } from "react";
+import { Container, Nav, Navbar, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../NavBar.css";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { PersonFill } from "react-bootstrap-icons";
 
-function navbar() {
+function NavBar() {
+  // const [showSignOutDropdown, setShowSignOutDropdown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authUser, setAuthUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAuthUser(user);
+        setIsLoggedIn(true);
+      } else {
+        setAuthUser(null);
+        setIsLoggedIn(false);
+      }
+    });
+  }, [isLoggedIn]);
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("sign out successful");
+        setIsLoggedIn(false);
+        navigate("/");
+      })
+      .catch((error) => console.log("Sign out error:", error));
+  };
+
   return (
     <>
       <Navbar fluid="true" bg="dark" variant="dark" expand="lg" sticky="top">
@@ -29,9 +59,33 @@ function navbar() {
             className="justify-content-end"
           >
             <Nav className="ml-auto h2">
-              <Link to="/login" className="nav-link pill-link">
-                Your Account
-              </Link>
+              {isLoggedIn ? (
+                <Dropdown>
+                  <Dropdown.Toggle
+                    variant="success"
+                    id="account-dropdown-toggle"
+                  >
+                    <PersonFill />
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => console.log("Profile")}>
+                      Profile
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => console.log("Settings")}>
+                      Settings
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={handleSignOut}>
+                      Sign Out
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              ) : (
+                <Link to="/login" className="nav-link pill-link">
+                  Sign In
+                </Link>
+              )}
+
               <Link to="/about" className="nav-link pill-link">
                 About
               </Link>
@@ -46,4 +100,4 @@ function navbar() {
   );
 }
 
-export default navbar;
+export default NavBar;

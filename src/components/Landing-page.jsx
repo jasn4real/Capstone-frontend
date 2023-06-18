@@ -82,7 +82,7 @@ function LandingPage({
     updatedConfirmDeletionArray.splice(index, 1);
     setConfirmDeletionArray(updatedConfirmDeletionArray);
     setCurrentFileHash(undefined);
-    //pop_frame;
+    pop_frame(0);
   }
 
   const handleMouseEnter = (idx) => {

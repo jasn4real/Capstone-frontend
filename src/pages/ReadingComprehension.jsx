@@ -3,15 +3,10 @@ import { useState, useEffect } from "react";
 
 import lc from "../storage_";
 import "./ReadingComprehension.css";
-
 import Form from "react-bootstrap/Form";
 
-import { FcReading } from "react-icons/fc";
-import { FcFolder } from "react-icons/fc";
-import { FcBookmark } from "react-icons/fc";
 import { FcInfo } from "react-icons/fc";
-import { FcAbout } from "react-icons/fc";
-import { FcDocument } from "react-icons/fc";
+
 export default function ReadingComprehension() {
   const [responseData, setResponseData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +61,7 @@ export default function ReadingComprehension() {
   return (
     <div>
       <div className="container content">
-      <span className="reading-level-text">Select reading level</span>
+        <span className="reading-level-text">Select reading level</span>
 
         <div className="reading-level-radio">
           {/* <p class="gradient-text">Hello, world!</p> */}
@@ -100,13 +95,7 @@ export default function ReadingComprehension() {
       </div>
       <div className="menu-container">
         <ul className="vertical-nav">
-          <FcReading className="book-half" />
-          <span className="history-column-text">
-            {/* <FcBookmark className="book-half" /> */}
-            {/* <FcFolder className="book-half" />
-              <FcDocument className="book-half" /> */}
-            History
-          </span>
+          <span className="history-column-text">History</span>
           <li>
             <ul>
               {historyData.length !== 0 ? (

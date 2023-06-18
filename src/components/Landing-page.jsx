@@ -5,16 +5,21 @@ import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import "../pages/fw-v0.02-sub/landing-page.css";
 import lc from "../storage_";
 import TutorialModal from "../TutorialModal/index";
+import ReadingComprehension from "../pages/ReadingComprehension";
 
 import { FcFullTrash } from "react-icons/fc";
-function LandingPage({ pop_frame, setCurrentFileHash }) {
+function LandingPage({
+  pop_frame,
+  setCurrentFileHash,
+  setResponseData,
+  responseData,
+}) {
+  const [recents, setRecents] = useState([]); //recent files
 
-  const [recents, setRecents] = useState([]);
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  // const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); //loading indicator
 
-  const [activeBoxIndex, setActiveBoxIndex] = useState(null);
+  const [activeBoxIndex, setActiveBoxIndex] = useState(null); //takes the index of the file when mouse over occurs
+
   // const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [confirmDeletionArray, setConfirmDeletionArray] = useState(
     Array(recents.length).fill(false)
@@ -28,9 +33,10 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
 
   useEffect(() => {
     let allFiles = lc.getAllFiles();
-    allFiles = allFiles.map((el) =>
-      lc.getFileDetail(el, ["metaData", "textToImage"])
-    );
+    allFiles = allFiles.map((el) => ({
+      ...lc.getFileDetail(el, ["metaData", "textToImage"]),
+      fileHash: el,
+    }));
     setRecents(allFiles);
     console.log(allFiles);
   }, []);
@@ -42,29 +48,24 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
     document.querySelector("#files_input").click();
   }
 
-  // function toggleFileSelection(file) {
-  //   if (selectedFiles.includes(file)) {
-  //     setSelectedFiles(selectedFiles.filter((selectedFile) => selectedFile !== file));
-  //   } else {
-  //     setSelectedFiles([...selectedFiles, file]);
-  //   }
-  // }
-
   function OnUploadInputChange(evt) {
     if (evt.target.files[0]) {
       setIsLoading(true); //start animation loading
 
       lc.uploadFile(evt.target, (data) => {
         setIsLoading(false); // Stop loading animation
-        if(data === false){
+        if (data === false) {
           return;
-        } 
+        }
         let allFiles = lc.getAllFiles();
-        allFiles = allFiles.map((el) => lc.getFileDetail(el, ["metaData", "textToImage"]));
+        allFiles = allFiles.map((el) => ({
+          ...lc.getFileDetail(el, ["metaData", "textToImage"]),
+          fileHash: el,
+        }));
         setRecents(allFiles);
         pop_frame(1);
-        
-        if(data.fileHash) setCurrentFileHash(data.fileHash);
+
+        if (data.fileHash) setCurrentFileHash(data.fileHash);
         evt.target.value = "";
       });
     }
@@ -72,22 +73,16 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
   }
 
   function deleteFile(index) {
-    // if (selectedFiles.length > 0) {
-    //   selectedFiles.forEach((file) => lc.deleteFile(file.id));
-    //   const updatedRecents = recents.filter(
-    //     (file) => !selectedFiles.includes(file)
-    //   );
-    //   setRecents(updatedRecents);
-    //   setSelectedFiles([]);
-    //   setShowModal(false);
-    // }
-    lc.deleteFile(recents[index].id);
+    lc.deleteFile(recents[index].fileHash); // Assuming lc.deleteHistory is the correct function to delete the file
+
     const updatedRecents = [...recents];
     updatedRecents.splice(index, 1);
     setRecents(updatedRecents);
     const updatedConfirmDeletionArray = [...confirmDeletionArray];
     updatedConfirmDeletionArray.splice(index, 1);
     setConfirmDeletionArray(updatedConfirmDeletionArray);
+    setCurrentFileHash(undefined);
+    //pop_frame;
   }
 
   const handleMouseEnter = (idx) => {
@@ -103,6 +98,12 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
     setConfirmDeletionArray(updatedConfirmDeletionArray);
   };
 
+  const cleanFileName = (fileName) => {
+    const cleanedName = fileName.replace(/[^a-zA-Z]/g, "");
+
+    return cleanedName;
+  };
+
   return (
     <div className={`landing-page ${isLoading ? "blurry" : ""}`}>
       <Container className="cols-container">
@@ -114,7 +115,9 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
             <div className="subtitle-div">
               <div></div>
               <div>
-                <h2>Discover the full story - let AI guide you through every page.</h2>
+                <h2>
+                  Discover the full story - let AI guide you through every page.
+                </h2>
               </div>
               <div>
                 <Button
@@ -124,7 +127,7 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
                 >
                   Upload PDF
                 </Button>
-                
+
                 <input
                   id="files_input"
                   type="file"
@@ -172,34 +175,42 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
                 </Button>
               </div>
               <div className="recents-box">
-                {recents.map((recent, idx) => (
-                  <div
-                    key={idx}
-                    onMouseEnter={() => handleMouseEnter(idx)}
-                    onMouseLeave={() => handleMouseLeave(idx)}
-                  >
-                    <span className="file-name">{recent.metaData.name}</span>
-                    {activeBoxIndex === idx && (
-                      <button
-                        className="delete-button"
-                        onClick={() => handleConfirmDelete(idx)}
-                      >
-                        <FcFullTrash className="trash-icon" />
-                      </button>
-                    )}
-                    {confirmDeletionArray[idx] && (
-                      <button
-                        className="confirm-deletion-button"
-                        onClick={() => deleteFile(idx)}
-                      >
-                        Delete
-                      </button>
-                    )}
-                    {/* <>
-                      <span className="file-index-number">{idx}</span>
-                       </> */}
-                  </div>
-                ))}
+                {recents.map((recent, idx) => {
+                  if (!recent || !recent.metaData) {
+                    return null;
+                  }
+
+                  const cleanedName = cleanFileName(recent.metaData.name);
+
+                  return (
+                    <div
+                      key={idx}
+                      onMouseEnter={() => handleMouseEnter(idx)}
+                      onMouseLeave={() => handleMouseLeave(idx)}
+                    >
+                      {cleanedName && (
+                        <span className="file-name">{cleanedName}</span>
+                      )}
+                      {activeBoxIndex === idx && (
+                        <button
+                          className="delete-button"
+                          onClick={() => handleConfirmDelete(idx)}
+                        >
+                          <FcFullTrash className="trash-icon" />
+                        </button>
+                      )}
+                      {confirmDeletionArray[idx] && (
+                        <button
+                          id="recent"
+                          className="confirm-deletion-button"
+                          onClick={() => deleteFile(idx)}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </Col>

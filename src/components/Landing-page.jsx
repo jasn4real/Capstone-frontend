@@ -14,13 +14,10 @@ function LandingPage({
   setResponseData,
   responseData,
 }) {
-  const [recents, setRecents] = useState([]); //recent files
-
-
   const [activeBoxIndex, setActiveBoxIndex] = useState(null); //takes the index of the file when mouse over occurs
 
   const [recents, setRecents] = useState([]);
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  // const [selectedFiles, setSelectedFiles] = useState([]);
   // const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 

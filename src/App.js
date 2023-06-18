@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Navigation from "./components/Navigation";
+// import UserGuide from "./components/UserGuide";
 // import Welcome from "./components/Welcome";
 
 // import RecentsContainer from "./components/RecentsContainer";
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/framework-testing" element={<AllInOneFramework />} />
             <Route path="/" element={<Welcome />} />
             <Route path="/testing_fetch" element={<TestOnly />} />
+            {/* <Route path="/userwalkthrough" element={<UserGuide />} /> */}
           </Routes>
         </main>
       </Router>

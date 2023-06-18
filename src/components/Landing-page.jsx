@@ -4,6 +4,7 @@ import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 // import UploadModal from "./UploadModal";
 import "../pages/fw-v0.02-sub/landing-page.css";
 import lc from "../storage_";
+import UserGuide from "./UserGuide";
 import TutorialModal from "../TutorialModal/index";
 import ReadingComprehension from "../pages/ReadingComprehension";
 
@@ -20,7 +21,6 @@ function LandingPage({
   // const [selectedFiles, setSelectedFiles] = useState([]);
   // const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
 
   // const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [confirmDeletionArray, setConfirmDeletionArray] = useState(
@@ -56,12 +56,11 @@ function LandingPage({
       setIsLoading(true); //start animation loading
 
       lc.uploadFile(evt.target, (data) => {
-
         console.log(data);
         evt.target.value = "";
         setIsLoading(false);
-        if(data === false) return;
-        
+        if (data === false) return;
+
         let allFiles = lc.getAllFiles();
         allFiles = allFiles.map((el) => ({
           ...lc.getFileDetail(el, ["metaData", "textToImage"]),
@@ -70,12 +69,10 @@ function LandingPage({
         setRecents(allFiles);
         pop_frame(1);
 
-        
-        if(data.fileHash) setCurrentFileHash(data.fileHash);
+        if (data.fileHash) setCurrentFileHash(data.fileHash);
         // evt.target.value = "";
         // setIsLoading(false); // Stop loading animation
       });
-      
     }
     console.log(evt.target.files);
   }
@@ -143,12 +140,13 @@ function LandingPage({
                   onChange={OnUploadInputChange}
                 />
               </div>
-              <div>
+              {/* <div>
                 <p>User guide</p>
-              </div>
+              </div> */}
             </div>
           </Col>
         </Row>
+        <UserGuide style={{position: "absolute"}} />
       </Container>
 
       {isLoading && (

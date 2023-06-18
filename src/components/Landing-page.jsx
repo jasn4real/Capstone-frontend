@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
-// import { Spinner } from "react-bootstrap";
-// import UploadModal from "./UploadModal";
+
 import "../pages/fw-v0.02-sub/landing-page.css";
+
 import lc from "../storage_";
+import fe from "../fetch_";
 import UserGuide from "./UserGuide";
+
 import TutorialModal from "../TutorialModal/index";
-import ReadingComprehension from "../pages/ReadingComprehension";
 
 import { FcFullTrash } from "react-icons/fc";
 function LandingPage({
@@ -191,6 +192,7 @@ function LandingPage({
                   return (
                     <div
                       key={idx}
+                      style={{backgroundImage:`url(${fe.pdf_thumbnail_url(recent.fileHash)})`,backgroundSize:"cover"}}
                       onMouseEnter={() => handleMouseEnter(idx)}
                       onMouseLeave={() => handleMouseLeave(idx)}
                     >

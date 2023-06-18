@@ -58,18 +58,20 @@ function LandingPage({ pop_frame, setCurrentFileHash }) {
       setIsLoading(true); //start animation loading
 
       lc.uploadFile(evt.target, (data) => {
-        setIsLoading(false); // Stop loading animation
-        if(data === false){
-          return;
-        } 
+        console.log(data);
+        evt.target.value = "";
+        setIsLoading(false);
+        if(data === false) return;
         let allFiles = lc.getAllFiles();
         allFiles = allFiles.map((el) => lc.getFileDetail(el, ["metaData", "textToImage"]));
         setRecents(allFiles);
         pop_frame(1);
         
         if(data.fileHash) setCurrentFileHash(data.fileHash);
-        evt.target.value = "";
+        // evt.target.value = "";
+        // setIsLoading(false); // Stop loading animation
       });
+      
     }
     console.log(evt.target.files);
   }

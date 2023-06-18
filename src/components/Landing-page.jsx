@@ -5,6 +5,7 @@ import "../pages/fw-v0.02-sub/landing-page.css";
 
 import lc from "../storage_";
 import fe from "../fetch_";
+import UserGuide from "./UserGuide";
 
 import TutorialModal from "../TutorialModal/index";
 
@@ -140,12 +141,13 @@ function LandingPage({
                   onChange={OnUploadInputChange}
                 />
               </div>
-              <div>
+              {/* <div>
                 <p>User guide</p>
-              </div>
+              </div> */}
             </div>
           </Col>
         </Row>
+        <UserGuide style={{position: "absolute"}} />
       </Container>
 
       {isLoading && (

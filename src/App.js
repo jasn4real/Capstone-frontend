@@ -1,11 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import NavBar from "./components/NavBar";
 import About from "./pages/About";
 import Navigation from "./components/Navigation";
 // import Welcome from "./components/Welcome";
-
 
 // import RecentsContainer from "./components/RecentsContainer";
 
@@ -14,10 +12,9 @@ import Welcome from "./pages/fw-v0.02";
 import ReadingAssistance from "./pages/ReadingAssistance";
 import ReadingComprehension from "./pages/ReadingComprehension";
 import TestOnly from "./pages/test-only";
-
+import NavBar from "./components/NavBar";
 
 // import srv from './fetch_';
-
 
 export default function App() {
   return (

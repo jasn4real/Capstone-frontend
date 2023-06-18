@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { Form, Button, Card, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import "../LogIn.css";
 import { PersonFill } from "react-bootstrap-icons";
@@ -90,7 +90,7 @@ function LogIn(props) {
                 Cancel
               </Button>
               <span className="psw">
-                Forgot <a href="#">password?</a>
+                Forgot <Link href="#">password?</Link>
               </span>
             </div>
           </Form>

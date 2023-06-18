@@ -1,11 +1,5 @@
-
 import React, { useState, useEffect } from "react";
 import { Container, Nav, Navbar, Dropdown } from "react-bootstrap";
-
-// import React from "react";
-// import { Container } from "react-bootstrap";
-// import Nav from "react-bootstrap/Nav";
-// import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../NavBar.css";
@@ -48,7 +42,7 @@ function NavBar() {
         <Container fluid>
           <Navbar.Brand
             href="/"
-            className="navbar-brand mb-0 h1 mx-auto pl-4"
+            className="navbar-brand mb-0 h1 mx-auto d-flex align-items-center"
             style={{ fontSize: "2rem" }}
           >
             <img
@@ -59,19 +53,26 @@ function NavBar() {
               alt=""
             />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
             id="basic-navbar-nav"
             className="justify-content-end"
           >
             <Nav className="ml-auto h2">
+              <Link to="/about" className="nav-link m-2">
+                About
+              </Link>
+              <Link to="/search" className="nav-link m-2">
+                Search
+              </Link>
               {isLoggedIn ? (
-                <Dropdown>
+                <Dropdown className="avatar-dropdown">
                   <Dropdown.Toggle
-                    variant="success"
+                    variant="bg-transparent"
                     id="account-dropdown-toggle"
+                    // className="lg"
                   >
-                    <PersonFill />
+                    <PersonFill className="avatar-icon" />
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
@@ -87,17 +88,10 @@ function NavBar() {
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (
-                <Link to="/login" className="nav-link pill-link">
+                <Link to="/login" className="nav-link m-2">
                   Sign In
                 </Link>
               )}
-
-              <Link to="/about" className="nav-link pill-link">
-                About
-              </Link>
-              <Link to="/search" className="nav-link pill-link">
-                Search
-              </Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

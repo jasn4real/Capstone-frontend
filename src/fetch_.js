@@ -109,7 +109,10 @@ function upload_file(files, callback){
     .then((data) => {
       callback(data);
     })
-    .catch(error_handle);
+    .catch(error => {
+      error_handle(error);
+      callback({error});
+    });
   /* result example
     {
       "result":"success",
@@ -190,5 +193,6 @@ export default {
   question_to_reading_comprehension,
   imageExists,
   pdf_download_url_prefix: `${API}/download_file/`,
+  pdf_thumbnail_url: (fileHash) => `${API}/download_file/pdf_thumbnail/${fileHash}`,
   download_localstorage_init
  };

@@ -16,9 +16,14 @@ function LandingPage({
 }) {
   const [recents, setRecents] = useState([]); //recent files
 
-  const [isLoading, setIsLoading] = useState(false); //loading indicator
 
   const [activeBoxIndex, setActiveBoxIndex] = useState(null); //takes the index of the file when mouse over occurs
+
+  const [recents, setRecents] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  // const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   // const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [confirmDeletionArray, setConfirmDeletionArray] = useState(
@@ -40,6 +45,7 @@ function LandingPage({
     setRecents(allFiles);
     console.log(allFiles);
   }, []);
+
   function onGoLandingPageClick(evt) {
     pop_frame(0);
   }
@@ -53,10 +59,12 @@ function LandingPage({
       setIsLoading(true); //start animation loading
 
       lc.uploadFile(evt.target, (data) => {
-        setIsLoading(false); // Stop loading animation
-        if (data === false) {
-          return;
-        }
+
+        console.log(data);
+        evt.target.value = "";
+        setIsLoading(false);
+        if(data === false) return;
+        
         let allFiles = lc.getAllFiles();
         allFiles = allFiles.map((el) => ({
           ...lc.getFileDetail(el, ["metaData", "textToImage"]),
@@ -65,9 +73,12 @@ function LandingPage({
         setRecents(allFiles);
         pop_frame(1);
 
-        if (data.fileHash) setCurrentFileHash(data.fileHash);
-        evt.target.value = "";
+        
+        if(data.fileHash) setCurrentFileHash(data.fileHash);
+        // evt.target.value = "";
+        // setIsLoading(false); // Stop loading animation
       });
+      
     }
     console.log(evt.target.files);
   }

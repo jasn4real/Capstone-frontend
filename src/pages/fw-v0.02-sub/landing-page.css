@@ -1,5 +1,5 @@
 .page-active .landing-page{
-  background: url("./sixteen-miles-out-ScvYtpYzgFI-unsplash.jpg")  no-repeat left bottom;
+  background: url("./minimize_background.jpg")  no-repeat left bottom;
   width: 100%;
   height: 100%;
   display: flex;
@@ -347,3 +347,11 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   box-shadow: 3px 2px 5px purple;
 }
 
+.container-fluid > .navbar-brand > img{
+  margin-left: 18px;
+}
+
+.current-document-in-recent{
+  /* box-shadow: -2px 0px 5px 4px violet; */
+  border: 4px double violet!important;
+}

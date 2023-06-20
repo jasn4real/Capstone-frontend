@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import "./reading-assistance-page.css";
 import ComprehensionPage from "./reading-comprehension-page-h";
-import ReadingAssistance from "../ReadingAssistance";// -h possible
+import ReadingAssistance from "../ReadingAssistance-h";// -h possible
 
 let triggerHistoryUpdate_callback ;
 const setTriggerHistoryUpdate = ( func ) => {
@@ -44,14 +44,13 @@ export default function AssistancePage({ pop_frame, fileHash }) {
       <div className="cols-container">
         <div className="reading-panel" style={{ flex: "50px" }}>
           <div className="text-reading-panel">
-            <div className="popup-detail">
               <ReadingAssistance 
                 fileHash={fileHash} 
                 triggerHistoryUpdate={triggerHistoryUpdate}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
               /> 
-            </div>
+
           </div>
         </div>
 

@@ -1,7 +1,9 @@
 // <!-- <script src="https://unpkg.com/pdfjs-dist@2/build/pdf.js"></script>
 // <script src="https://unpkg.com/pdfjs-dist@2/build/pdf.worker.js"></script> -->
-const cdn_pdfjs_link = '//mozilla.github.io/pdf.js/build/pdf.js';
-const cdn_pdfjs_worker_link = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+// const cdn_pdfjs_link = '//mozilla.github.io/pdf.js/build/pdf.js';
+// const cdn_pdfjs_worker_link = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+const cdn_pdfjs_link = '/pdf.js';
+const cdn_pdfjs_worker_link = '/pdf.worker.js';
 let PDFJS;
 const script = document.createElement('script');
 script.src = cdn_pdfjs_link;

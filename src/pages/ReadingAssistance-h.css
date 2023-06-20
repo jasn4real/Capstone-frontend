@@ -1,16 +1,56 @@
+.bigcontainer{
+  position: relative;
+  overflow: auto;
+}
 .bigcontainer > div > span{
   font-size:large;
 }
-
+.bigcontainer > div {
+  display: grid;
+  overflow-y: scroll;
+}
+.bigcontainer > div > canvas {
+  margin: auto;
+}
 .bigcontainer > div > .separator {
   border-bottom: 1px solid black;
-  
+  font-size: larger;
+  margin-top: 3rem;
+  text-transform: capitalize;
 }
-
-.bigcontainer > div > canvas {
-
+.text-reading-panel > div > .function_panel {
+  padding: 10px;
+  position: absolute;
+  top: 68px;
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
-
+.text-reading-panel > div > .function_panel:hover{
+  opacity: 1;
+}
+.ra-popup-menu-box{
+  padding: 0px;
+  position: fixed;
+  display: grid;
+  gap: 5px;
+  grid-auto-flow: column;
+  width: 0px;
+  height: 0px;
+  z-index: 500;
+  overflow: hidden;
+  transition: width 0.2s, height 0.2s;
+}
+.ra-popup-menu-box.popup-on-call{
+  width: 320px;
+  height: 78px;
+  padding: 10px;
+}
+.popup-on-call.ra-popup-menu-box > button:hover{
+  box-shadow: 0px 1px 3px 3px rgb(215, 87, 215);
+}
 /* 
 
 body {

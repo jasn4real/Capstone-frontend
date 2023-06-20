@@ -67,7 +67,7 @@ input[type="radio"] {
 }
 .history-in-comprehension-page-div > div{
   margin-top: 10px;
-  border-bottom: 1px solid rgba(13,110,253,.25);
+  /* border-bottom: 1px solid rgba(13,110,253,.25); */
 }
 
 form , btn-style{
@@ -159,7 +159,7 @@ text-decoration: underline;
   position: relative;
   width: 80px;
   height: 80px;
-  transform: translate(30rem, 10rem);
+  margin: auto;
 }
 .lds div {
   position: absolute;
@@ -214,3 +214,79 @@ text-decoration: underline;
 
 /*form-check-box*/
 
+
+.rc-submit-button:hover {
+  color: whitesmoke;
+
+}
+.reading-level-radio {
+  position: absolute;
+  transform: translate(8rem, -19rem);
+  /* opacity: 0.2; */
+  transition: opacity 0.2s ease;
+}
+
+.reading-level-radio:hover {
+  opacity: 1;
+  color: rgb(32, 32, 121);
+}
+
+.reading-level-text {
+  font-size: large;
+  font-weight: 500;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 2em; */
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+label {
+  position: relative;
+  margin-right: 1em;
+  padding-left: 2em;
+  padding-right: 1em;
+  line-height: 2;
+  cursor: pointer;
+}
+
+label::before {
+  box-sizing: border-box;
+  content: " ";
+  position: absolute;
+  top: 0.3em;
+  left: 0;
+  display: block;
+  width: 1.4em;
+  height: 1.4em;
+  border: 2px solid rgb(236, 230, 230);
+  border-radius: 0.25em;
+  z-index: -1;
+}
+
+input[type="radio"] + label::before {
+  border-radius: 1em;
+}
+
+/* Checked */
+input[type="checkbox"]:checked + label,
+input[type="radio"]:checked + label {
+  padding-left: 1em;
+  /* color: $wisteria; */
+}
+
+input[type="checkbox"]:checked + label::before,
+input[type="radio"]:checked + label::before {
+  top: 0;
+  width: 100%;
+  height: 2em;
+  background: white;
+}

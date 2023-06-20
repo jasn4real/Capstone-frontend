@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./reading-assistance-page.css";
+import "./reading-assistance-page-h.css";
 import ComprehensionPage from "./reading-comprehension-page";
 import { FcAbout } from "react-icons/fc";
 import { FaSearchPlus, FaSearchMinus } from "react-icons/fa";

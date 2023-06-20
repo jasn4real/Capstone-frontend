@@ -13,7 +13,6 @@
 
 .reading-comprehension-input{
   transition: box-shadow .3s;
-
 }
 .reading-comprehension-input:hover{
   box-shadow: 0 0 11px rgba(33,33,33,.3); 
@@ -47,6 +46,8 @@ input[type="radio"] {
 }
 .comprehension-input-button > button{
   width: 18%;
+  margin: 8px 3px;
+
 }
 .comprehensionp-panel{
   height: 100%;

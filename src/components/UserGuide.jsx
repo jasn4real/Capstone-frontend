@@ -23,7 +23,6 @@ const UserGuide = () => {
           width="60"
           height="60"
           src={process.env.PUBLIC_URL + "/UserGuidepic.png"}
-          style={{ position: "fixed", right: "20px", bottom: "10px" }}
         />
       )}
     </OverlayTrigger>

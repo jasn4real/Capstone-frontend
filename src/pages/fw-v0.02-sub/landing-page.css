@@ -61,11 +61,10 @@ div:not(.page-active) > .landing-page > .cols-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2em;
 }
 
 .btn-style-square{
-margin-right:11rem;
+  margin-right:11rem;
 }
 
 
@@ -80,7 +79,7 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 .min-status-col .recents-box {
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 6.5em;
+  row-gap: 10px;
   width: 100%;
   margin-top: 20px;
   /* margin-left: 1em; */
@@ -88,10 +87,10 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 }
 .min-status-col .recents-box > div{
   margin-left:3px;
-  width: calc(100% - 90px);
+  width: 105px;
   background-color: gray;
   border: 1px solid violet;
-  height: 14em;
+  height: 148.5px;
   text-align: center;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
@@ -120,7 +119,8 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 }
 
 .trash-icon{
-font-size: 1.9rem;
+  font-size: 3rem;
+  margin: auto;
 }
 
 .confirm-deletion-button{
@@ -136,25 +136,50 @@ font-size: 1.9rem;
   color: #fcfcfc;
 
 }
-
-.file-name{
+.recent-card > img{
+  position:static;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.recent-card > div{
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+.recent-card > div > div{  
+  transition: all 0.2s ease-in-out;
 
 }
+.recent-card > div > :first-child{
+  width: 100%;
+  height: 66.6%;
+}
+.recent-card > div > :last-child{
+  width: 100%;
+  height: 33.3%;
+  align-items: center;
+  display: flex;
+}
 
-.file-index-number{
-
-  /* position: absolute; */
-  /*  
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
-  z-index: 1; /* Ensure the index number appears above other elements 
-  */
+.recent-card > div > div:hover{
+  background-color: #fcfcfc;
+  box-shadow: 0px 0px 7px 1px rgba(128, 32, 128, 0.85);
+}
+.recent-card > div > div > p{
+  width: 100%;
+  display: block;
+  font-stretch: expanded;
+  padding: 10px;
+  font-size: 20px;
+  word-wrap: break-word;
+  overflow: hidden;
+  height: 100%;
+}
+.recent-card > div:hover{
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .landing-page.blurry > *:not(.loader-container) {
@@ -260,6 +285,7 @@ font-size: 1.9rem;
     filter: blur(0px);
     text-shadow: none;
   }
+  
 }
 
 @keyframes glow {
@@ -274,4 +300,19 @@ font-size: 1.9rem;
   100% {
     opacity: 0;
   }
+}
+
+
+.userguide-icon{
+  transition: all 0.3s ease-in-out;
+  border: violet 1px solid;
+  position: fixed;
+  right: 20px;
+  bottom: 10px;
+  padding: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+.userguide-icon:hover{
+  box-shadow: 3px 2px 5px purple;
 }

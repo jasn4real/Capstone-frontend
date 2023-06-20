@@ -130,6 +130,7 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
                 type="radio"
                 name="rb"
                 id="rb2"
+                checked
               />
               Medium
             </label>

@@ -19,11 +19,9 @@ img {
 
 body {
   max-width: 100%;
-  overflow-x: hidden;
-}
-
-body {
+  overflow: hidden;
   background-color: #f6f6f6;
+
 }
 
 .query-history {

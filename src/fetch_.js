@@ -178,10 +178,27 @@ function get_latest_file_hash(callback) {
 }
 
 function imageExists(image_url){
-  var http = new XMLHttpRequest();
-  http.open('HEAD', image_url, false);
-  http.send();
-  return http.status != 404;
+  try {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', image_url, false);
+    http.send();
+    return http.status != 404;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+// function checkImageExists(imageUrl) {
+//   return fetch(imageUrl, { method: 'HEAD' })
+//     .then(response => response.ok)
+//     .catch(error => {
+//       console.error('Error checking image:', error);
+//       return false;
+//     });
+// }
+function pdf_thumbnail_url(fileHash){
+  const url = `${API}/download_file/pdf_thumbnail/${fileHash}`;
+  return (url) ? url : `${API}/download_file/image/binarymindlogorectangle`;
 }
 
 export default { 
@@ -193,6 +210,6 @@ export default {
   question_to_reading_comprehension,
   imageExists,
   pdf_download_url_prefix: `${API}/download_file/`,
-  pdf_thumbnail_url: (fileHash) => `${API}/download_file/pdf_thumbnail/${fileHash}`,
+  pdf_thumbnail_url,
   download_localstorage_init
  };

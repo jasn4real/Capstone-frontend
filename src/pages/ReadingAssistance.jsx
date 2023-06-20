@@ -41,9 +41,6 @@ const ReadingAssistance = ({fileHash, triggerHistoryUpdate}) => {
   let voices = [];
   const POPUP_WIDTH = 200; // Replace with the desired width of your pop-up interface
 
-
-
-
   const extractTextFromBlob = async (blob) => {
     try {
       const url = URL.createObjectURL(blob);
@@ -392,7 +389,7 @@ const ReadingAssistance = ({fileHash, triggerHistoryUpdate}) => {
 
   return (
     <div className="bigcontainer" ref={con} style={{ position: "relative", overflow: 'auto' }}>
-      <h2>Reading Assistance</h2>
+      <h2>{storageFunctions.getFileDetail(fileHash, ['metaData']).metaData.name}</h2>
       {numPages && <div>Number of Pages: {numPages}</div>}
       {fileTextContent.split("-- PAGE START -- ").map((page, pageIndex) => (
         <div key={pageIndex} className="page-content">

@@ -6,8 +6,8 @@
 
 .btn-style-square{
   height: 65px;
-  width: 65px;
-  margin: auto;
+  width: 105px;
+  margin-left:3px;
  
 }
 
@@ -72,7 +72,9 @@
   .landing-frame:not(.page-active){
     width: var(--landing-page-min-width);
   }
-
+  .landing-page, .landing-page > .min-status-col {
+    height: 100%;
+  }
   .assistance-frame:not(.page-active){
     width: var(--assistance-page-min-width);
   }

@@ -13,10 +13,8 @@ script.onload = () => {
 document.body.appendChild(script);
 ////hector build jun/01/2023 //////////////////////////
 async function extractTextAndImageFromPDF(url){
-  console.log(PDFJS);
   if(PDFJS === undefined) throw new Error("pdfjs not found");
   if(url.trim() === "") return false;
-  
   const pdf = await PDFJS.getDocument(url).promise;
   const ret = [];
   for (let p = 1; p <= pdf.numPages; p++) {
@@ -30,7 +28,12 @@ async function extractTextAndImageFromPDF(url){
     const {fnArray, argsArray} = await page.getOperatorList();
     argsArray.forEach(async (arg, i) => {
       if(fnArray[i] === PDFJS.OPS.paintImageXObject) {
-        imgs.push(await page.objs.get(arg[0]));
+        try {
+          let img = await page.objs.get(arg[0]);
+          imgs.push(img);
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
     const text = await page.getTextContent();
@@ -38,18 +41,4 @@ async function extractTextAndImageFromPDF(url){
   }
 }
 
-async function custom_split_by_jeans_format(url){
-  const obj = await extractTextAndImageFromPDF(url);
-  const extractedText = [];
-  for(let x of obj){
-    let pageText = "";
-    for(let item of x.text.items){
-      pageText += item.str;
-      if(item.hasEOL) pageText += "\n\n";
-
-    }
-    extractedText.push("-- PAGE START -- " + pageText);
-  }
-  return extractedText.join("\n\n");
-}
-export {extractTextAndImageFromPDF, custom_split_by_jeans_format};
+export {extractTextAndImageFromPDF};

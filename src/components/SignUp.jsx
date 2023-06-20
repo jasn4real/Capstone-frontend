@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { Card, Form, Button } from "react-bootstrap";
+import { Card, Form, Button, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function SignUp(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
+        // Redirect to the landing page
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -29,11 +33,15 @@ function SignUp(props) {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <Card>
-        <Card.Body>
-          <h2 className="text-center">Create Account</h2>
+    <Container>
+      <Row className="justify-content-center align-items-center">
+        <Col xs={12} md={6}>
           <Form onSubmit={handleSubmit}>
+            <div>
+              <h2 className="text-center">
+                <strong>Create Account</strong>
+              </h2>
+            </div>
             <Form.Group controlId="formBasicName">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -63,17 +71,26 @@ function SignUp(props) {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
-
+            <br></br>
+            <div className="justify-content-center">
+              <h5>
+                <span>
+                  By clicking Sign Up, you agree to our Terms, Privacy Policy
+                  and Cookies Policy. You may receive SMS Notifications from us
+                  and can opt out any time.
+                </span>
+              </h5>
+            </div>
             <Button variant="primary" type="submit">
-              Submit
+              <strong>Sign Up</strong>
+            </Button>
+            <Button variant="primary" onClick={handleFormSwitch}>
+              <strong>Already have an account? Log In Here</strong>
             </Button>
           </Form>
-          <Button variant="primary" onClick={handleFormSwitch}>
-            Already have an account? Log In Here
-          </Button>
-        </Card.Body>
-      </Card>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

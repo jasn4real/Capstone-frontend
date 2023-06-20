@@ -67,10 +67,10 @@ function LogIn(props) {
               />
             </Form.Group>
             <Button variant="primary" type="submit">
-              Submit
+              <strong>Submit</strong>
             </Button>
             <Button onClick={handleFormSwitch}>
-              Don't have an account? Sign Up Here
+              <strong>Don't have an account? Sign Up Here</strong>
             </Button>
             <Form.Group controlId="remember">
               <Form.Check

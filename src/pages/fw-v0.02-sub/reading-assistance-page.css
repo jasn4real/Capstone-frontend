@@ -32,7 +32,7 @@
   flex-basis: auto;
   overflow-x: auto;
 }
-
+/* 
 .text-reading-panel {
   flex-grow: 1;
   overflow: auto;
@@ -41,7 +41,7 @@
   border-radius: 5px;
   padding: 10px;
 
-}
+} */
 
 .popup-detail {
   overflow-x: auto;

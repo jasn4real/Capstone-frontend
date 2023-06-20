@@ -7,7 +7,9 @@
   visibility: visible;
   opacity: 1;
 }
-
+/* .landing-page{
+  background: url("./sixteen-miles-out-ScvYtpYzgFI-unsplash.jpg")  no-repeat left bottom;
+} */
 
 /*page active reading assistant, comp container*/
 .page-active .cols-container{
@@ -23,6 +25,9 @@
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
   border-radius: 10px;
+  box-shadow: -3px 2px 5px purple;
+  max-width: 580px;
+  min-width: 500px;
 }
 
 .page-active .title-div h1{
@@ -75,6 +80,7 @@ div:not(.page-active) > .landing-page > .min-status-col {
 div:not(.page-active) > .landing-page > .min-status-col > div{
   display: flex;
   flex-direction: column;
+  
 }
 .min-status-col .recents-box {
   display: grid;
@@ -122,7 +128,7 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   font-size: 3rem;
   margin: auto;
 }
-
+/* 
 .confirm-deletion-button{
   background-color: #fff;
   border: none;
@@ -135,7 +141,7 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   background-color: #22249b;
   color: #fcfcfc;
 
-}
+} */
 .recent-card > img{
   position:static;
   width: 100%;
@@ -146,6 +152,7 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   height: 100%;
   width: 100%;
   opacity: 0;
+  overflow: hidden;
   transition: all 0.2s ease-in-out;
 }
 .recent-card > div > div{  
@@ -157,10 +164,10 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   height: 66.6%;
 }
 .recent-card > div > :last-child{
-  width: 100%;
+  /* width: 100%; */
   height: 33.3%;
   align-items: center;
-  display: flex;
+  overflow: hidden;
 }
 
 .recent-card > div > div:hover{
@@ -181,7 +188,30 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
   opacity: 1;
   background-color: rgba(255, 255, 255, 0.5);
 }
+.recent-box-del-btn{
+  display: flex;
+  overflow-x: hidden;
+  width: 200%;
+}
 
+.confirm-pop > div{
+  left: -50%!important;
+}
+.recent-box-del-btn > div > span{
+  width: 100%;
+  margin: auto;
+  color: red;
+  font-size: 12px;
+}
+
+.recent-box-del-btn > div{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  left: 0px;
+}
 .landing-page.blurry > *:not(.loader-container) {
   filter: blur(5px);
   pointer-events: none;
@@ -316,3 +346,4 @@ div:not(.page-active) > .landing-page > .min-status-col > div{
 .userguide-icon:hover{
   box-shadow: 3px 2px 5px purple;
 }
+

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./reading-assistance-page.css";
+// import "./reading-assistance-page.css";
 import ComprehensionPage from "./reading-comprehension-page-h";
 import ReadingAssistance from "../ReadingAssistance";// -h possible
 
@@ -14,7 +14,8 @@ const triggerHistoryUpdate = (q) =>{
 
 export default function AssistancePage({ pop_frame, fileHash }) {
   const [isNightModeActive, setIsNightModeActive] = useState(false);
-  
+  let [isLoading, setIsLoading] = useState(false);
+
 
   function onLandingClick() {
     pop_frame(0);
@@ -44,14 +45,24 @@ export default function AssistancePage({ pop_frame, fileHash }) {
         <div className="reading-panel" style={{ flex: "50px" }}>
           <div className="text-reading-panel">
             <div className="popup-detail">
-              <ReadingAssistance fileHash={fileHash} triggerHistoryUpdate={triggerHistoryUpdate}/> 
+              <ReadingAssistance 
+                fileHash={fileHash} 
+                triggerHistoryUpdate={triggerHistoryUpdate}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+              /> 
             </div>
           </div>
         </div>
 
         <div className="comprehension-panel">
 
-        <ComprehensionPage fh={fileHash} setTriggerHistoryUpdate={setTriggerHistoryUpdate} />
+        <ComprehensionPage 
+          fh={fileHash} 
+          setTriggerHistoryUpdate={setTriggerHistoryUpdate}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
         </div>
       </div>
     </div> // Missing in the original code

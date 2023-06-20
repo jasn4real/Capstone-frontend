@@ -248,7 +248,7 @@ const print_you_local_storage = () => {
 const init_local_storage = () => {
   try {
     const currentLC = localStorage.getItem("files");
-    console.log(Array.isArray(JSON.parse(currentLC)))
+    // console.log(Array.isArray(JSON.parse(currentLC)))
     if(!Array.isArray(JSON.parse(currentLC))){
       throw "local stroage files key is not an array";
     }

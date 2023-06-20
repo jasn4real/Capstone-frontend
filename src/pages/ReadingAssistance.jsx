@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import "../index.css";
+// import "../index.css";
+import "./fw-v0.02-sub/reading-assistance-page.css";
 import { useSpring } from "react-spring";
 import { pdfjs } from "react-pdf";
 import storageFunctions from "../storage_";

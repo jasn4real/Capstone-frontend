@@ -6,12 +6,11 @@ import "./reading-comprehension-page-h.css";
 import lc from "../../storage_";
 import srv from "../../fetch_";
 let fileHash = undefined;
-export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
+export default function ComprehensionPage({ fh, setTriggerHistoryUpdate, isLoading, setIsLoading }) {
   fileHash = fh;
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true);
   const [historyData, setHistoryData] = useState([]);
   useEffect(() => {
-    // console.log(getAllHistorywithUnifyTime(fileHash));
     setHistoryData(getAllHistorywithUnifyTime(fileHash));
   }, [fileHash]);
   setTriggerHistoryUpdate((q)=>{
@@ -130,7 +129,7 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
                 type="radio"
                 name="rb"
                 id="rb2"
-                checked
+                defaultChecked
               />
               Medium
             </label>
@@ -164,6 +163,8 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
           </div>
         </form>
       </div>
+      
+      <div className="history-in-comprehension-page-div">
       {isLoading ? (
         <div className="history-in-comprehension-page-div lds">
           <div></div>
@@ -172,49 +173,49 @@ export default function ComprehensionPage({ fh, setTriggerHistoryUpdate }) {
           <div></div>
         </div>
       ) : (
-        <div className="history-in-comprehension-page-div">
-          {historyData.map((el, idx) => (
-            <div className="history-card" key={idx}>
-              <li>
-                <div className="history-card-tags">
-                  <span
-                    className="response-type"
-                    style={{
-                      color:
-                        el.type === "comprehension"
-                          ? "rgb(145 113 180)"
-                          : "#2096f3",
-                    }}
-                  >
-                    {el.type.toUpperCase()}
-                  </span>
-                  ⎮ <span className="date-text">DATE: {el.date_str}</span>
-                </div>
-
-                <span className="question-header">Q</span>
-
-                <span className="user-question-text">
-                  {capitalizeFirstLetter(el.q)}
-                </span>
-              </li>
-              {el.type === "image" ? (
-                <img
-                  src={el.data}
-                  alt="Not Found"
-                  alt-src={el.alt_image_url}
-                  onError={onImgError}
-                />
-              ) : (
-                <li>
-                  <span className="answer-header">response: </span>
-                  <span className="response-text">{el.data}</span>
-                </li>
-              )}
-              <li></li>
-            </div>
-          ))}
-        </div>
+        ""
       )}
+        {historyData.map((el, idx) => (
+          <div className="history-card" key={idx}>
+            <li>
+              <div className="history-card-tags">
+                <span
+                  className="response-type"
+                  style={{
+                    color:
+                      el.type === "comprehension"
+                        ? "rgb(145 113 180)"
+                        : "#2096f3",
+                  }}
+                >
+                  {el.type.toUpperCase()}
+                </span>
+                ⎮ <span className="date-text">DATE: {el.date_str}</span>
+              </div>
+
+              <span className="question-header">Q</span>
+
+              <span className="user-question-text">
+                {capitalizeFirstLetter(el.q)}
+              </span>
+            </li>
+            {el.type === "image" ? (
+              <img
+                src={el.data}
+                alt="Not Found"
+                alt-src={el.alt_image_url}
+                onError={onImgError}
+              />
+            ) : (
+              <li>
+                <span className="answer-header">response: </span>
+                <span className="response-text">{el.data}</span>
+              </li>
+            )}
+            <li></li>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

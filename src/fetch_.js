@@ -168,21 +168,21 @@ function read_text_to_explaination(q, callback) {
   */
 }
 
-function get_latest_file_hash(callback) {
-  fetch(`${API}/download_file/latest`)
-    .then((response) => response.json())
-    .then((data) => {
-      callback(data.hash);
-    })
-    .catch(error_handle);
-}
+// function get_latest_file_hash(callback) {
+//   fetch(`${API}/download_file/latest`)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       callback(data.hash);
+//     })
+//     .catch(error_handle);
+// }
 
 function imageExists(image_url){
   try {
     var http = new XMLHttpRequest();
     http.open('HEAD', image_url, false);
     http.send();
-    return http.status != 404;
+    return http.status !== 404;
   } catch (error) {
     console.log(error);
     return false;
@@ -198,10 +198,10 @@ function imageExists(image_url){
 // }
 function pdf_thumbnail_url(fileHash){
   const url = `${API}/download_file/pdf_thumbnail/${fileHash}`;
-  return (url) ? url : `${API}/download_file/image/binarymindlogorectangle`;
-}
 
-export default { 
+  return imageExists(url) ? url : `${API}/download_file/image/binarymindlogorectangle`;
+}
+const entry = { 
   read_text_to_image, 
   read_text_to_explaination, 
   upload_file, 
@@ -212,4 +212,5 @@ export default {
   pdf_download_url_prefix: `${API}/download_file/`,
   pdf_thumbnail_url,
   download_localstorage_init
- };
+};
+export default entry;

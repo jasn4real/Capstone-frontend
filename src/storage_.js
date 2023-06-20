@@ -66,7 +66,7 @@ function pull_history(fileHash, category, question){
     return false;
   }
 }
-///file related///////////////////////////////////////////////
+///file related//////////////////////////////////////
 function downloadFile(fileHash, callback){
   srv.download_file(fileHash, (result) => {
     callback(result);
@@ -250,7 +250,7 @@ const init_local_storage = () => {
     const currentLC = localStorage.getItem("files");
     // console.log(Array.isArray(JSON.parse(currentLC)))
     if(!Array.isArray(JSON.parse(currentLC))){
-      throw "local stroage files key is not an array";
+      throw new Error( "local stroage files key is not an array");
     }
   } catch (error) {
     localStorage.clear();

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Modal } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import "../pages/fw-v0.02-sub/landing-page.css";
 import lc from "../storage_";
 import fe from "../fetch_";
 import UserGuide from "./UserGuide";
 
-import TutorialModal from "../TutorialModal/index";
+// import TutorialModal from "../TutorialModal/index";
 
 import { FcFullTrash } from "react-icons/fc";
 function LandingPage({
@@ -16,17 +16,7 @@ function LandingPage({
 
   const [recents, setRecents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const [confirmDeletionArray, setConfirmDeletionArray] = useState(
-    Array(recents.length).fill(false)
-  );
   
-  const handleConfirmDelete = (index) => {
-    const updatedConfirmDeletionArray = [...confirmDeletionArray];
-    updatedConfirmDeletionArray[index] = !updatedConfirmDeletionArray[index];
-    setConfirmDeletionArray(updatedConfirmDeletionArray);
-  };
-
   useEffect(() => {
     update_recents();
   }, []);
@@ -147,12 +137,11 @@ function LandingPage({
                 className="btn-style btn-style-square"
                 onClick={onGoLandingPageClick}
               >
-                upload <br /> PDF
+                Go Back & <br></br>
+                upload PDF
               </Button>
             </div>
-            
           </Col>
-          
         </Row>
         <Row style={{overflowY: "scroll"}}>
             <Col>
@@ -162,7 +151,7 @@ function LandingPage({
                     <div
                       key={idx}
                       style={{backgroundImage:`url(${fe.pdf_thumbnail_url(recent.fileHash)})`,backgroundSize:"cover"}}
-                      className="recent-card"
+                      className={`recent-card ${recent.fileHash === fileHash ? "current-document-in-recent" : ""}`}
                     >
                       <div>
                         <div recent_idx={idx} onClick={change_file_click}>
@@ -170,7 +159,7 @@ function LandingPage({
                         </div>
                         <div className="recent-box-del-btn" recent_idx={idx} onClick={delete_file_click} onMouseLeave={on_mouse_leave_confirm_delete}>
                           <div><FcFullTrash className="trash-icon" /></div>
-                          <div recent_idx={idx} onClick={on_confirm_delete}><span>confirm delete</span></div>
+                          <div recent_idx={idx} onClick={on_confirm_delete}><span>Confirm Delete</span></div>
                         </div>
                       </div>
                     </div>

@@ -46,6 +46,7 @@
 }
 .bigcontainer > div > canvas {
   margin: auto;
+  max-width: 100%;
 }
 .bigcontainer > div > .separator {
   border-bottom: 1px solid black;

@@ -185,7 +185,7 @@ const ReadingAssistance = ({ fileHash, triggerHistoryUpdate, isLoading, setIsLoa
       >
       </div>
       <div ref={popup_menu} className="ra-popup-menu-box">
-        <button className="btn btn-style" onClick={onTextToExplainationClick}>Text to Explanation</button>
+        <button className="btn btn-style" onClick={onTextToExplainationClick}>Expand on Text</button>
         <button className="btn btn-style" onClick={onTextToImageClick}>Text to Image</button>
       </div>
     </div>
